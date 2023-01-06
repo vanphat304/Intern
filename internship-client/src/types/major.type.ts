@@ -1,0 +1,8 @@
+export const Major = {
+  INFORMATION_SYSTEM: 'INFORMATION_SYSTEM',
+  SOFTWARE_TECHNOLOGY: 'SOFTWARE_TECHNOLOGY',
+  NETWORK_SCURITY: 'NETWORK_SCURITY',
+  DATA_ANALYS: 'DATA_ANALYS',
+};
+
+export type MajorType = typeof Major[keyof typeof Major];

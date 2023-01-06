@@ -1,0 +1,64 @@
+import React from 'react';
+import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
+import { COMPONENTS_PRIVATE_ADMIN_FLATTED_MAP } from '../constants/pagePath';
+import InternPageContainer from '../containers/InernContainer/InternPageContainer';
+import MainLayout from '../Layout/mainLayout';
+import AdminPage from '../pages/Admin';
+import HomePage from '../pages/Home';
+import LoginPage from '../pages/login/loginPage';
+import PageNotFound from '../pages/pageNotFound/pageNotFound';
+import Profile from '../pages/Profile/profile';
+import RegisterPage from '../pages/register/register';
+import CustomPrivateRoute from './customPrivateRoute/customPrivateRoute';
+import PrivateRoute from './privateRoute';
+
+type typeRenderComponent = {
+  Component: React.FunctionComponent<any>;
+  path: string;
+  code: string;
+  title: string;
+};
+
+const Routers = () => (
+  <BrowserRouter>
+    <Routes>
+      <Route path="" element={<HomePage />}></Route>
+
+      <Route element={<CustomPrivateRoute redirectPath="/" />}>
+        <Route path="/login" element={<LoginPage />}></Route>
+        <Route path="/register" element={<RegisterPage />}></Route>
+      </Route>
+
+      <Route element={<CustomPrivateRoute redirectPath="/" />}>
+        <Route path="/profile" element={<Profile />}></Route>
+      </Route>
+
+      <Route element={<CustomPrivateRoute redirectPath="/" />}>
+        <Route path="/admin" element={<AdminPage />}></Route>
+      </Route>
+
+      {COMPONENTS_PRIVATE_ADMIN_FLATTED_MAP.map(
+        ({ Component, path, code, title }: typeRenderComponent) => (
+          <Route
+            element={
+              <MainLayout>
+                <InternPageContainer title={title}>
+                  <Component />
+                </InternPageContainer>
+              </MainLayout>
+            }
+            key={path}
+            path={path}
+          ></Route>
+        ),
+      )}
+
+      {/* <PrivateRoute /> */}
+
+      <Route path="*" element={<Navigate to="/not-found" />}></Route>
+      <Route path="/not-found" element={<PageNotFound />}></Route>
+    </Routes>
+  </BrowserRouter>
+);
+
+export default Routers;
