@@ -45,9 +45,8 @@ export class JobDescriptionService {
           },
         },
         where: {
-
-          companyId:{
-            contains:companyId
+          companyId: {
+            contains: companyId,
           },
 
           OR: [
@@ -81,6 +80,14 @@ export class JobDescriptionService {
         where: {
           jobId: id,
         },
+        include: {
+          company: {
+            select: {
+              logo: true,
+              nameCompany: true,
+            },
+          },
+        },
       });
       if (!JobDecripton) {
         throw new HttpException(`can't find Job description with id ${id}`, HttpStatus.BAD_REQUEST);
@@ -94,7 +101,7 @@ export class JobDescriptionService {
 
   async updateJobDecripton(dto: JobDecripton) {
     try {
-      const { jobId, ...rest } = dto;
+      const { jobId, company, ...rest } = {...dto ,  company: '' } || {};
       const result = await this.prisma.jobDecripton.update({
         where: {
           jobId,
@@ -128,6 +135,15 @@ export class JobDescriptionService {
         where: {
           companyId: reqParams.companyId,
         },
+        include: {
+          company: {
+            select: {
+              nameCompany: true,
+              logo: true,
+              address: true,
+            },
+          },
+        },
       });
 
       if (!results) {
@@ -139,6 +155,25 @@ export class JobDescriptionService {
       return results;
     } catch (error) {
       throw error;
+    }
+  }
+
+  async getListJobWithCompany() {
+    try {
+      const results = this.prisma.jobDecripton.findMany({
+        include: {
+          company: {
+            select: {
+              nameCompany: true,
+              logo: true,
+              address: true,
+            },
+          },
+        },
+      });
+      return results;
+    } catch (error) {
+      throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
 }

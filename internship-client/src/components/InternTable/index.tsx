@@ -77,7 +77,7 @@ const InternTable = ({ columns = [], dataSource, isLoading = false }: tableType)
                           return (
                             <td key={dataIndex} className="text-center py-4 px-6">
                               {render
-                                ? render(data[dataIndex as studentType])
+                                ? render(getNestedValue(dataIndex, data))
                                 : data[dataIndex as studentType]}
                             </td>
                           );
@@ -102,7 +102,7 @@ const InternTable = ({ columns = [], dataSource, isLoading = false }: tableType)
                               )}
                             </Fragment>
                           );
-                        } else {
+                          } else {
                           return (
                             <td
                               key={key}
@@ -112,7 +112,7 @@ const InternTable = ({ columns = [], dataSource, isLoading = false }: tableType)
                                   : 'bg-slate-100 hover:bg-slate-300'
                               } text-center py-4 px-6 sticky  right-0 z-10`}
                             >
-                              {render ? render(data.id || data.jobId) : data[dataIndex as studentType]}
+                              {render ? render(data.id || data.jobId || data.studentId) : data[dataIndex as studentType]}
                             </td>
                           );
                         }

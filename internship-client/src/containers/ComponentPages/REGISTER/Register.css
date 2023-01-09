@@ -1,0 +1,11 @@
+.Register{
+    background-color: #fff;
+    height: 100%;
+    padding: 2rem 4rem;
+}
+.Register_form-input input{
+    background-color: #fff !important;
+}
+.Register_form-input:hover{
+    border: 1px solid #00b14f;
+}

@@ -85,7 +85,7 @@ export class StudentApplyJobsService {
             select: {
               firstName: true,
               lastName: true,
-              identifierStudent:true
+              identifierStudent: true,
             },
           },
           jobDecription: {
@@ -94,6 +94,7 @@ export class StudentApplyJobsService {
               company: {
                 select: {
                   nameCompany: true,
+                  logo: true,
                 },
               },
             },
@@ -106,6 +107,62 @@ export class StudentApplyJobsService {
       }
 
       return StudentApplyJob;
+    } catch (error) {
+      console.log(error);
+      throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
+    }
+  }
+  async getStudentApplyJobHistory(id: string): Promise<Array<StudentApplyJob>> {
+    try {
+      const StudentApplyJobHistories: Array<StudentApplyJob> =
+        await this.prisma.studentApplyJob.findMany({
+          where: {
+            student: {
+              id: id,
+            },
+          },
+          include: {
+            jobDecription: {
+              include: {
+                company: {
+                  select: {
+                    nameCompany: true,
+                    logo: true,
+                  },
+                },
+              },
+            },
+          },
+        });
+
+      if (!StudentApplyJobHistories) {
+        throw new HttpException(`can't find StudentApplyJob with id ${id}`, HttpStatus.BAD_REQUEST);
+      }
+
+      return StudentApplyJobHistories;
+    } catch (error) {
+      console.log(error);
+      throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async checkStudentIsApplied(query): Promise<boolean> {
+    const { jobId, studentId } = query;
+    try {
+      const check: Array<StudentApplyJob> = await this.prisma.studentApplyJob.findMany({
+        where: {
+          AND: [
+            {
+              jobId,
+            },
+            {
+              studentId,
+            },
+          ],
+        },
+      });
+
+      return check.length !== 0;
     } catch (error) {
       console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
@@ -168,10 +225,27 @@ export class StudentApplyJobsService {
           },
         });
         const { studentId, jobId } = props;
+
+        const jobDetail = await this.prisma.jobDecripton.findFirst({
+          where: {
+            jobId,
+          },
+          include: {
+            company: {
+              select: {
+                nameCompany: true,
+              },
+            },
+          },
+        });
+        const {
+          jobTitle,
+          company: { nameCompany },
+        } = jobDetail;
         await this.prisma.notificationStudent.create({
           data: {
             studentId,
-            content: `Thông tin ứng tuyển thực tập của bạn ở công việc ${jobId} đã được chấp nhận`,
+            content: `Bạn vừa được nhận vào làm ở vị trí : ${jobTitle} tại công ty ${nameCompany}  `,
           },
         });
       }

@@ -36,7 +36,7 @@ const scaleCompanies = Object.keys(ScaleCompany).map((item) => ({
   value: item,
 }));
 
-const status = Object.keys(STATUS).map((item) => ({
+const statuses = Object.keys(STATUS).map((item) => ({
   id: item,
   name: item,
   value: item,
@@ -51,7 +51,7 @@ const ModalDetail = ({
 }: any) => {
   const methods = useForm();
 
-  const { isLoading, mutate: approveStudentProposal } = useMutation({
+  const { isLoading, mutate: approveStudentApplyJob } = useMutation({
     mutationFn: (id: string) => Service.approveStudentApplyJob({ id }),
     onSuccess: (data) => {
       toast.success('Phê duyệt thành công');
@@ -70,17 +70,33 @@ const ModalDetail = ({
     formState: { errors },
   } = methods;
 
-  const { isFetching } = useQuery({
+  const { isFetching , data  }  = useQuery({
     enabled: id !== IS_ADD,
     queryKey: [id],
     refetchOnWindowFocus: false,
     queryFn: () => Service.getStudentApplyJob({ id }),
     onSuccess(data) {
+
       Object.keys(data).forEach((item) => {
         if (datesFormat.includes(item)) {
           setValue(item, formatDateTime(data[item]));
-        } else if (Object.keys(data[item]).length !== 0) {
-          Object.keys(data[item]).map((nested) => setValue(nested, data[item][nested]));
+        } else if (
+          data[item] &&
+          typeof data[item] === 'object' &&
+          Object.keys(data[item]).length !== 0
+        ) {
+          Object.keys(data[item]).forEach((nested) => {
+            if (
+              data[item][nested] &&
+              typeof data[item][nested] === 'object' &&
+              Object.keys(data[item][nested]).length !== 0
+            ) {
+              Object.keys(data[item][nested]).forEach((inNested) =>
+                setValue(inNested, data[item][nested][inNested]),
+              );
+            }
+            setValue(nested, data[item][nested]);
+          });
         } else {
           setValue(item, data[item]);
         }
@@ -88,13 +104,15 @@ const ModalDetail = ({
     },
   });
 
+  const {status} = data || {}
   const footer = () => (
     <InternFooterModalContainer
       ButtonSubmit={
         <InternButtonApprove
           isLoading={isLoading}
+          isShow={status === STATUS.SUMBMITED || status === STATUS.PENDING}
           onClick={() => {
-            approveStudentProposal(id);
+            approveStudentApplyJob(id);
           }}
         />
       }
@@ -104,7 +122,7 @@ const ModalDetail = ({
           onClick={() => {
             handleOpenReject(id);
           }}
-          isShow={id !== IS_ADD}
+          isShow={status === STATUS.SUMBMITED || status === STATUS.PENDING}
         />
       }
     />
@@ -133,76 +151,16 @@ const ModalDetail = ({
             </InternRow>
             <InternRow withAutoCol={12}>
               <InternLinkForm colSpan={6} name="fileCV" label="File CV" text="Xem file cv" />
-              <InternLinkForm colSpan={6} name="fileScore" label="Xem file bảng điểm" />
+              <InternLinkForm
+                colSpan={6}
+                name="fileScore"
+                label="File điểm"
+                text="Xem file bảng điểm"
+              />
             </InternRow>
             <InternRow withAutoCol={12}>
               <InternDatePicker colSpan={6} name="dateAppply" label="Ngày ứng tuyển" />
-              <InternSelect data={status} colSpan={6} name="status" label="Trạng thái" />
-            </InternRow>
-            <InternRow>
-              <InternTextEditor
-                labelSpan={1}
-                name="legalRepresentative"
-                label="Thông tin người đại diện pháp luật"
-              />
-            </InternRow>
-            <InternRow withAutoCol={12}>
-              <InternText colSpan={6} name="specializeCompany" label="Chuyên ngành công ty" />
-              <InternText
-                colSpan={6}
-                name="referenceName"
-                label="Thông tin người giám sát thực tâp"
-              />
-            </InternRow>
-            <InternRow withAutoCol={12}>
-              <InternText
-                colSpan={6}
-                name="referencePhoneNumber"
-                label="Sô diện thoại người giám sát"
-              />
-              <InternText colSpan={6} name="referenceEmail" label="Email người giám sát" />
-            </InternRow>
-            <InternRow>
-              <InternTextEditor
-                labelSpan={1}
-                name="introducePosition"
-                label="Giới thiệu về vị trí thực tập"
-              />
-            </InternRow>
-            <InternRow>
-              <p className="col-span-1 text-red-800 font-semibold underline ">
-                Mô tả thông tin thực tập từng tuần
-              </p>
-            </InternRow>
-            <InternRow>
-              <InternTextEditor labelSpan={1} name="week1" label="Thông tin tuần 1" />
-            </InternRow>
-            <InternRow>
-              <InternTextEditor labelSpan={1} name="week2" label="Thông tin tuần 2" />
-            </InternRow>
-            <InternRow>
-              <InternTextEditor labelSpan={1} name="week3" label="Thông tin tuần 3" />
-            </InternRow>
-            <InternRow>
-              <InternTextEditor labelSpan={1} name="week4" label="Thông tin tuần 4" />
-            </InternRow>
-            <InternRow>
-              <InternTextEditor labelSpan={1} name="week5" label="Thông tin tuần 5" />
-            </InternRow>
-            <InternRow>
-              <InternTextEditor labelSpan={1} name="week6" label="Thông tin tuần 6" />
-            </InternRow>
-            <InternRow>
-              <InternTextEditor labelSpan={1} name="week7" label="Thông tin tuần 7" />
-            </InternRow>
-            <InternRow>
-              <InternTextEditor labelSpan={1} name="week8" label="Thông tin tuần 8" />
-            </InternRow>
-            <InternRow withAutoCol={12}>
-              <InternSelect data={status} colSpan={6} name="status" label="Trạng thái" />
-              {watch('status') === STATUS.REJECTED && (
-                <InternTextArea disabled colSpan={6} name="reasonReject" label="Lý do từ chối" />
-              )}
+              <InternSelect disabled data={statuses} colSpan={6} name="status" label="Trạng thái" />
             </InternRow>
           </form>
         </FormProvider>

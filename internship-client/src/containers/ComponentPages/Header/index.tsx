@@ -6,7 +6,7 @@ import { useAppStore } from '../../../store/appStore';
 
 const Header = () => {
   const [current] = useAppStore();
-  const [user] = useAuthStore()
+  const [{userLogin}] = useAuthStore()
 
   const contentPopover = (
     <div>
@@ -27,9 +27,9 @@ const Header = () => {
       </div>
       <Popover content={contentPopover} placement="bottomRight" trigger={'click'}>
         <div className="col-span-1 flex items-center justify-end">
-          <h1 className="mr-4 font-medium text-xl">{user?.username}</h1>
+          <h1 className="mr-4 font-medium text-xl">{(userLogin as any)?.username}</h1>
           <div className="w-16 h-16 rounded-full flex justify-center items-center cursor-pointer bg-orange-300 text-xl">
-            {user?.role?.substr(0,1)}
+            {(userLogin as any)?.role?.substr(0,1)}
           </div>
         </div>
       </Popover>

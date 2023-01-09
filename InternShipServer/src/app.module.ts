@@ -10,6 +10,7 @@ import { UploadfileModule } from './uploadfile/uploadfile.module';
 import { ResultApplyJobModule } from './result-apply-job/result-apply-job.module';
 import { StudentProposalModule } from './student-proposal/student-proposal.module';
 import { StudentWorkCompanyModule } from './student-work-company/student-work-company.module';
+import { NotficationModule } from './notfication/notfication.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { StudentWorkCompanyModule } from './student-work-company/student-work-co
     ResultApplyJobModule,
     StudentProposalModule,
     StudentWorkCompanyModule,
+    NotficationModule,
   ],
 })
 export class AppModule {}

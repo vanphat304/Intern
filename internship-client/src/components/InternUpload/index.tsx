@@ -19,6 +19,7 @@ type typeInternUpload = {
   rule?: {};
   message?: string;
   direct?: boolean;
+  namePreview?: string;
 };
 
 const InternUpload = ({
@@ -33,6 +34,7 @@ const InternUpload = ({
   rule,
   message = '',
   direct = false,
+  namePreview = 'logo',
   ...rest
 }: typeInternUpload) => {
   const {
@@ -53,6 +55,7 @@ const InternUpload = ({
 
   const handleUploadFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
+
     if (!file) return;
     const formData = new FormData();
     formData.append('file', file);
@@ -61,8 +64,10 @@ const InternUpload = ({
       .post(`${path}/uploadfile`, formData)
       .then((data: AxiosResponse<{ filename: string }>) => {
         toast('upload file success');
-        setValue('logo', path + '/uploadfile/' + data.data.filename);
-        clearErrors('logo');
+        setValue(namePreview, path + '/uploadfile/' + data.data.filename);
+        setValue(name, path + '/uploadfile/' + data.data.filename);
+        clearErrors(namePreview);
+        clearErrors(name);
       })
       .catch((err) => {
         console.log(err);
@@ -81,7 +86,7 @@ const InternUpload = ({
         </label>
         <div className="overflow-hidden relative w-64 mt-4 mb-4 ">
           <label
-            htmlFor="file_input"
+            htmlFor={name}
             className="border cursor-pointer border-blue-500 rounded-md text-blue-500 font-bold py-2 px-4 w-full inline-flex items-center"
           >
             <svg
@@ -95,13 +100,13 @@ const InternUpload = ({
               <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z" />
             </svg>
             <span className="ml-2">Upload Document</span>
+            <input
+              className="cursor-pointer absolute hidden py-2 px-4 w-full opacity-0 pin-r pin-t"
+              type="file"
+              id={name}
+              onChange={handleUploadFile}
+            />
           </label>
-          <input
-            className="cursor-pointer absolute hidden py-2 px-4 w-full opacity-0 pin-r pin-t"
-            type="file"
-            id="file_input"
-            onChange={handleUploadFile}
-          />
         </div>
         <p
           className="col-span-6 col-start-3 text-sm text-gray-500 dark:text-gray-300"

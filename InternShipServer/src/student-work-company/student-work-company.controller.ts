@@ -18,7 +18,7 @@ export class StudentWorkCompanyController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  addCompany(@Body() dto: StudentWorkCompany): Promise<StudentWorkCompany> {
+  addStudentWorkCompany(@Body() dto: StudentWorkCompany): Promise<StudentWorkCompany> {
     return this.StudentWorkCompanyService.addStudentWorkCompany(dto);
   }
   @Get()

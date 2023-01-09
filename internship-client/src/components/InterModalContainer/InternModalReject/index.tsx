@@ -41,9 +41,10 @@ const InternModalReject = ({
 
   const handleSubmitReject = () => {
     return handleSubmit((data) => {
-      console.log(data);
-      // updateStudent(data as Student);
-      // updateStudent(data);
+      const { reasonReject } = data;
+      console.log(reasonReject);
+      
+      onClick && onClick(reasonReject);
     });
   };
 

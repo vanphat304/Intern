@@ -1,0 +1,96 @@
+.Detailrecruit-nav{
+    display: flex;
+}
+.Detailrecruit-navItem{
+    margin-right: 2rem;
+    margin-top: 1rem;
+    font-size: 16px;
+    padding: 1rem 0;
+}
+.Detailrecruit-navItem a{
+    color: #807f7f;
+}
+.active-nav{
+    border-bottom: 2px solid #333;
+}
+.active-nav a{
+    color: #333 !important;
+    font-weight: 700;
+}
+.Detailrecruit-box{
+    margin-top: 2rem;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 2px;
+}
+.Detailrecruit-box-title-name{
+    font-size: 22px;
+    font-weight: 700;
+}
+.Detailrecruit-box-address,
+.Detailrecruit-box-generalIf{
+    padding: 1rem;
+    background: rgba(0,177,79,.051);
+    border-radius: 3px;
+    margin-top: 1rem;
+}
+.generalIf-detail-left,
+.generalIf-detail-right{
+    width: 50%;
+}
+.Detailrecruit-box-generalIf-detail{
+    display: flex;
+}
+.generalIf-detail-item{
+    display: flex;
+    line-height: 2rem;
+    font-size: 14px;
+}
+.generalIf-title-name{
+    color: #333;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration-line: underline;
+}
+.Detailrecruit-box-generalIf-title{
+    margin-bottom: 1rem;
+}
+.generalIf-detail-item-icon{
+    width: 10%;
+    text-align: center;
+    color: #00b14f;
+    background-color: #fff;
+    margin: 0 1rem 1rem 0;
+    border-radius: 50%;
+}
+.generalIf-detail-item-header{
+    display: block;
+    line-height: 16px;
+    font-weight: 600;
+}
+
+.Detailrecruit-box-address-content{
+    font-size: 14px;
+    line-height: 2rem;
+}
+.content-tab{
+    line-height: 2rem;
+    font-size: 14px;
+}
+.Detailrecruit-job-data-title{
+    font-size: 18px;
+    font-weight: 700;
+    margin: 1rem 1rem 1rem 0;
+}
+.content-tab{
+    margin-left: 3rem;
+}
+
+.content-tab li{
+    list-style-type: square;
+}
+/* col-4 */
+.recruit_shareJob{
+    border: 1px solid #eee;
+    border-radius: 0;
+}

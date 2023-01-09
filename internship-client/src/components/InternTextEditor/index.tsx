@@ -15,6 +15,7 @@ type InputText = {
   rule?: {};
   message?: string;
   direct?: boolean;
+  disabled?: boolean;
 };
 
 const InternTextEditor = ({
@@ -28,6 +29,7 @@ const InternTextEditor = ({
   rule,
   message = '',
   direct = false,
+  disabled = false,
   ...rest
 }: InputText) => {
   const {
@@ -60,6 +62,7 @@ const InternTextEditor = ({
           }  text-gray-900 text-xl rounded-lg p-2`}
         >
           <Editor
+            disabled={disabled}
             apiKey={API_KEY}
             value={value}
             init={{ ...initialConfigEditor }}

@@ -9,13 +9,13 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     key: 'index',
   },
   {
-    title: 'jobTitle',
+    title: 'jobDecription',
     dataIndex: ['jobDecription', 'jobTitle'],
     key: 'jobDecription',
   },
   {
     title: 'nameCompany',
-    dataIndex: ['company', 'nameCompany'],
+    dataIndex: ['jobDecription', 'company', 'nameCompany'],
     key: 'nameCompany',
   },
   {
@@ -46,7 +46,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     key: 'fileCV',
     render: (value: string) => (
       <Link to={value} target={'_blank'}>
-        {value}
+        <span className="text-blue-600">{value}</span>
       </Link>
     ),
   },
@@ -57,7 +57,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     key: 'fileScore',
     render: (value: string) => (
       <Link to={value} target={'_blank'}>
-        {value}
+        <span className="text-blue-600">{value}</span>
       </Link>
     ),
   },

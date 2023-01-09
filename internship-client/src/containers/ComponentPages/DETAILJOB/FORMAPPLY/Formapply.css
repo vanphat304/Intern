@@ -1,0 +1,103 @@
+.Formapply_modal{
+    margin: 0 auto;
+    width: 600px;
+    height: 90%;
+    background-color: #fff;
+    margin-top: 2%;
+    padding: 1rem;
+    overflow:scroll;
+    overflow-x: hidden;
+}
+.Formapply_modal-header{
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 18px;
+}
+.modal_header-position{
+    flex: 1;
+    margin-left: 1rem;
+    color: #00B14F;
+}
+.modal_header-position:hover{
+    text-decoration: underline;
+}
+
+.Formapply_modal-body button{
+    display: flex;
+    float: right;
+    margin-top: 1rem;
+    color: #333;
+    background-color: #fff;
+    border-color: #adadad;
+    padding: 5px 10px;
+    font-weight: 700;
+    border: 1px solid #adadad;
+    border-radius: 2px;
+}
+.Formapply_modal-body button:hover{
+    cursor: pointer;
+    background-color: #e6e6e6;
+}
+
+.Formapply_modal-body-introduce{
+    margin-top: 3rem;
+}
+.Formapply_modal-body-introduce textarea{
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.Formapply_modal-body-introduce-item{
+    margin: 1rem 0;
+}
+.Formapply_modal-body-introduce-item{
+    font-size: 12px;
+}
+.Formapply_modal-body-introduce-item input{
+    width: 100%;
+    font-size: 14px;
+    padding: .5rem;
+    border: none;
+    border-bottom: solid 1px #f0f0f0;
+    outline: none;
+    color: #333;
+}
+.Formapply_modal-header{
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 1rem;
+}
+.modal_header-icon-close{
+    font-size: 12px;
+    font-weight: 700;
+}
+.modal_header-icon-close:hover{
+    cursor: pointer;
+}
+.Formapply_modal-groupbtn{
+    display: flex;
+    flex: 1;
+    float: right;
+}
+.Formapply_modal-groupbtn button{
+    color: #333;
+    background-color: #fff;
+    border-color: #adadad;
+    padding: 10px 20px;
+    margin-right: 1rem;
+    font-weight: 700;
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+}
+.Formapply_modal-groupbtn-submit{
+    background-color: #27ae60 !important;
+    color: #fff !important;
+}
+.Formapply_modal-groupbtn-close:hover{
+    background-color: #e6e6e6; 
+    cursor: pointer;
+}
+.Formapply_modal-groupbtn-submit:hover{
+    cursor: pointer;
+}

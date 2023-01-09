@@ -21,6 +21,7 @@ type InputText = {
   keyValue?: string;
   direct?: boolean;
   data: Array<option>;
+  disabled?: boolean;
 };
 
 const InternSelect = ({
@@ -33,6 +34,7 @@ const InternSelect = ({
   rule,
   message = '',
   direct = false,
+  disabled = false,
   keyName,
   keyValue,
   data = [],
@@ -55,6 +57,7 @@ const InternSelect = ({
           {label}
         </label>
         <select
+        disabled={disabled}
           className={`${
             errors[name] ? 'border-red-600' : 'focus:ring-gray-600 focus:border-gray-700'
           } outline-none  border border-gray-400 ${

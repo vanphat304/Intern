@@ -39,7 +39,6 @@ export const API = {
   GET: async (url = '', data: dataTypeParams) => {
     const { vars, params } = data;
     console.log(data);
-    
 
     const result = await axiosInstance.get(parseUrl(url, vars), {
       params,
@@ -104,7 +103,7 @@ export const API = {
   student: 'student',
   student_id: 'student/{id}',
   student_update: 'student/update',
-  student_params : 'student/params',
+  student_params: 'student/params',
 
   // company
   company: 'company',
@@ -117,6 +116,8 @@ export const API = {
   jobDescription: 'jobdescription',
   jobDescription_id: 'jobdescription/{id}',
   jobDescription_update: 'jobdescription/update',
+  jobDescription_jobCompany: 'jobdescription/job-company',
+  jobDescription_filter: 'jobdescription/filter',
 
   // student proposal
   studentProposal: 'student-proposal',
@@ -128,7 +129,20 @@ export const API = {
   // student apply job
   studentApplyJob: 'student-apply-jobs',
   studentApplyJob_id: 'student-apply-jobs/{id}',
+  studentApplyJob_history_apply: 'student-apply-jobs/history-apply/{id}',
+  studentApplyJob_check: 'student-apply-jobs/check',
   studentApplyJob_update: 'student-apply-jobs/update',
   studentApplyJob_approve_id: 'student-apply-jobs/approve/{id}',
   studentApplyJob_reject_id: 'student-apply-jobs/reject/{id}',
+
+  //student notification
+  notification: 'notification',
+  notification_id: 'notification/{id}',
+  notification_update: 'notification/update',
+
+  //student work at company
+  student_work_company: 'student-work-company',
+  student_work_company_id: 'student-work-company/{id}',
+  student_work_company_update: 'student-work-company/update',
+  student_work_company_report_id: 'student-work-company/report/{id}',
 };

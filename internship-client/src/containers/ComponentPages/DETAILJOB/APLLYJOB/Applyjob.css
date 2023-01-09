@@ -1,0 +1,76 @@
+.Applyjob {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #fff;
+}
+
+.Applyjob_detailjob-buttonApply button,
+.Applyjob_detailjob span {
+    display: block;
+}
+
+.Applyjob_detailjob {
+    /* flex: 1; */
+    margin-left: 2rem;
+    line-height: 2rem;
+}
+
+.Applyjob_avatar {
+    align-items: center;
+    border: 2px solid #eee;
+    border-radius: 75px;
+    display: flex;
+    height: 110px;
+    overflow: hidden;
+    width: 110px;
+}
+
+.Applyjob_avatar img {
+    width: 100%;
+}
+
+.Applyjob_detailjob-name {
+    color: #00b14f;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.Applyjob_detailjob-CPN {
+    color: #333;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.Applyjob_detailjob-time {
+    font-size: 14px;
+    color: #333;
+    font-weight: 300;
+}
+
+.Applyjob_detailjob-buttonApply {
+    width: 20%;
+
+}
+
+.Applyjob_detailjob-buttonApply button {
+    font-size: 16px;
+    padding: 9px 30px;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 1rem;
+    font-weight: 600;
+}
+.butonApply-applynow{
+    background-color: #00b14f;
+    color: #fff;
+}
+.butonApply-savejob{
+    color: #00b14f;
+    background-color: #fff;
+    border: .5px solid #00b14f;
+}
+.Applyjob_detailjob-buttonApply button:hover{
+    cursor: pointer;
+    opacity: .8;
+}

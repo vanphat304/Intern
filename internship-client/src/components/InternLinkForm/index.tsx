@@ -13,6 +13,7 @@ type InputText = {
   name?: string;
   direct?: boolean;
   text?: string;
+  place?:string;
 };
 
 const InternLinkForm = ({
@@ -20,6 +21,7 @@ const InternLinkForm = ({
   colSpan = 1,
   labelSpan,
   placeholder,
+  place,
   name = '',
   direct = false,
   text = '',
@@ -29,6 +31,8 @@ const InternLinkForm = ({
   const {
     field: { value },
   } = useController({ control, name });
+
+  console.log({ value });
 
   return (
     <div className={`col-span-${colSpan}`}>
@@ -42,15 +46,16 @@ const InternLinkForm = ({
           {label}
         </label>
 
-        <Link
-          to={value}
+        <a
+          href={value}
+          rel="noreferrer"
           target={'_blank'}
           className={`${
             direct ? 'col-span-6' : `${labelSpan ? 'col-span-5' : 'col-span-4'}`
-          } text-red-800 font-semibold underline`}
+          } text-red-800 font-semibold underline ${place}`}
         >
           {text}
-        </Link>
+        </a>
       </div>
     </div>
   );

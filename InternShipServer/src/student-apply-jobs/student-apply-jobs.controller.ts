@@ -11,7 +11,7 @@ import {
   Query,
   UseInterceptors,
 } from '@nestjs/common';
-import { StudentApplyJob } from '@prisma/client';
+import { Student, StudentApplyJob } from '@prisma/client';
 import { StudentApplyJobsService } from './student-apply-jobs.service';
 
 @Controller('student-apply-jobs')
@@ -28,10 +28,22 @@ export class StudentApplyJobsController {
   getListStudentApplyJob(@Query() query): Promise<StudentApplyJob[]> {
     return this.StudentApplyJobService.getListStudentApplyJob(query);
   }
+
+  @Get('check')
+  checkStudentIsApplied(@Query() query): Promise<boolean> {
+    return this.StudentApplyJobService.checkStudentIsApplied(query);
+  }
+
   @Get(':id')
   getStudentApplyJobById(@Param('id') id: string): Promise<StudentApplyJob> {
     return this.StudentApplyJobService.getStudentApplyJobById(id);
   }
+
+  @Get('history-apply/:id')
+  getStudentApplyJobHistory(@Param('id') id: string): Promise<Array<StudentApplyJob>> {
+    return this.StudentApplyJobService.getStudentApplyJobHistory(id);
+  }
+
   @Put('update')
   updateStudentApplyJob(@Body() dto: StudentApplyJob) {
     return this.StudentApplyJobService.updateStudentApplyJob(dto);
@@ -46,7 +58,10 @@ export class StudentApplyJobsController {
     return this.StudentApplyJobService.approveStudentApplyJob(id);
   }
   @Put('reject/:id')
-  rejectStudentApplyJob(@Param('id') id: string, @Body() reasonReject: Pick<StudentApplyJob, 'reasonReject'>) {
+  rejectStudentApplyJob(
+    @Param('id') id: string,
+    @Body() reasonReject: Pick<StudentApplyJob, 'reasonReject'>,
+  ) {
     return this.StudentApplyJobService.rejectStudentApplyJob(id, reasonReject);
   }
 }

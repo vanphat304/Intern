@@ -1,0 +1,77 @@
+.introduceCPN{
+    margin-top: 1.5rem;
+}
+
+.des_company{
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 10px;
+}
+.title_adressCPN,
+.des_company-title{
+    font-size: 20px;
+    color: #333;
+    font-size: 19px;
+    font-style: normal;
+    line-height: 24px;
+    margin: initial;
+}
+.des_company-title{
+    padding-left:8px;
+    border-left: 5px solid #00b14f;
+}
+
+.share_CPN,
+.box_adressCPN{
+    background-color: #fff;
+    margin-left: 1rem;
+    padding: 1.5rem;
+    border-radius: 10px;
+}
+.share_CPN{
+    margin-top: 1rem;
+}
+.name_adressCPN,
+.des_company-body{
+    font-size: 14px;
+    margin-top: 1rem;
+    line-height: 2rem;
+}
+.title_map{
+    color: #777;
+    font-size: 15px;
+    line-height: 20px;
+    margin-bottom: 16px;
+    margin-top: 16px;
+}
+.map{
+    height: 270px;
+}
+.map img{
+    width: 100%;
+    height: 100%;
+}
+.box-copy{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+.box-copy input{
+    width: 86%;
+    outline: none;
+    border: none;
+    background-color: #fafafa;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.btn-copy button{
+    padding: 15px;
+    border-radius: 5px;
+    color: #00b14f;
+    margin-left: .5rem;
+    background-color: #f2fbf6;
+}
+.btn-copy button:hover{
+    cursor: pointer;
+}

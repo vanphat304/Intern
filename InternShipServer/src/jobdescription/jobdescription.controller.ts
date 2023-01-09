@@ -27,6 +27,10 @@ export class JobdescriptionController {
   getListJobDecripton(@Query() query): Promise<JobDecripton[]> {
     return this.jobDescription.getListJobDecripton(query);
   }
+  @Get('/job-company')
+  getListJobCompany() {
+    return this.jobDescription.getListJobWithCompany();
+  }
   @Get('filter')
   getListJobDesByCompanyId(@Query() reqParams): Promise<JobDecripton[]> {
     return this.jobDescription.getListJobDesByCompanyId(reqParams);
@@ -44,4 +48,5 @@ export class JobdescriptionController {
   deleteJobDecripton(@Param('id') id: string) {
     return this.jobDescription.deleteJobDecripton(id);
   }
+  
 }

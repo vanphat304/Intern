@@ -22,7 +22,12 @@ export class StudentWorkCompanyService {
   async getListStudentWorkCompany(): Promise<Array<StudentWorkCompany>> {
     try {
       const listStudentWorkCompany: Array<StudentWorkCompany> =
-        await this.prisma.studentWorkCompany.findMany();
+        await this.prisma.studentWorkCompany.findMany({
+          include: {
+            company: true,
+            student: true,
+          },
+        });
 
       return listStudentWorkCompany;
     } catch (error) {
@@ -38,6 +43,21 @@ export class StudentWorkCompanyService {
           where: {
             studentId,
           },
+          include:{
+            company:{
+              select:{
+                nameCompany : true,
+                logo:true,
+              }
+            },
+            student:{
+              select:{
+                identifierStudent:true,
+                firstName:true,
+                lastName:true,
+              }
+            }
+          }
         },
       );
       return StudentWorkCompany;

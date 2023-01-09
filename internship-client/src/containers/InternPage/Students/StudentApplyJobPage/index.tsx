@@ -13,6 +13,7 @@ import {
   IS_ADD,
   IS_DELETE,
   QUERY_KEY_STUDENTS,
+  QUERY_KEY_STUDENTS_APPLY_JOB,
   QUERY_KEY_STUDENTS_PROPS,
   STALE_TIME,
 } from '../../../../enums';
@@ -82,15 +83,14 @@ const StudentApplyJobPage = () => {
   );
 
   const { data, isLoading, refetch } = useQuery({
-    queryKey: [QUERY_KEY_STUDENTS_PROPS, pageNumber, pageSize, searchItem],
-    queryFn: () => Service.getStudentProposals(queryString),
+    queryKey: [QUERY_KEY_STUDENTS_APPLY_JOB, pageNumber, pageSize, searchItem],
+    queryFn: () => Service.getStudentApplyJobs(queryString),
     cacheTime: CACHE_TIME,
     staleTime: STALE_TIME,
     keepPreviousData: true,
   });
 
-  console.log({data});
-  
+  console.log({ data });
 
   const handleSearch = (searchItem: searchItemType) => {
     setUrlSearchParams({ ...queryString, ...searchItem });

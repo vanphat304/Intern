@@ -1,0 +1,26 @@
+.navbar-right__item button{
+    border-radius: 5px;
+    font-weight: 600;
+    padding: 16px 18px;
+}
+.navbar-right__item button:hover{
+    cursor: pointer;
+}
+.navbar-right__item-logion{
+    border: 1px solid #00b14f;
+    color: #00b14f;
+    background-color: #fff;
+}
+.navbar-right__item-logion:hover{
+    background-color: rgba(229,247,237,.5);
+}
+.navbar-right__item-register{
+    background: #00b14f!important;
+    border: 1px solid #00b14f;
+    color: #fff;
+}
+.navbar-right__item-manager{
+    background: #212f3f 0 0 no-repeat padding-box!important;
+    border: 1px solid #eee;
+    color: #fff;
+}

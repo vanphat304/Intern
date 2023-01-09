@@ -27,10 +27,11 @@ enum ScaleCompany {
 }
 
 enum STATUS {
-  PENDING
+  NOT_WORKED
   APPROPVED
   REJECTED
   SUMBMITED
+  WORKED
 }
 
 enum RATING {
@@ -49,12 +50,13 @@ enum Role {
 }
 
 model NotificationStudent {
-  id        String  @id @default(uuid())
-  student   Student @relation(fields: [studentId], references: [id])
+  id        String   @id @default(uuid())
+  student   Student  @relation(fields: [studentId], references: [id])
   studentId String
   content   String
   note      String?
-  isRead    Boolean @default(false)
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
 
   @@map("notificationStudents")
 }
@@ -121,9 +123,14 @@ model Company {
   id                 String               @id @default(uuid())
   nameCompany        String
   logo               String
+  banner             String?
   scale              ScaleCompany         @default(SMALLMEDIUM)
+  website            String?              @default("https://vi.wikipedia.org/wiki/Son_Goku")
   address            String
+  addressProvince    String?              @default("HCM")
+  addressDistrict    String?
   introduce          String               @db.Text
+  rating             Float                @default(1)
   createdAt          DateTime             @default(now())
   updateAt           DateTime             @updatedAt
   jobDecription      JobDecripton[]
@@ -163,7 +170,7 @@ model StudentApplyJob {
   fileCV        String
   fileScore     String
   status        STATUS?      @default(SUMBMITED)
-  reasonReject   String?      
+  reasonReject  String?
 
   resultApply ResultApplyJob?
 
@@ -185,7 +192,7 @@ model ResultApplyJob {
 
 model StudentWorkCompany {
   studentId String  @id @unique
-  student   Student @relation(fields: [studentId], references: [identifierStudent])
+  student   Student @relation(fields: [studentId], references: [id])
   companyId String
   company   Company @relation(fields: [companyId], references: [id])
 

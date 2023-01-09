@@ -1,0 +1,123 @@
+.box-featurejob {
+  background-color: #fff;
+  padding: 1.5rem 1rem;
+}
+.featureJob_header {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+.featurejob_seemore {
+  font-size: 14px;
+  color: #00b14f;
+}
+.featurejob_seemore :hover {
+  opacity: 0.3;
+  cursor: pointer;
+}
+.featurejob_seemore .seemore-icon {
+  padding-left: 1rem;
+}
+
+/* featurejob_slideAdress-fl */
+.featurejob_slideAdress {
+  /* margin: 0 1.5rem; */
+}
+.btnAdress {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btnAdress button {
+  /* font-size: 15px; */
+  padding: 0.6rem;
+  border-radius: 20px;;
+  opacity: 0.6;
+  /* min-width: max-content; */
+  margin-right: auto;
+}
+.btnAdress button:hover {
+  background-color: #00b14f;
+  color: #fff;
+  opacity: 1;
+  cursor: pointer;
+}
+
+/* .slick-slide.slick-active {
+  min-width: 105px !important;
+} */
+/* .default-button {
+  background-color: #00b14f;
+  color: #fff;
+  opacity: 1 !important;
+  cursor: pointer;
+} */
+/* custom slick adress */
+.slick-prev::before,
+.slick-next::before {
+  color: black;
+  /* font-size: 2rem; */
+}
+.slick-initialized {
+  padding-top: 2%;
+}
+
+/* setting */
+.feature_boxJob-item {
+  border-radius: 7px;
+  box-shadow: 2px 2px 12px rgb(33 47 63 / 10%);
+  margin: 6px 0;
+  padding: 12px 12px 10px;
+  transition: box-shadow 0.2s;
+}
+.feature_boxJob-item:hover {
+  background-color: #f6f6f6;
+}
+.boxJob_title {
+  display: flex;
+}
+.boxJob_title-img {
+  align-items: center;
+  border: 0.25px solid #f7f7f7;
+  border-radius: 7px;
+  display: flex;
+  height: 44px;
+  overflow: hidden;
+  width: 50px;
+  margin-right: 1rem;
+}
+.boxJob_title img {
+  width: 100%;
+  vertical-align: middle;
+}
+.boxJob_title-des {
+  width: 70%;
+  margin-right: 0.25rem;
+  font-size: 14px;
+}
+.boxJob_title-des span:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.boxJob_title-des-name {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.boxJob_title-des-cpn {
+  color: #999;
+}
+.button_saveJob button {
+  padding: 0.25rem;
+  border: 0.5px solid #d4d7da;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #a5abb1;
+}
+.button_saveJob button:hover {
+  background-color: rgba(229, 247, 237, 0.5);
+  cursor: pointer;
+}
+.boxJob_adress {
+  font-size: 14px;
+}

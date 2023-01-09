@@ -8,3 +8,67 @@
     font-family: 'Roboto', sans-serif;
   }
 }
+body {
+  background-color: #f0f0f0;
+}
+
+ul,
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+
+.container {
+  margin: 1rem 5rem;
+}
+
+
+
+.gutter {
+  background-color: #fff;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.cl-3 {
+  width: 33%;
+}
+
+.cl-6 {
+  width: 16%;
+}
+
+.cl-8 {
+  width: 66.66666667%;
+}
+
+.cl-4 {
+  width: 33.33333333%;
+}
+
+.footer {
+  background-color: #f9f9f9;
+}
+
+.ml-1r {
+  margin-left: 1rem;
+}
+.bold {
+  font-weight: 700;
+}
+.cover {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  z-index: 1000;
+  background-color: rgba(128, 128, 128, 0.3);
+}

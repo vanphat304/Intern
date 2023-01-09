@@ -1,0 +1,61 @@
+.Login{
+    background-color: #fff;
+    height: 100%;
+    padding: 2rem 4rem;
+}
+.Login_form-group{
+    margin: 1rem 0;
+}
+.Login_form-group label{
+    color: #333;
+    font-weight: 700;
+    font-size: 14px;
+}
+.Login_form-input{
+    display: flex;
+    margin-top: 1rem;
+    border: 1px solid #eee;
+    border-radius: 3px;
+    display: flex;
+    
+}
+.Login_form-input input{
+    width: 100%;
+    height: 100%;
+    padding: .5rem;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background-color: rgb(232, 240, 254);
+}
+.Login_form-icon{
+    width: 10%;
+   height: 100%;
+   padding: .5rem;
+   margin: 0 auto;
+   color: #00b14f;
+}
+.Login_form-group button{
+    width: 100%;
+    font-size: 16px;
+    padding: .75rem;
+    background-color: #00b14f;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 3px;
+}
+.Login_form-group button:hover{
+    background-color: #3ba769;
+    cursor: pointer;
+}
+.forgot_pass{
+    display: flex;
+    flex: 1;
+    float: right;
+    font-size: 14px;
+    font-weight: 700;
+    color: #00b14f;
+}
+.forgot_pass:hover{
+    cursor: pointer;
+}
