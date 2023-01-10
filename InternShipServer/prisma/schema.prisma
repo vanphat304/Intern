@@ -61,6 +61,27 @@ model NotificationStudent {
   @@map("notificationStudents")
 }
 
+model Province {
+  id      String    @id @default(uuid())
+  code    String
+  name    String
+  Company Company[]
+}
+
+model District {
+  id      String    @id @default(uuid())
+  code    String
+  name    String
+  Company Company[]
+}
+
+model SpecializeCompany {
+  id              String            @id @default(uuid())
+  name            String
+  Company         Company[]
+  StudentProposal StudentProposal[]
+}
+
 model Student {
   id                  String                @id @default(uuid())
   identifierStudent   String?               @unique @db.VarChar(12)
@@ -100,35 +121,45 @@ model StudentProposal {
   referencePhoneNumber String?
   addressIntern        String?      @db.Text
   linkWebsite          String?      @db.Text
-  specializeCompany    String?
-  createdAt            DateTime     @default(now())
-  updateAt             DateTime     @updatedAt
-  studentId            String       @unique
-  student              Student      @relation(fields: [studentId], references: [id])
-  week1                String?      @db.Text
-  week2                String?      @db.Text
-  week3                String?      @db.Text
-  week4                String?      @db.Text
-  week5                String?      @db.Text
-  week6                String?      @db.Text
-  week7                String?      @db.Text
-  week8                String?      @db.Text
-  status               STATUS       @default(SUMBMITED)
-  reasonReject         String?      @db.Text
+
+  speacialize      String
+  specilizeCompany SpecializeCompany @relation(fields: [speacialize], references: [id])
+
+  createdAt    DateTime @default(now())
+  updateAt     DateTime @updatedAt
+  studentId    String   @unique
+  student      Student  @relation(fields: [studentId], references: [id])
+  week1        String?  @db.Text
+  week2        String?  @db.Text
+  week3        String?  @db.Text
+  week4        String?  @db.Text
+  week5        String?  @db.Text
+  week6        String?  @db.Text
+  week7        String?  @db.Text
+  week8        String?  @db.Text
+  status       STATUS   @default(SUMBMITED)
+  reasonReject String?  @db.Text
 
   @@map("studenprosal")
 }
 
 model Company {
-  id                 String               @id @default(uuid())
-  nameCompany        String
-  logo               String
-  banner             String?
-  scale              ScaleCompany         @default(SMALLMEDIUM)
-  website            String?              @default("https://vi.wikipedia.org/wiki/Son_Goku")
-  address            String
-  addressProvince    String?              @default("HCM")
-  addressDistrict    String?
+  id                  String            @id @default(uuid())
+  nameCompany         String
+  logo                String
+  banner              String?
+  scale               ScaleCompany      @default(SMALLMEDIUM)
+  website             String?           @default("https://vi.wikipedia.org/wiki/Son_Goku")
+  specializeCompanyId String
+  SpecializeCompany   SpecializeCompany @relation(fields: [specializeCompanyId], references: [id])
+  address             String?
+
+  addressProvinceId String
+  Province          Province @relation(fields: [addressProvinceId], references: [id])
+
+  addressDistrictId String
+  District          District @relation(fields: [addressDistrictId], references: [id])
+
   introduce          String               @db.Text
   rating             Float                @default(1)
   createdAt          DateTime             @default(now())

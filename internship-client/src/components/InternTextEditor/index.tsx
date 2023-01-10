@@ -76,7 +76,7 @@ const InternTextEditor = ({
             <p
               className={`animate-pulse text-red-600 ${
                 labelSpan ? 'col-start-2' : 'col-start-3'
-              }  col-span-6 font-normal text-xl`}
+              }  col-span-6 font-normal text-sm`}
             >
               {message}
             </p>

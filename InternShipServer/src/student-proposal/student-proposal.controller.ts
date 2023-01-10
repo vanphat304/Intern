@@ -44,6 +44,8 @@ export class StudentProposalController {
   }
   @Put('reject/:id')
   rejectStudent(@Param('id') id: string, @Body() reasonReject: Pick<StudentProposal, 'reasonReject'>) {
+    console.log({reasonReject});
+    
     return this.studentProposal.rejectStudentProposal(id, reasonReject);
   }
 }

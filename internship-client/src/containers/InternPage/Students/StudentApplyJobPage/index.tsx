@@ -62,12 +62,13 @@ const StudentApplyJobPage = () => {
 
   const { isLoading: isLoadingReject, mutate: rejectStudentApplyJob } = useMutation({
     mutationFn: ({ id, reason }: { id: string | null | number; reason: string }) => {
-      return Service.rejectStudentApplyJob({ id }, { reason });
+      return Service.rejectStudentApplyJob({ id }, { reasonReject: reason });
     },
     onSuccess: () => {
       toast.success('Từ chối thành công');
       refetch();
       handleCloseReject();
+      handleCloseDetail();
     },
   });
 

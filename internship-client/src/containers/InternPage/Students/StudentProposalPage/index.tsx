@@ -60,12 +60,13 @@ const StudentProposalPage = () => {
 
   const { isLoading: isLoadingReject, mutate: rejectStudentProposal } = useMutation({
     mutationFn: ({ id, reason }: { id: string | null | number; reason: string }) => {
-      return Service.rejectStudentProposal({ id }, { reason });
+      return Service.rejectStudentProposal({ id }, { reasonReject: reason });
     },
     onSuccess: () => {
       toast.success('Từ chối thành công');
       refetch();
       handleCloseReject();
+      handleCloseDetail();
     },
   });
 
@@ -88,8 +89,7 @@ const StudentProposalPage = () => {
     keepPreviousData: true,
   });
 
-  console.log({data});
-  
+  console.log({ data });
 
   const handleSearch = (searchItem: searchItemType) => {
     setUrlSearchParams({ ...queryString, ...searchItem });

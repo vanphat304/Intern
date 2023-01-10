@@ -7,10 +7,11 @@ import Routers from './routers';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AppStore } from './store/appStore';
+import { AuthAppStore } from './store';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -18,8 +19,10 @@ root.render(
   <>
     <QueryClientProvider client={queryClient}>
       <AppStore.Provider>
-        <ToastContainer />
-        <Routers />
+        <AuthAppStore.Provider>
+          <ToastContainer />
+          <Routers />
+        </AuthAppStore.Provider>
       </AppStore.Provider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

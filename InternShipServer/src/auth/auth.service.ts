@@ -41,7 +41,7 @@ export class AuthService {
 
   async register(dto: AuthDto) {
     try {
-      const { email, password, username } = dto;
+      const { email, password, username, firstName, identifierStudent, lastName } = dto;
       const passwordHashed = await this.scriptPassword(password);
 
       const userRegister: Student = await this.prisma.student.create({
@@ -49,6 +49,9 @@ export class AuthService {
           email,
           passwordHashed,
           username,
+          firstName,
+          identifierStudent,
+          lastName,
         },
       });
 
@@ -66,9 +69,8 @@ export class AuthService {
     }
   }
 
-  async signIn(dto: AuthDto) {
+  async signIn(dto: Pick<AuthDto, 'email' | 'password'>) {
     const { email, password } = dto;
-    console.log({ dto });
 
     const user: Student = await this.prisma.student.findFirst({
       where: {

@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Company } from '@prisma/client';
+import { Company, District, Province, SpecializeCompany } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -44,6 +44,39 @@ export class CompanyService {
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
+
+  async getListSpecialize() {
+    try {
+      const listSpecializeCompany: Array<SpecializeCompany> =
+        await this.prisma.specializeCompany.findMany();
+        
+      return listSpecializeCompany;
+    } catch (error) {
+      console.log(error);
+      throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async getListDistrict() {
+    try {
+      const listDistrict: Array<District> = await this.prisma.district.findMany();
+      return listDistrict;
+    } catch (error) {
+      console.log(error);
+      throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async getListProvince() {
+    try {
+      const listProvince: Array<Province> = await this.prisma.province.findMany();
+      return listProvince;
+    } catch (error) {
+      console.log(error);
+      throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
+    }
+  }
+
   async getListCompanyByParams(): Promise<Array<Pick<Company, 'id' | 'nameCompany'>>> {
     try {
       const listCompany: Array<Pick<Company, 'id' | 'nameCompany'>> =

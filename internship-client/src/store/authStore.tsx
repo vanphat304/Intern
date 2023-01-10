@@ -3,7 +3,7 @@ import { actionType, user as userType } from './type';
 
 const tempUser = localStorage.getItem('tempUser');
 const user = {
-  userLogin : null,
+  userLogin: null,
 };
 if (tempUser) {
   try {
@@ -12,12 +12,11 @@ if (tempUser) {
 }
 
 function reducer(state: any, action: actionType<string>) {
-  console.log({action});
-
+  console.log({action})
   switch (action.type) {
     case 'LOGOUT':
       localStorage.removeItem('tempUser');
-      return null;
+      return { userLogin: (state.user = action.data) };
     default:
       throw new Error();
   }

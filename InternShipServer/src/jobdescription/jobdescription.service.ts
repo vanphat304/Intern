@@ -101,7 +101,7 @@ export class JobDescriptionService {
 
   async updateJobDecripton(dto: JobDecripton) {
     try {
-      const { jobId, company, ...rest } = {...dto ,  company: '' } || {};
+      const { jobId, company, ...rest } = { ...dto, company: '' } || {};
       const result = await this.prisma.jobDecripton.update({
         where: {
           jobId,
@@ -158,9 +158,19 @@ export class JobDescriptionService {
     }
   }
 
-  async getListJobWithCompany() {
+  async getListJobWithCompany(query) {
+    const { id } = query
+
+
     try {
       const results = this.prisma.jobDecripton.findMany({
+        where: {
+          company: {
+            addressDistrictId: {
+              contains: id || '',
+            },
+          },
+        },
         include: {
           company: {
             select: {

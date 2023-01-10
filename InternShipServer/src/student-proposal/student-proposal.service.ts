@@ -115,7 +115,8 @@ export class StudentProposalService {
         await this.prisma.notificationStudent.create({
           data: {
             studentId,
-            content: `Thông tin mô tả thực tập của bạn ở công ty ${nameCompany} đã được chấp nhận`,
+            content: `Công ty ${nameCompany} do bạn để xuất đã được chấp nhận`,
+
           },
         });
       }
@@ -134,6 +135,8 @@ export class StudentProposalService {
   }
 
   async rejectStudentProposal(id: string, { reasonReject }: Pick<StudentProposal, 'reasonReject'>) {
+    console.log({reasonReject});
+    
     try {
       const result = await this.prisma.studentProposal.update({
         where: {
@@ -152,10 +155,11 @@ export class StudentProposalService {
         });
         const { studentId, nameCompany } = props;
         await this.prisma.notificationStudent.create({
-          data: {
+          data: { 
             studentId,
             content: `Thông tin mô tả thực tập của bạn ở công ty ${nameCompany} vừa bị từ chối`,
             note: reasonReject,
+
           },
         });
       }

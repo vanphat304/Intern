@@ -25,4 +25,15 @@ export class AuthDto {
   @MinLength(4)
   @MaxLength(20)
   password: string;
+
+  @IsNotEmpty()
+  @MinLength(4)
+  @MaxLength(12)
+  identifierStudent: string;
+
+  @IsNotEmpty()
+  firstName: string;
+
+  @IsNotEmpty()
+  lastName: string;
 }

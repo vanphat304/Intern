@@ -15,6 +15,9 @@ export const Service = {
 
   //company
   getCompanies: (params: {}) => API.GET(API.company, { params }),
+  getCompanySpecialize: (params: {}) => API.GET(API.company_specialize, { params }),
+  getCompanyDistrict: (params: {}) => API.GET(API.company_district, { params }),
+  getCompanyProvince: (params: {}) => API.GET(API.company_province, { params }),
   getCompanyParams: (params?: {}) => API.GET(API.company_params, { params }),
   getCompany: (vars: {}) => API.GET(API.company_id, { vars }),
   updateCompany: (params: {}) => API.PUT(API.company_update, { params }),
@@ -24,7 +27,7 @@ export const Service = {
   // job description
   getJobDescriptions: (params: {}) => API.GET(API.jobDescription, { params }),
   getJobDescription: (vars: {}) => API.GET(API.jobDescription_id, { vars }),
-  getJobDescriptionCompany: (vars: {}) => API.GET(API.jobDescription_jobCompany, { vars }),
+  getJobDescriptionCompany: (params: {}) => API.GET(API.jobDescription_jobCompany, { params }),
   getJobDescriptionByCompany: (params: {}) => API.GET(API.jobDescription_filter, { params }),
   updateJobDescription: (params: {}) => API.PUT(API.jobDescription_update, { params }),
   addJobDescription: (params: {}) => API.POST(API.jobDescription, { params }),

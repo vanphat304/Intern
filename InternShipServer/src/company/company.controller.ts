@@ -10,7 +10,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { Company } from '@prisma/client';
+import { Company, District, Province, SpecializeCompany } from '@prisma/client';
 import { CompanyService } from './company.service';
 
 @Controller('company')
@@ -24,12 +24,27 @@ export class CompanyController {
 
     return this.companyService.addCompany(dto);
   }
-  @Get()
+  @Get('')
   getListCompany(@Query() query): Promise<Company[]> {
     return this.companyService.getListCompany(query);
   }
 
-  @Get('params')
+  @Get('/specialize')
+  getListSpecialize(): Promise<SpecializeCompany[]> {
+    
+    return this.companyService.getListSpecialize();
+  }
+  @Get('/district')
+  getListDistrict(): Promise<District[]> {
+    return this.companyService.getListDistrict();
+  }
+
+  @Get('/province')
+  getListProvince(): Promise<Province[]> {
+    return this.companyService.getListProvince();
+  }
+
+  @Get('/params')
   getListCompanyDrop(): Promise<Array<Pick<Company, 'id' | 'nameCompany'>>> {
     return this.companyService.getListCompanyByParams();
   }

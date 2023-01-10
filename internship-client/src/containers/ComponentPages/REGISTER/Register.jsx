@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as yup from 'yup';
 
 import { ContactsFilled, EyeInvisibleFilled, LockFilled, MailOutlined } from '@ant-design/icons';
@@ -21,7 +21,7 @@ function Register() {
     identifierStudent: yup.string().required('Trường này bắt buộc nhập'),
     email: yup.string().required('Trường này bắt buộc nhập').email('email không đúng định dạng'),
     password: yup.string().required('Trường này bắt buộc nhập'),
-    passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords không có khớp'),
+    passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Mật khẩu không có khớp'),
   });
 
   const methods = useForm({
@@ -46,6 +46,10 @@ function Register() {
   } = methods;
 
   console.log({ errors });
+  const [show, setShow] = useState({
+    password: 'password',
+    confirmPassword: 'password',
+  });
 
   const handleRegister = (data) => {
     return handleSubmit((data) => {
@@ -57,15 +61,14 @@ function Register() {
   return (
     <div className="Register">
       <form action="POST">
-
-      <div className="Login_form-group">
+        <div className="Login_form-group">
           <label>Tên</label>
           <div className="Register_form-input Login_form-input">
             <div className="Login_form-icon">
               <LockFilled />
             </div>
 
-            <input type="text" name="firstName" {...register('firstName')} />
+            <input type="text" name="firstName" placeholder='Nhập Tên' {...register('firstName')} />
           </div>
           <ErrorMessage
             errors={errors}
@@ -84,7 +87,7 @@ function Register() {
               <LockFilled />
             </div>
 
-            <input type="text" name="lastName" {...register('lastName')} />
+            <input type="text" name="lastName" placeholder='Nhập họ , tên lót' {...register('lastName')} />
           </div>
           <ErrorMessage
             errors={errors}
@@ -103,7 +106,7 @@ function Register() {
               <LockFilled />
             </div>
 
-            <input type="text" name="identifierStudent" {...register('identifierStudent')} />
+            <input type="text" name="identifierStudent" placeholder='Nhập mã số sinh viên' {...register('identifierStudent')} />
           </div>
           <ErrorMessage
             errors={errors}
@@ -167,9 +170,21 @@ function Register() {
               <LockFilled />
             </div>
 
-            <input type="password" name="password" {...register('password')} />
+            <input type={show.password} name="password" {...register('password')} />
             <div className="Login_form-icon">
-              <EyeInvisibleFilled />
+              <EyeInvisibleFilled
+                onClick={() => {
+                  show.password === 'password'
+                    ? setShow({
+                        ...show,
+                        password: 'text',
+                      })
+                    : setShow({
+                        ...show,
+                        password: 'password',
+                      });
+                }}
+              />
             </div>
           </div>
           <ErrorMessage
@@ -189,9 +204,25 @@ function Register() {
               <LockFilled />
             </div>
 
-            <input type="password" name="passwordConfirm" {...register('passwordConfirm')} />
+            <input
+              type={show.confirmPassword}
+              name="passwordConfirm"
+              {...register('passwordConfirm')}
+            />
             <div className="Login_form-icon">
-              <EyeInvisibleFilled />
+              <EyeInvisibleFilled
+                onClick={() => {
+                  show.confirmPassword === 'password'
+                    ? setShow({
+                        ...show,
+                        confirmPassword: 'text',
+                      })
+                    : setShow({
+                        ...show,
+                        confirmPassword: 'password',
+                      });
+                }}
+              />
             </div>
           </div>
           <ErrorMessage

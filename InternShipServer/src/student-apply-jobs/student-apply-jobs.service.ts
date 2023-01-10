@@ -281,10 +281,29 @@ export class StudentApplyJobsService {
           },
         });
         const { studentId, jobId } = props;
+
+        const jobDetail = await this.prisma.jobDecripton.findFirst({
+          where: {
+            jobId,
+          },
+          include: {
+            company: {
+              select: {
+                nameCompany: true,
+              },
+            },
+          },
+        });
+
+        const {
+          jobTitle,
+          company: { nameCompany },
+        } = jobDetail;
+
         await this.prisma.notificationStudent.create({
           data: {
             studentId,
-            content: `Thông tin ứng tuyển thực tập của bạn cho bị trí ${jobId} vừa bị từ chối`,
+            content: `Thông tin ứng tuyển thực tập của bạn cho bị trí ${jobTitle} tại công ty ${nameCompany} vừa bị từ chối`,
             note: reasonReject,
           },
         });

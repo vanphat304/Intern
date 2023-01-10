@@ -64,7 +64,7 @@ const StudentPage = () => {
   return (
     <>
       <StudentSearch onClick={handleSearch as (a: searchItemType | void) => void} />
-      <InternButtonAddNew col={6} onClick={() => handleOpenDetail(IS_ADD)} />
+      {/* <InternButtonAddNew col={6} onClick={() => handleOpenDetail(IS_ADD)} /> */}
       <InternTable
         columns={columnsStudent({
           handleOpenDetail: handleOpenDetail,

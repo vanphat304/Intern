@@ -76,7 +76,6 @@ const ModalDetail = ({ handleCloseDetail, id, handleSearch, handleOpenDelete }: 
     formState: { errors },
   } = methods;
 
-  console.log({ errors });
 
   const handleSubmitForm = () => {
     return handleSubmit((data) => {

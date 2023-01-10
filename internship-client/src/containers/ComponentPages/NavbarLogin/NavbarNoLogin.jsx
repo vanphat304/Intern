@@ -2,6 +2,9 @@ import React from 'react';
 import './NavbarNoLogin.css';
 import { Link } from 'react-router-dom';
 function NavbarNoLogin() {
+
+  
+
   return (
     <div className="Container_Navbar">
       {/*  navbar header : */}
@@ -50,6 +53,7 @@ function NavbarNoLogin() {
               <ul className="navbar_menu">
                 <li className="navbar_menu-item">Danh sách công ty</li>
                 <li className="navbar_menu-item">Top công ty</li>
+                <li className="navbar_menu-item">Đề xuất công ty thực tập</li>
               </ul>
             </div>
           </li>

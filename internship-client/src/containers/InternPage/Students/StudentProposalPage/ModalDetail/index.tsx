@@ -17,7 +17,13 @@ import { Major } from '../../../../../types/major.type';
 import { Role } from '../../../../../types/role.type';
 import { toast } from 'react-toastify';
 import { Student } from '../../../../../types/students.type';
-import { CACHE_TIME, IS_ADD, STALE_TIME, datesFormat } from '../../../../../enums';
+import {
+  CACHE_TIME,
+  IS_ADD,
+  QUERY_KEY_COMPANY,
+  STALE_TIME,
+  datesFormat,
+} from '../../../../../enums';
 import { AxiosError } from 'axios';
 import { formatDateTime } from '../../../../../helpers/datetime';
 import InternButtonReject from '../../../../../components/InternButton/InternButtonReject';
@@ -36,7 +42,7 @@ const schema = yup.object({
   introducePosition: yup.string().required('Trường này bắt buộc nhập'),
   addressIntern: yup.string().required('Trường này bắt buộc nhập'),
   linkWebsite: yup.string().required('Trường này bắt buộc nhập'),
-  specializeCompany: yup.string().required('Trường này bắt buộc nhập'),
+  speacialize: yup.string().required('Trường này bắt buộc nhập'),
   referenceName: yup.string().required('Trường này bắt buộc nhập'),
   referenceEmail: yup.string().required().email('email không đúng định dạng'),
   referencePhoneNumber: yup
@@ -79,19 +85,6 @@ const ModalDetail = ({
     resolver: yupResolver(schema),
   });
 
-  // const { isLoading, mutate: updateStudent } = useMutation({
-  //   mutationFn: (params: Student) => Service.updateStudent(params),
-  //   onSuccess: (data) => {
-  //     toast.success('update success');
-  //     handleSearch();
-  //     handleCloseDetail();
-  //   },
-  //   onError(error: AxiosError<{ message: string; statusCode: string }>) {
-  //     console.log(error);
-  //     toast.error(error?.response?.data?.message);
-  //   },
-  // });
-
   const { isLoading, mutate: approveStudentProposal } = useMutation({
     mutationFn: (id: string) => Service.approveStudentProposal({ id }),
     onSuccess: (data) => {
@@ -105,6 +98,14 @@ const ModalDetail = ({
     },
   });
 
+  const { data: specializes = [] } = useQuery({
+    queryFn: () => Service.getCompanySpecialize({}),
+    queryKey: [QUERY_KEY_COMPANY, 'specialize', 'proposal'],
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
+    refetchOnWindowFocus: false,
+  });
+
   const {
     handleSubmit,
     setValue,
@@ -115,6 +116,8 @@ const ModalDetail = ({
   const handleSubmitForm = () => {
     return handleSubmit(() => {
       approveStudentProposal(id);
+      handleCloseDetail();
+      
     });
   };
 
@@ -191,7 +194,14 @@ const ModalDetail = ({
               />
             </InternRow>
             <InternRow withAutoCol={12}>
-              <InternText colSpan={6} name="specializeCompany" label="Chuyên ngành công ty" />
+              <InternSelect
+                colSpan={6}
+                name="speacialize"
+                label="Lĩnh vực công ty"
+                data={specializes}
+                keyName='name'
+                keyValue='id'
+              />
               <InternText
                 colSpan={6}
                 name="referenceName"

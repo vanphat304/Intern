@@ -21,7 +21,7 @@ const JobApplied = ({
 }) => {
   const [modalConfirm, setModalConfirm] = useState(null);
 
-  const [{ id }] = useAuthStore();
+  const [{ userLogin : {id} }] = useAuthStore();
   const handleCloseModalConfirm = () => {
     setModalConfirm(null);
   };

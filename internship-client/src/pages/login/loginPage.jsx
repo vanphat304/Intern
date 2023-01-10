@@ -10,13 +10,13 @@ import { useAuthStore } from '../../store';
 
 const LoginPage = () => {
   const methods = useForm();
-  const [user] = useAuthStore();
+  const [userLogin] = useAuthStore();
   const { mutate: login } = useMutation({
     mutationFn: (params) => Service.loginAuth(params),
     onSuccess: (data) => {
       localStorage.setItem('tempUser', JSON.stringify(data));
       toast.success('đăng nhập thành công', { data });
-      if (user?.role === 'ADMIN') {
+      if (userLogin?.role === 'ADMIN') {
         window.location.href = '/students/student';
       } else {
         window.location.href = '/';

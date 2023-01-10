@@ -110,6 +110,9 @@ export const API = {
   company_id: 'company/{id}',
   company_update: 'company/update',
   company_params: 'company/params',
+  company_specialize: 'company/specialize',
+  company_district: 'company/district',
+  company_province: 'company/province',
 
   // job description
 

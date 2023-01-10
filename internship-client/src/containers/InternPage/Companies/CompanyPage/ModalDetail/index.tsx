@@ -17,7 +17,7 @@ import { Major } from '../../../../../types/major.type';
 import { Role } from '../../../../../types/role.type';
 import { toast } from 'react-toastify';
 import { Student } from '../../../../../types/students.type';
-import { CACHE_TIME, IS_ADD, STALE_TIME } from '../../../../../enums';
+import { CACHE_TIME, IS_ADD, QUERY_KEY_COMPANY, STALE_TIME } from '../../../../../enums';
 import { formatDateTime, isValidDate, parserDateTime } from '../../../../../helpers/datetime';
 import { AxiosError } from 'axios';
 import { ScaleCompany } from '../../../../../types/scale';
@@ -33,6 +33,9 @@ const schema = yup.object({
   scale: yup.string().required('trường này bắt buộc nhập'),
   address: yup.string().required('trường này bắt buộc nhập'),
   introduce: yup.string().required('trường này bắt buộc nhập'),
+  addressDistrictId: yup.string().required('trường này bắt buộc nhập'),
+  addressProvinceId: yup.string().required('trường này bắt buộc nhập'),
+  specializeCompanyId: yup.string().required('trường này bắt buộc nhập'),
 });
 
 const scalesCompany = Object.keys(ScaleCompany).map((item) => ({
@@ -45,6 +48,36 @@ const ModalDetail = ({ handleCloseDetail, id, handleSearch, handleOpenDelete }: 
   const methods = useForm({
     resolver: yupResolver(schema),
   });
+
+  const { data: specializes = [] } = useQuery({
+    queryFn: () => Service.getCompanySpecialize({}),
+    queryKey: [QUERY_KEY_COMPANY, 'specialize'],
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
+    refetchOnWindowFocus: false,
+  });
+
+  console.log({ specializes });
+
+  const { data: districts = [] } = useQuery({
+    queryFn: () => Service.getCompanyDistrict({}),
+    queryKey: [QUERY_KEY_COMPANY, 'district'],
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
+    refetchOnWindowFocus: false,
+  });
+
+  console.log({ districts });
+
+  const { data: provinces = [] } = useQuery({
+    queryFn: () => Service.getCompanyProvince({}),
+    queryKey: [QUERY_KEY_COMPANY, 'province'],
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
+    refetchOnWindowFocus: false,
+  });
+
+  console.log({ provinces });
 
   const { isLoading: isLoadingUpdate, mutate: updateCompany } = useMutation({
     mutationFn: (params: Company) => Service.updateCompany(params),
@@ -174,8 +207,38 @@ const ModalDetail = ({ handleCloseDetail, id, handleSearch, handleOpenDelete }: 
                 label="Quy mô công ty"
               />
             </InternRow>
+
             <InternRow>
-              <InternText labelSpan={1} name="address" label="Địa chỉ công ty" />
+              <InternSelect
+                labelSpan={1}
+                name="specializeCompanyId"
+                label="Lĩnh vực công ty"
+                keyName="name"
+                keyValue="id"
+                data={specializes}
+              />
+            </InternRow>
+            <InternRow withAutoCol={12}>
+              <InternSelect
+                colSpan={6}
+                name="addressProvinceId"
+                label="Chọn tỉnh thành ( địa chỉ )"
+                keyName="name"
+                keyValue="id"
+                data={provinces}
+              />
+              <InternSelect
+                colSpan={6}
+                name="addressDistrictId"
+                label="Chọn khu vực ( địa chỉ )"
+                keyName="name"
+                keyValue="id"
+                data={districts}
+              />
+            </InternRow>
+
+            <InternRow>
+              <InternText labelSpan={1} name="address" label="Địa chỉ chỉ tiết công ty" />
             </InternRow>
             <InternRow>
               <InternTextEditor labelSpan={1} name="introduce" label="Giới thiệu" />
