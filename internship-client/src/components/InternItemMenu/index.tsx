@@ -61,8 +61,8 @@ const InternItemMenu = ({ code, title, subMenu }: typeMenuItem) => {
               key={item.code}
               className={({ isActive }) =>
                 isActive
-                  ? 'bg-blue-600 flex items-center w-full p-2 font-medium text-xl text-white transition duration-75 rounded-lg pl-11'
-                  : 'bg-white flex items-center w-full p-2 hover:text-blue-500 font-medium text-xl text-gray-600 transition duration-75 rounded-lg pl-11'
+                  ? 'bg-blue-600 flex items-center w-full p-1 font-medium text-xl text-white transition duration-75 rounded-lg pl-11'
+                  : 'bg-white flex items-center w-full p-1 hover:text-blue-500 font-medium text-xl text-gray-600 transition duration-75 rounded-lg pl-11'
               }
               to={item.path}
             >

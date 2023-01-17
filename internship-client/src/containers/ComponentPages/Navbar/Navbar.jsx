@@ -118,6 +118,19 @@ function Navbar() {
                   >
                     Đề xuất công ty thực tập
                   </li>
+                  <li
+                    onClick={() => {
+                      if (!userLogin) {
+                        toast.error('đặng nhập trước khi report công ty');
+                        return navigate('/auth/login');
+                      } else {
+                        return navigate('/report-company');
+                      }
+                    }}
+                    className="navbar_menu-item"
+                  >
+                    Báo cáo công ty thực tập
+                  </li>
                 </ul>
               </div>
             </li>
@@ -176,8 +189,10 @@ function Navbar() {
                               </span>
                             </div>
                             <div className="notify_text text-gray-500 hover:text-green-600">
-                            <p className='text-red-500' dangerouslySetInnerHTML={{ __html: item.note }}></p>
-
+                              <p
+                                className="text-red-500"
+                                dangerouslySetInnerHTML={{ __html: item.note }}
+                              ></p>
                             </div>
                             <span className="text-xs text-gray-700 font-light hover:text-green-600">
                               {formatDateTime(item?.createdAt, 'DD/MM/YYYY')}
@@ -224,6 +239,7 @@ function Navbar() {
                       onClick={() => {
                         console.log('data');
                         setAuth({ type: 'LOGOUT', data: null });
+                        window.location.href = '/';
                       }}
                       className="navbar_menu-item"
                     >

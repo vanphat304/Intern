@@ -23,6 +23,7 @@ export const QUERY_KEY_HISTORY = 'QUERY_KEY_HISTORY';
 export const QUERY_KEY_NOTIFICATION = 'QUERY_KEY_NOTIFICATION';
 export const QUERY_KEY_JOB_COM = 'QUERY_KEY_JOB_COM';
 export const QUERY_KEY_CHECK = 'QUERY_KEY_CHECK';
+export const QUERY_KEY_GET_COMP_REPORT = 'QUERY_KEY_GET_COMP_REPORT';
 
 export const initialConfigEditor = {
   plugins: 'code',

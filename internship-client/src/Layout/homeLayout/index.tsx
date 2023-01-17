@@ -12,7 +12,6 @@ import Register from '../../containers/ComponentPages/REGISTER/Register';
 const HomeLayout = () => {
   return (
     <div className="App">
-        {/* <FormAuthentication/> */}
       <div className="header">
         <Navbar />
         <Search />

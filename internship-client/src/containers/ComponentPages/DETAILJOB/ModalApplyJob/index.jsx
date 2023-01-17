@@ -43,8 +43,6 @@ const ModalDetail = ({ title, id, handleCloseDetail }) => {
     },
   });
 
-  console.log('CV', watch('fileCVpreview'));
-  console.log('SCORE', watch('fileSCpreview'));
 
   const handleApplyJob = () => {
     return handleSubmit((data) => {

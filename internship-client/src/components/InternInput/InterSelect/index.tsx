@@ -1,7 +1,8 @@
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useController } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-
+import { Select } from 'antd';
+import './style.css';
 type option = {
   id: string;
   name: string;
@@ -43,7 +44,12 @@ const InternSelect = ({
   const {
     register,
     formState: { errors },
+    control,
   } = useFormContext();
+
+  const {
+    field: { value, onChange },
+  } = useController({ control, name });
 
   return (
     <div className={`col-span-${colSpan}`}>
@@ -56,21 +62,23 @@ const InternSelect = ({
         >
           {label}
         </label>
-        <select
-        disabled={disabled}
+        <Select
+          disabled={disabled}
           className={`${
             errors[name] ? 'border-red-600' : 'focus:ring-gray-600 focus:border-gray-700'
           } outline-none  border border-gray-400 ${
             direct ? 'col-span-6' : `${labelSpan ? 'col-span-5' : 'col-span-4'}`
-          }  text-gray-900 text-xl rounded-lg p-2.5`}
+          }  text-gray-900 text-xl flex items-center justify-center h-11 rounded-lg bg-white p-2.5`}
           placeholder={placeholder}
-          inputMode={'search'}
-          {...register(name)}
-          {...rest}
+          allowClear
+          showSearch
+          filterOption={(value, option: any) =>
+            option.props.children?.toString()?.toLowerCase()?.indexOf(value.toLowerCase()) >= 0
+          }
+          value={value}
+          onChange={onChange}
         >
-          <option value={''}>
-            {placeholder}
-          </option>
+          <option value={''}>{placeholder}</option>
           {data.map((item: any) => (
             <option
               key={item?.value || item[keyValue as any]}
@@ -79,7 +87,7 @@ const InternSelect = ({
               {item?.name || item[keyName as any]}
             </option>
           ))}
-        </select>
+        </Select>
         <ErrorMessage
           errors={errors}
           name={name}

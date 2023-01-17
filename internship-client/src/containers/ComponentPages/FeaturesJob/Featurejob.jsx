@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Service } from '../../../services/service';
 import { CACHE_TIME, QUERY_KEY_COMPANY, QUERY_KEY_JOB_COM, STALE_TIME } from '../../../enums';
 import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchAppStore } from '../../../store/searchStore';
 
 const settings = {
   dots: true,
@@ -21,17 +22,16 @@ const settingMultipleItem = {
   slidesToShow: 6,
   slidesToScroll: 2,
   swipeToSlide: true,
-
 };
 
 function FeatureJob() {
-  const [searchJob, setSearchJob] = useState(null);
+  const [search, setSearchJob] = useSearchAppStore();
 
-  console.log({ searchJob });
+  console.log({ search });
 
   const { isLoading, data: jobDescriptionCompanies = [] } = useQuery({
-    queryFn: () => Service.getJobDescriptionCompany({ id: searchJob }),
-    queryKey: [QUERY_KEY_JOB_COM, searchJob],
+    queryFn: () => Service.getJobDescriptionCompany({ search }),
+    queryKey: [QUERY_KEY_JOB_COM, search],
     staleTime: STALE_TIME,
     cacheTime: CACHE_TIME,
     refetchOnWindowFocus: false,
@@ -52,9 +52,18 @@ function FeatureJob() {
         <div className="featureJob_header">
           <h2>Tin tuyển dụng, việc làm tốt nhất</h2>
           <div className="featurejob_seemore">
-            <span onClick={()=>{
-              setSearchJob(null)
-            }} className="seemore-text">
+            <span
+              onClick={() => {
+                setSearchJob({
+                  type: 'SEARCH_JOB',
+                  data: {
+                    ...search,
+                    addressDistrictId: '',
+                  },
+                });
+              }}
+              className="seemore-text"
+            >
               Xem tất cả
               <span className="seemore-icon"></span>
               <ArrowRightOutlined />
@@ -62,15 +71,24 @@ function FeatureJob() {
           </div>
         </div>
         <div className="featurejob_slideAdress">
-          <Slider {...settingMultipleItem }>
-          
+          <Slider {...settingMultipleItem}>
             {districts.map((item) => {
-              
               return (
                 <button
-                  className={`${item.id === searchJob ? 'text-white p-1 mx-4 bg-green-600 rounded-xl' : 'bg-blue-50 rounded-xl p-1 mx-4'}`}
+                  className={`${
+                    item.id === search.addressDistrictId
+                      ? 'text-white p-1 mx-4 bg-green-600 rounded-xl'
+                      : 'bg-blue-50 rounded-xl p-1 mx-4'
+                  }`}
                   onClick={() => {
-                    setSearchJob(item?.id);
+                    console.log('item', item.id);
+                    setSearchJob({
+                      type: 'SEARCH_JOB',
+                      data: {
+                        ...search,
+                        addressDistrictId: item.id,
+                      },
+                    });
                   }}
                 >
                   {item.name}

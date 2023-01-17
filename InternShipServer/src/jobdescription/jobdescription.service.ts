@@ -159,15 +159,27 @@ export class JobDescriptionService {
   }
 
   async getListJobWithCompany(query) {
-    const { id } = query
-
+    const {
+      search: { addressDistrictId, addressProvinceId, searchItem, specializeCompanyId },
+    } = query;
+    console.log({ searchItem });
+    console.log({ specializeCompanyId });
 
     try {
       const results = this.prisma.jobDecripton.findMany({
         where: {
+          jobTitle: {
+            contains: searchItem || '',
+          },
           company: {
             addressDistrictId: {
-              contains: id || '',
+              contains: addressDistrictId || '',
+            },
+            addressProvinceId: {
+              contains: addressProvinceId || '',
+            },
+            specializeCompanyId: {
+              contains: specializeCompanyId || '',
             },
           },
         },

@@ -72,12 +72,12 @@ const ModalDetail = ({ handleCloseDetail }: any) => {
   const { isLoading, mutate: addStudentProposal } = useMutation({
     mutationFn: (params: {}) => Service.addStudentProposal(params),
     onSuccess: (data) => {
-      toast.success('Đã gửi thông tin công ty thành công');
+      toast.success('Đề xuất thông tin công ty thành công');
       handleCloseDetail();
     },
-    onError: (error: AxiosError<{ message: string; statusCode: string }>) => {
+    onError: (error: AxiosError<{ error: { message: string }; statusCode: string }>) => {
       console.log(error);
-      toast.error(error?.response?.data?.message);
+      toast.error(error?.response?.data?.error.message);
     },
   });
 
@@ -130,7 +130,7 @@ const ModalDetail = ({ handleCloseDetail }: any) => {
       isLoading={isLoading}
       closeModal={handleCloseDetail}
       footerModal={footer()}
-      headerText={'Thông tin công ty sinh viên tự đề xuất'}
+      headerText={'ĐỀ XUÁT CÔNG TY THỰC TẬP'}
     >
       <InternRow>
         <FormProvider {...methods}>

@@ -21,6 +21,8 @@ import FeatureJob from '../containers/ComponentPages/FeaturesJob/Featurejob';
 import Register from '../containers/ComponentPages/REGISTER/Register';
 import CustomPrivateRoute from './customPrivateRoute/customPrivateRoute';
 import { HistoryApply } from '../containers/ComponentPages/HistoryApply';
+import ReportCompany from '../containers/ComponentPages/ReportCompany';
+import { useAuthStore } from '../store';
 
 type typeRenderComponent = {
   Component: React.FunctionComponent<any>;
@@ -29,65 +31,58 @@ type typeRenderComponent = {
   title: string;
 };
 
-const Routers = () => (
-  <BrowserRouter>
-    <Routes>
-      {/* <Featurejob /> */}
+const Routers = () => {
+  const [{ userLogin }] = useAuthStore();
 
-      {/* //     <HeaderCompany />
-    //     <IntroduceCPN />
-    //     <ListRecruitCPN /> */}
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="" element={<HomeLayout />}>
+          <Route path="/" element={<FeatureJob />}></Route>
+          <Route path="/company-detail/:id" element={<CompanyDetail />}></Route>
+          <Route path="/job-description/:id" element={<JobDescription />}></Route>
+          <Route element={<CustomPrivateRoute redirectPath="/auth/login" check={userLogin} />}>
+            <Route path="/history-apply" element={<HistoryApply />}></Route>
+          </Route>
+          <Route path="/report-company" element={<ReportCompany />}></Route>
+        </Route>
 
-      {/* <Applyjob/> */}
-      {/* <Detailrecruit/> */}
+        <Route path="/auth" element={<FormAuthentication />}>
+          <Route path="login" element={<Login />}></Route>
+          <Route path="register" element={<Register />}></Route>
+        </Route>
 
-      <Route path="" element={<HomeLayout />}>
-        <Route path="/" element={<FeatureJob />}></Route>
-        <Route path="/company-detail/:id" element={<CompanyDetail />}></Route>
-        <Route path="/job-description/:id" element={<JobDescription />}></Route>
-        <Route path="/history-apply" element={<HistoryApply />}></Route>
-      </Route>
+        <Route element={<CustomPrivateRoute redirectPath="/" />}>
+          <Route path="/profile" element={<Profile />}></Route>
+        </Route>
 
-      <Route path="/auth" element={<FormAuthentication />}>
-        <Route path="login" element={<Login />}></Route>
-        <Route path="register" element={<Register />}></Route>
-      </Route>
-      {/* 
-      <Route element={<CustomPrivateRoute redirectPath="/" />}>
-        <Route path="/login" element={<LoginPage />}></Route>
-        <Route path="/register" element={<RegisterPage />}></Route>
-      </Route> */}
+        <Route element={<CustomPrivateRoute redirectPath="/" />}>
+          <Route path="/admin" element={<AdminPage />}></Route>
+        </Route>
 
-      <Route element={<CustomPrivateRoute redirectPath="/" />}>
-        <Route path="/profile" element={<Profile />}></Route>
-      </Route>
+        {COMPONENTS_PRIVATE_ADMIN_FLATTED_MAP.map(
+          ({ Component, path, code, title }: typeRenderComponent) => (
+            <Route
+              element={
+                <MainLayout>
+                  <InternPageContainer title={title}>
+                    <Component />
+                  </InternPageContainer>
+                </MainLayout>
+              }
+              key={path}
+              path={path}
+            ></Route>
+          ),
+        )}
 
-      <Route element={<CustomPrivateRoute redirectPath="/" />}>
-        <Route path="/admin" element={<AdminPage />}></Route>
-      </Route>
+        {/* <PrivateRoute /> */}
 
-      {COMPONENTS_PRIVATE_ADMIN_FLATTED_MAP.map(
-        ({ Component, path, code, title }: typeRenderComponent) => (
-          <Route
-            element={
-              <MainLayout>
-                <InternPageContainer title={title}>
-                  <Component />
-                </InternPageContainer>
-              </MainLayout>
-            }
-            key={path}
-            path={path}
-          ></Route>
-        ),
-      )}
-
-      {/* <PrivateRoute /> */}
-
-      <Route path="*" element={<Navigate to="/not-found" />}></Route>
-      <Route path="/not-found" element={<PageNotFound />}></Route>
-    </Routes>
-  </BrowserRouter>
-);
+        <Route path="*" element={<Navigate to="/not-found" />}></Route>
+        <Route path="/not-found" element={<PageNotFound />}></Route>
+      </Routes>
+    </BrowserRouter>
+  );
+};
 
 export default Routers;

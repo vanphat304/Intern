@@ -3,10 +3,15 @@ export type actionType<T> = {
   data: T;
 };
 export interface user {
-    userName:string,
-    email : string ,
+  userName: string;
+  email: string;
 }
 export interface currentTile {
-  currentTile : string
-  
+  currentTile: string;
+}
+export interface searchJob {
+  addressProvinceId: String;
+  addressDistrictId: String;
+  searchItem: String;
+  specializeCompanyId: String;
 }

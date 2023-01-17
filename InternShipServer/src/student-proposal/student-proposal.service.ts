@@ -1,5 +1,5 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { StudentProposal } from '@prisma/client';
+import { HttpCode, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { STATUS, StudentProposal } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -9,6 +9,21 @@ export class StudentProposalService {
 
   async addStudentProposal(dto: StudentProposal) {
     try {
+      const isSubmit = await this.prisma.studentProposal.findFirst({
+        where: {
+          studentId: {
+            equals: dto.studentId,
+          },
+        },
+      });
+
+      if (isSubmit && isSubmit.status === STATUS.SUMBMITED) {
+        throw new HttpException(
+          `Công ty ${isSubmit.nameCompany} đang được xem xét , vui lòng chờ kết quả trước khi để xuất thêm công ty`,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+
       const StudentProposal: StudentProposal = await this.prisma.studentProposal.create({
         data: {
           ...dto,
@@ -116,7 +131,6 @@ export class StudentProposalService {
           data: {
             studentId,
             content: `Công ty ${nameCompany} do bạn để xuất đã được chấp nhận`,
-
           },
         });
       }
@@ -135,8 +149,8 @@ export class StudentProposalService {
   }
 
   async rejectStudentProposal(id: string, { reasonReject }: Pick<StudentProposal, 'reasonReject'>) {
-    console.log({reasonReject});
-    
+    console.log({ reasonReject });
+
     try {
       const result = await this.prisma.studentProposal.update({
         where: {
@@ -155,11 +169,10 @@ export class StudentProposalService {
         });
         const { studentId, nameCompany } = props;
         await this.prisma.notificationStudent.create({
-          data: { 
+          data: {
             studentId,
             content: `Thông tin mô tả thực tập của bạn ở công ty ${nameCompany} vừa bị từ chối`,
             note: reasonReject,
-
           },
         });
       }

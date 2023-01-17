@@ -32,6 +32,7 @@ import InternTextEditor from '../../../../../components/InternTextEditor';
 import { STATUS } from '../../../../../types/status.type';
 import { ScaleCompany } from '../../../../../types/scale';
 import InternTextArea from '../../../../../components/InternInput/InternTextArea';
+import InternLinkForm from '../../../../../components/InternLinkForm';
 
 const schema = yup.object({
   nameCompany: yup.string().required('Trường này bắt buộc nhập'),
@@ -178,7 +179,7 @@ const ModalDetail = ({
             </InternRow>
             <InternRow withAutoCol={12}>
               <InternSelect colSpan={6} data={scaleCompanies} name="scale" label="Quy mô công ty" />
-              <InternText colSpan={6} name="linkWebsite" label="website công ty" />
+              <InternLinkForm text='linkWebsite' colSpan={6} name="linkWebsite" label="website công ty" />
             </InternRow>
             <InternRow>
               <InternText labelSpan={1} name="addressCompany" label="địa chỉ công ty" />

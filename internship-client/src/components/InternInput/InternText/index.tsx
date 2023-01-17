@@ -52,7 +52,7 @@ const InternText = ({
             errors[name] ? 'border-red-600' : 'focus:ring-gray-600 focus:border-gray-700'
           } outline-none  border border-gray-400 ${
             direct ? 'col-span-6' : `${labelSpan ? 'col-span-5' : 'col-span-4'}`
-          }  text-gray-900 text-xl rounded-lg p-2`}
+          }  text-gray-900 text-xs rounded-lg h-11 px-6`}
           placeholder={placeholder}
           {...register(name)}
           {...rest}

@@ -4,8 +4,12 @@ import { Select } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { Service } from '../../../services/service';
 import { CACHE_TIME, QUERY_KEY_COMPANY, STALE_TIME } from '../../../enums';
-import { useForm } from 'react-hook-form';
+import { useForm, useController } from 'react-hook-form';
+import { useSearchAppStore } from '../../../store/searchStore';
+import InternSelect from '../../../components/InternInput/InterSelect';
 function Search() {
+  const [, setSearchItem] = useSearchAppStore();
+
   const { data: specializes = [] } = useQuery({
     queryFn: () => Service.getCompanySpecialize({}),
     queryKey: [QUERY_KEY_COMPANY, 'specialize', 'search'],
@@ -22,8 +26,14 @@ function Search() {
     refetchOnWindowFocus: false,
   });
 
-  const { register, getValues } = useForm();
+  const { register, getValues, control } = useForm();
+  const {
+    field: { onChange },
+  } = useController({ control, name: 'specializeCompanyId' });
 
+  const {
+    field: { onChange: onChangeSelect },
+  } = useController({ control, name: 'addressProvinceId' });
   return (
     <div className="search_job  bg-white">
       <div className="container box-search-job box">
@@ -43,7 +53,7 @@ function Search() {
               }
               placeholder="Lĩnh vực công ty"
               style={{ width: '100%' }}
-              {...register('specializeCompanyId')}
+              onChange={onChange}
             >
               {specializes.map((item) => {
                 return (
@@ -65,9 +75,8 @@ function Search() {
               }
               className="form-control select_form-findJob"
               style={{ width: '100%' }}
-              {...register('addressProvinceId')}
-              name='addressProvinceId'
-
+              onChange={onChangeSelect}
+              name="addressProvinceId"
             >
               {provinces.map((item) => {
                 return (
@@ -82,6 +91,7 @@ function Search() {
             <button
               onClick={() => {
                 console.log(getValues());
+                setSearchItem({ type: 'SEARCH_JOB', data: { ...getValues() } });
               }}
               className="btn btn-search btn-primary btn-primary-hover"
             >

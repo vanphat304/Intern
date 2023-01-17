@@ -12,6 +12,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { SearchAppStore } from './store/searchStore';
 
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -20,8 +21,10 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <AppStore.Provider>
         <AuthAppStore.Provider>
-          <ToastContainer />
-          <Routers />
+          <SearchAppStore.Provider>
+            <ToastContainer />
+            <Routers />
+          </SearchAppStore.Provider>
         </AuthAppStore.Provider>
       </AppStore.Provider>
       <ReactQueryDevtools initialIsOpen={false} />

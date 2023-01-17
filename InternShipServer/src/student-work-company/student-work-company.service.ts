@@ -43,21 +43,22 @@ export class StudentWorkCompanyService {
           where: {
             studentId,
           },
-          include:{
-            company:{
-              select:{
-                nameCompany : true,
-                logo:true,
-              }
+          include: {
+            company: {
+              select: {
+                nameCompany: true,
+                logo: true,
+                id: true,
+              },
             },
-            student:{
-              select:{
-                identifierStudent:true,
-                firstName:true,
-                lastName:true,
-              }
-            }
-          }
+            student: {
+              select: {
+                identifierStudent: true,
+                firstName: true,
+                lastName: true,
+              },
+            },
+          },
         },
       );
       return StudentWorkCompany;

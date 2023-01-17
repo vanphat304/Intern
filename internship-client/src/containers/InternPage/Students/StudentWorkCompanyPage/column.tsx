@@ -44,6 +44,12 @@ export const columnsStudentWork = ({ handleOpenDetail, handleOpenDelete }: any) 
     title: 'decription',
     dataIndex: 'decription',
     key: 'decription',
+    render: (value: string) => {
+      return value
+        ?.replace(/(<([^>]+)>)/gi, '')
+        .toString()
+        .substring(0, 12);
+    },
   },
 
   {
