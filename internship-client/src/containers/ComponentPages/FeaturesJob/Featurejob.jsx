@@ -74,12 +74,14 @@ function FeatureJob() {
           <Slider {...settingMultipleItem}>
             {districts.map((item) => {
               return (
+              
                 <button
                   className={`${
                     item.id === search.addressDistrictId
-                      ? 'text-white p-1 mx-4 bg-green-600 rounded-xl'
-                      : 'bg-blue-50 rounded-xl p-1 mx-4'
+                      ? 'text-white mx-2 p-2 bg-green-600 rounded-full'
+                      : 'bg-blue-50 mx-2 p-2 rounded-full'
                   }`}
+                  style={{width:'100px'}}
                   onClick={() => {
                     console.log('item', item.id);
                     setSearchJob({
@@ -93,6 +95,7 @@ function FeatureJob() {
                 >
                   {item.name}
                 </button>
+              
               );
             })}
           </Slider>

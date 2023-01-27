@@ -220,7 +220,7 @@ function Register() {
         <button onClick={handleRegister()}>Đăng ký</button>
       </div>
       <Link to={'/auth/login'}>
-        <p className="forgot_pass pr-3"> Đăng nhập </p>
+        <p className="forgot_pass pr-3">Đăng nhập</p>
       </Link>
     </div>
   );

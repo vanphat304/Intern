@@ -30,9 +30,9 @@ import { JobDescription } from '../../../../../types/jobdescription.type';
 
 const schema = yup.object({
   jobTitle: yup.string().required('trường này bắt buộc nhập'),
-  decriptionJob: yup.string().required('trường này bắt buộc nhập'),
-  salary: yup.string().required('trường này bắt buộc nhập'),
-  numberRecur: yup.string().required('trường này bắt buộc nhập'),
+  decriptionJob: yup.string().required('trường này bắt buộc nhập').max(2000,'Tối đã 2000 ký tự'),
+  salary: yup.string().required('trường này bắt buộc nhập').max(14,'Nhập tối đã 14 chữ số'),
+  numberRecur: yup.string().required('trường này bắt buộc nhập').max(14,'Nhập tối đã 14 chữ số'),
   companyId: yup.string().required('trường này bắt buộc nhập'),
   timeStartApply: yup.date().typeError('trường bắt buộc nhập'),
   timeEndAppply: yup
