@@ -49,7 +49,7 @@ const InternDatePicker = ({
             errors[name] ? 'border-red-600' : 'focus:ring-gray-600 focus:border-gray-700'
           } outline-none  border border-gray-400 ${
             direct ? 'col-span-6' : 'col-span-4'
-          }  text-gray-900 text-xl rounded-lg block w-full p-2`}
+          }  text-gray-900 text-sm rounded-lg block w-full p-2`}
           placeholder={placeholder}
           {...register(name)}
           {...rest}

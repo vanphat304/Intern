@@ -87,7 +87,6 @@ model Student {
   identifierStudent   String?               @unique @db.VarChar(12)
   firstName           String?               @db.VarChar(50)
   lastName            String?               @db.VarChar(50)
-  username            String                @unique
   passwordHashed      String
   role                Role                  @default(USER)
   dateOfBirth         DateTime?

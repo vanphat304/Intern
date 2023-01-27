@@ -9,16 +9,15 @@ import { useAuthStore } from '../../../store';
 import { useMutation } from '@tanstack/react-query';
 import { Service } from '../../../services/service';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ErrorMessage } from '@hookform/error-message';
 
 function Register() {
   const navigate = useNavigate();
   const schema = yup.object({
-    username: yup.string().required('Trường này bắt buộc nhập'),
-    firstName: yup.string().required('Trường này bắt buộc nhập'),
-    lastName: yup.string().required('Trường này bắt buộc nhập'),
-    identifierStudent: yup.string().required('Trường này bắt buộc nhập'),
+    firstName: yup.string().required('Trường này bắt buộc nhập').max(12,'Tên không vượt quá 12 ký tự'),
+    lastName: yup.string().required('Trường này bắt buộc nhập').max(24,'Họ , tên lót không vượt quá 24 ký tự'),
+    identifierStudent: yup.string().required('Trường này bắt buộc nhập').max(12,'Mã số sinh viên không vượt quá 12 ký tự'),
     email: yup.string().required('Trường này bắt buộc nhập').email('email không đúng định dạng'),
     password: yup.string().required('Trường này bắt buộc nhập'),
     passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Mật khẩu không có khớp'),
@@ -144,33 +143,13 @@ function Register() {
         </div>
 
         <div className="Login_form-group">
-          <label>User Name</label>
-          <div className="Register_form-input Login_form-input">
-            <div className="Login_form-icon">
-              <LockFilled />
-            </div>
-
-            <input type="text" name="username" {...register('username')} />
-          </div>
-          <ErrorMessage
-            errors={errors}
-            name={'username'}
-            render={({ message }) => (
-              <p className={`animate-pulse capitalize text-red-600 col-span-6 font-normal text-sm`}>
-                {message}
-              </p>
-            )}
-          />
-        </div>
-
-        <div className="Login_form-group">
           <label>Mật khẩu</label>
           <div className="Register_form-input Login_form-input">
             <div className="Login_form-icon">
               <LockFilled />
             </div>
 
-            <input type={show.password} name="password" {...register('password')} />
+            <input type={show.password} name="password" {...register('password')} placeholder='Nhập mật khẩu của bạn' />
             <div className="Login_form-icon">
               <EyeInvisibleFilled
                 onClick={() => {
@@ -207,6 +186,7 @@ function Register() {
             <input
               type={show.confirmPassword}
               name="passwordConfirm"
+              placeholder='Xác nhận mật khẩu của bạn'
               {...register('passwordConfirm')}
             />
             <div className="Login_form-icon">
@@ -239,6 +219,9 @@ function Register() {
       <div className="Login_form-group">
         <button onClick={handleRegister()}>Đăng ký</button>
       </div>
+      <Link to={'/auth/login'}>
+        <p className="forgot_pass pr-3"> Đăng nhập </p>
+      </Link>
     </div>
   );
 }

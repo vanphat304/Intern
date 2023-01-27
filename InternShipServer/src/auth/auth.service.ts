@@ -41,14 +41,13 @@ export class AuthService {
 
   async register(dto: AuthDto) {
     try {
-      const { email, password, username, firstName, identifierStudent, lastName } = dto;
+      const { email, password, firstName, identifierStudent, lastName } = dto;
       const passwordHashed = await this.scriptPassword(password);
 
       const userRegister: Student = await this.prisma.student.create({
         data: {
           email,
           passwordHashed,
-          username,
           firstName,
           identifierStudent,
           lastName,

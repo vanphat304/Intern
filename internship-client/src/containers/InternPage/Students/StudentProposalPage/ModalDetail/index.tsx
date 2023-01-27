@@ -254,7 +254,7 @@ const ModalDetail = ({
               <InternTextEditor labelSpan={1} name="week8" label="Thông tin tuần 8" />
             </InternRow>
             <InternRow withAutoCol={12}>
-              <InternSelect data={status} colSpan={6} name="status" label="Trạng thái" />
+              <InternSelect disabled data={status} colSpan={6} name="status" label="Trạng thái" />
               {watch('status') === STATUS.REJECTED && (
                 <InternTextArea disabled colSpan={6} name="reasonReject" label="Lý do từ chối" />
               )}

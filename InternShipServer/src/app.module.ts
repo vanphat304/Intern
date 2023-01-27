@@ -11,6 +11,7 @@ import { ResultApplyJobModule } from './result-apply-job/result-apply-job.module
 import { StudentProposalModule } from './student-proposal/student-proposal.module';
 import { StudentWorkCompanyModule } from './student-work-company/student-work-company.module';
 import { NotficationModule } from './notfication/notfication.module';
+import { ImportExportModule } from './import-export/import-export.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { NotficationModule } from './notfication/notfication.module';
     StudentProposalModule,
     StudentWorkCompanyModule,
     NotficationModule,
+    ImportExportModule,
   ],
 })
 export class AppModule {}
