@@ -17,6 +17,8 @@ export class JobDescriptionService {
       });
       return JobDecripton;
     } catch (error) {
+      console.log({error});
+      
       if (error instanceof PrismaClientKnownRequestError) {
         if ((error.code = 'P2003')) {
           throw new HttpException(

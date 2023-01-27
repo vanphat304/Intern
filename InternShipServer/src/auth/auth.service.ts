@@ -42,6 +42,8 @@ export class AuthService {
   async register(dto: AuthDto) {
     try {
       const { email, password, username, firstName, identifierStudent, lastName } = dto;
+      console.log({dto});
+      
       const passwordHashed = await this.scriptPassword(password);
 
       const userRegister: Student = await this.prisma.student.create({
@@ -58,6 +60,8 @@ export class AuthService {
       return this.signToken(userRegister);
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
+        console.log({error});
+        
         if ((error.code = 'P2002')) {
           throw new HttpException(
             `Unique constraint failed on the ${error?.meta?.target?.toString()}`,

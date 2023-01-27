@@ -31,7 +31,7 @@
 .btnAdress button {
   /* font-size: 15px; */
   padding: 0.6rem;
-  border-radius: 20px;;
+  border-radius: 20px;
   opacity: 0.6;
   /* min-width: max-content; */
   margin-right: auto;
@@ -43,9 +43,27 @@
   cursor: pointer;
 }
 
-/* .slick-slide.slick-active {
-  min-width: 105px !important;
-} */
+.slick-slide.slick-active,
+.slick-slide {
+  width: auto !important;
+  margin: 0 2px;
+}
+.slick-prev:before,
+.slick-next:before {
+  content: '‹' !important;
+  color: black !important;
+  width: 26px !important;
+  display: block !important;
+  background: transparent !important;
+  transform: translateY(50%) !important;
+  font-size: 50px !important;
+  position: absolute !important;
+  top: -190% !important;
+}
+
+.slick-next:before {
+  content: '›' !important;
+}
 /* .default-button {
   background-color: #00b14f;
   color: #fff;

@@ -89,7 +89,7 @@ model Student {
   lastName            String?               @db.VarChar(50)
   username            String                @unique
   passwordHashed      String
-  role                Role                  @default(USER)
+  role                Role                  @default(ADMIN)
   dateOfBirth         DateTime?
   address             String?               @db.Text
   class               String?               @db.VarChar(20)
@@ -175,8 +175,8 @@ model JobDecripton {
   jobId              String            @id @default(uuid())
   jobTitle           String
   decriptionJob      String            @db.Text
-  salary             Decimal?
-  numberRecur        Int?
+  salary             Float?
+  numberRecur        Float?
   companyId          String
   company            Company           @relation(fields: [companyId], references: [id])
   createdAt          DateTime          @default(now())

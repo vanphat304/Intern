@@ -11,6 +11,7 @@ import { Service } from '../../../services/service';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { ErrorMessage } from '@hookform/error-message';
+import { Link } from 'react-router-dom';
 
 function Register() {
   const navigate = useNavigate();
@@ -239,6 +240,9 @@ function Register() {
       <div className="Login_form-group">
         <button onClick={handleRegister()}>Đăng ký</button>
       </div>
+      <Link to={'/auth/login'}>
+        <p className="forgot_pass pr-3">Đăng nhập</p>
+      </Link>
     </div>
   );
 }

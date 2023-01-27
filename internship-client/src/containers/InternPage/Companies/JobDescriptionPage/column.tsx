@@ -11,16 +11,17 @@ export const columnsJobDescriptions = ({ handleOpenDetail, handleOpenDelete }: a
     title: 'jobTitle',
     dataIndex: 'jobTitle',
     key: 'jobTitle',
+    render: (value: string) => {
+      return value.toString().substring(0, 12);
+    },
   },
+
   {
     title: 'decriptionJob',
     dataIndex: 'decriptionJob',
     key: 'decriptionJob',
     render: (value: string) => {
-      return value
-        ?.replace(/(<([^>]+)>)/gi, '')
-        .toString()
-        .substring(0, 12);
+      return <span dangerouslySetInnerHTML={{ __html: value.toString().substring(0, 12) }}></span>;
     },
   },
 
@@ -58,6 +59,9 @@ export const columnsJobDescriptions = ({ handleOpenDetail, handleOpenDelete }: a
     title: 'addressToInterview',
     dataIndex: 'addressToInterview',
     key: 'addressToInterview',
+    render: (value: string) => {
+      return value.toString().substring(0, 12);
+    },
   },
   {
     title: 'action',
