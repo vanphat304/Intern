@@ -21,12 +21,19 @@ const InternSearch = ({ onClick , placeHolder="Nhập từ khóa tìm kiếm" , 
   const handleSearch = () => {
     onClick(getValues() as searchItemType );
   };
+  const handleEnter = (event : any )=> {
+
+    if (event.key === 'Enter') {
+      onClick(getValues() as searchItemType );
+    }
+  };
 
   return (
     <InternRow>
       <FormProvider {...methods}>
      <InternRow gap={6} withAutoCol={12}>
           <InternText
+            handleKeyDown={handleEnter}
             name="searchItem"
             colSpan={4}
             label="Tìm kiếm"

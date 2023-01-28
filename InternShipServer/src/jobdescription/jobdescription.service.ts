@@ -70,7 +70,9 @@ export class JobDescriptionService {
         },
       });
 
-      return listJobDecripton;
+      return listJobDecripton.sort((a,b)=>{
+        return b.createdAt as any - (a.createdAt as any)
+      });;
     } catch (error) {
       throw error;
     }
@@ -154,7 +156,9 @@ export class JobDescriptionService {
           HttpStatus.BAD_REQUEST,
         );
       }
-      return results;
+      return results.sort((a,b)=>{
+        return b.createdAt as any - (a.createdAt as any)
+      });;
     } catch (error) {
       throw error;
     }
@@ -168,7 +172,7 @@ export class JobDescriptionService {
     console.log({ specializeCompanyId });
 
     try {
-      const results = this.prisma.jobDecripton.findMany({
+      const results = await this.prisma.jobDecripton.findMany({
         where: {
           jobTitle: {
             contains: searchItem || '',
@@ -195,7 +199,9 @@ export class JobDescriptionService {
           },
         },
       });
-      return results;
+      return results.sort((a,b)=>{
+        return b.createdAt as any - (a.createdAt as any)
+      });;
     } catch (error) {
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }

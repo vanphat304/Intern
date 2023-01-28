@@ -13,7 +13,7 @@ export class StudentController {
     return this.studentService.getListStudent(query);
   }
   @Get('params')
-  getStudentByParams(): Promise<Array<Pick<Student, 'id' | 'firstName' | 'lastName'>>> {
+  getStudentByParams(): Promise<Array<Pick<Student, 'id' | 'firstName' | 'lastName' |'identifierStudent'>>> {
     return this.studentService.getStudentByParams();
   }
   @Get(':id')

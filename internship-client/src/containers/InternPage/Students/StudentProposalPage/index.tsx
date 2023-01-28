@@ -21,6 +21,7 @@ import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import { StudentProposals } from '../../../../types/studentProposal.type';
 import InternModalReject from '../../../../components/InterModalContainer/InternModalReject';
+import { filterObjectFalsy } from '../../../../helpers/object';
 
 type searchItemType = {
   searchItem: string;
@@ -31,7 +32,10 @@ const StudentProposalPage = () => {
   const [modalDeleteId, setModalDeleteId] = useState<number | null>(null);
   const [modalRejectId, setModalRejectId] = useState<number | null>(null);
 
-  const [queryString, setUrlSearchParams, { studentId }] = useQueryString('studentId');
+  const [queryString, setUrlSearchParams, { identifierStudent }] = useQueryString('identifierStudent');  
+
+  console.log({identifierStudent});
+  
 
   const { pageNumber, pageSize, searchItem } = queryString;
 
@@ -82,17 +86,17 @@ const StudentProposalPage = () => {
   );
 
   const { data, isLoading, refetch } = useQuery({
-    queryKey: [QUERY_KEY_STUDENTS_PROPS, pageNumber, pageSize, searchItem, studentId],
-    queryFn: () => Service.getStudentProposals({ ...queryString, studentId }),
+    queryKey: [QUERY_KEY_STUDENTS_PROPS, pageNumber, pageSize, searchItem, identifierStudent],
+    queryFn: () => Service.getStudentProposals({ ...queryString , identifierStudent }),
     cacheTime: CACHE_TIME,
     staleTime: STALE_TIME,
     keepPreviousData: true,
   });
 
-  console.log({ data });
 
-  const handleSearch = (searchItem: searchItemType) => {
-    setUrlSearchParams({ ...queryString, ...searchItem });
+  const handleSearch = (searchItem: searchItemType ) => {
+
+    setUrlSearchParams({ ...queryString, ...filterObjectFalsy(searchItem)  });
   };
 
   return (

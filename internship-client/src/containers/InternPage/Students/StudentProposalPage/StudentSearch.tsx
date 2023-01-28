@@ -18,20 +18,24 @@ const StudentSearch = ({ onClick }: typeInternSearch) => {
     queryKey: ['keyParamsStudents'],
     queryFn: () => Service.getStudentParams(),
   });
+
+  console.log({students});
+  
   return (
     <InternSearch placeHolder="Nhập tên công ty để tìm kiếm" onClick={onClick}>
       <InternSelect
-        placeholder="Chọn sinh viên cần tìm kiếm"
+        placeholder="Chọn mã số sinh viên để tìm kiếm"
         direct
         data={students?.map(
-          ({ id, firstName, lastName }: Pick<Student, 'id' | 'firstName' | 'lastName'>) => ({
-            name: `${lastName} ${firstName}`,
-            value: id,
+          ({ id, firstName, lastName , identifierStudent }: Pick<Student, 'id' | 'firstName' | 'lastName' | 'identifierStudent'>) => ({
+            name: identifierStudent,
+            value: identifierStudent,
           }),
         )}
         colSpan={4}
-        label="Công ty"
-        name="studentId"
+        labelSpan={4}
+        label="Mã số sinh viên"
+        name="identifierStudent"
       />
     </InternSearch>
   );

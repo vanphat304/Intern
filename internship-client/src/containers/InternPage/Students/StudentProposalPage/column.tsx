@@ -8,9 +8,30 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     key: 'index',
   },
   {
+    title : 'MSSV',
+    dataIndex : ['student','identifierStudent'],
+    key :'MSSV'
+  },
+  {
+    title : 'FirstName',
+    dataIndex : ['student','firstName'],
+    key :'FirstName'
+  },
+  {
+    title : 'LastName',
+    dataIndex : ['student','lastName'],
+    key :'LastName'
+  },
+  {
     title: 'nameCompany',
     dataIndex: 'nameCompany',
     key: 'nameCompany',
+    render: (value: string) => {
+      return value
+        ?.replace(/(<([^>]+)>)/gi, '')
+        .toString()
+        .substring(0, 12) + "...";;
+    },
   },
   {
     title: 'introduceCompany',
@@ -20,7 +41,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
       return value
         ?.replace(/(<([^>]+)>)/gi, '')
         .toString()
-        .substring(0, 12);
+        .substring(0, 12) + "..."; 
     },
   },
 
@@ -28,11 +49,18 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     title: 'scale',
     dataIndex: 'scale',
     key: 'scale',
+
   },
   {
     title: 'addressCompany',
     dataIndex: 'addressCompany',
     key: 'addressCompany',
+    render: (value: string) => {
+      return value
+        ?.replace(/(<([^>]+)>)/gi, '')
+        .toString()
+        .substring(0, 12) + "...";;
+    },
   },
   {
     title: 'legalRepresentative',
@@ -47,7 +75,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
       return value
         ?.replace(/(<([^>]+)>)/gi, '')
         .toString()
-        .substring(0, 12);
+        .substring(0, 12) + "...";;
     },
   },
   {
@@ -69,11 +97,20 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     title: 'addressIntern',
     dataIndex: 'addressIntern',
     key: 'addressIntern',
+    render: (value: string) => {
+      return value
+        ?.replace(/(<([^>]+)>)/gi, '')
+        .toString()
+        .substring(0, 12) + "...";;
+    },
   },
   {
     title: 'linkWebsite',
     dataIndex: 'linkWebsite',
     key: 'linkWebsite',
+    render : (value : string)=> { return <a href={value} target={'_blank'}>
+      {value}
+    </a> }
   },
   {
     title: 'specializeCompany',
@@ -93,7 +130,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
       return value
         ?.replace(/(<([^>]+)>)/gi, '')
         .toString()
-        .substring(0, 12);
+        .substring(0, 12) + "...";;
     },
   },
   {
@@ -104,7 +141,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
       return value
         ?.replace(/(<([^>]+)>)/gi, '')
         .toString()
-        .substring(0, 12);
+        .substring(0, 12) + "...";;
     },
   },
   {
@@ -115,7 +152,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
       return value
         ?.replace(/(<([^>]+)>)/gi, '')
         .toString()
-        .substring(0, 12);
+        .substring(0, 12) + "...";;
     },
   },
   {
@@ -126,7 +163,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
       return value
         ?.replace(/(<([^>]+)>)/gi, '')
         .toString()
-        .substring(0, 12);
+        .substring(0, 12) + "...";;
     },
   },
   {
@@ -137,7 +174,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
       return value
         ?.replace(/(<([^>]+)>)/gi, '')
         .toString()
-        .substring(0, 12);
+        .substring(0, 12) + "...";;
     },
   },
   {
@@ -148,7 +185,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
       return value
         ?.replace(/(<([^>]+)>)/gi, '')
         .toString()
-        .substring(0, 12);
+        .substring(0, 12) + "...";;
     },
   },
   {
@@ -159,7 +196,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
       return value
         ?.replace(/(<([^>]+)>)/gi, '')
         .toString()
-        .substring(0, 12);
+        .substring(0, 12) + "...";;
     },
   },
   {
@@ -170,7 +207,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
       return value
         ?.replace(/(<([^>]+)>)/gi, '')
         .toString()
-        .substring(0, 12);
+        .substring(0, 12) + "...";;
     },
   },
   {

@@ -47,6 +47,7 @@ const InternTextArea = ({
           {label}
         </label>
         <textarea
+        maxLength={500}
           rows={rows}
           className={`${
             errors[name] ? 'border-red-600' : 'focus:ring-gray-600 focus:border-gray-700'

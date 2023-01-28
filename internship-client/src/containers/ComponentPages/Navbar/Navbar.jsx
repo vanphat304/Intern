@@ -253,7 +253,7 @@ function Navbar() {
         )}
       </div>
 
-      {modalDetailId && <ModalProposalCompany handleCloseDetail={handleCloseDetail} />}
+      {modalDetailId && <ModalProposalCompany id = {userLogin.id} handleCloseDetail={handleCloseDetail} />}
     </>
   );
 }

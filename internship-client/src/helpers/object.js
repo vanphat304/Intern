@@ -9,3 +9,5 @@ export const getNestedValue = (arrKey, primeObject = {}) => {
     }
   }, {}) : primeObject[arrKey]
 }
+
+export const filterObjectFalsy = (obj) => Object.entries(obj).reduce((acc,[key,value]) => (value == null ? acc : (acc[key]=value, acc)), {})

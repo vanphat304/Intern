@@ -67,7 +67,9 @@ export class StudentApplyJobsService {
           // },
         });
 
-      return listStudentApplyJob;
+      return listStudentApplyJob.sort((a,b)=>{
+        return b.dateAppply as any - (a.dateAppply as any)
+      });;
     } catch (error) {
       console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
@@ -139,7 +141,9 @@ export class StudentApplyJobsService {
         throw new HttpException(`can't find StudentApplyJob with id ${id}`, HttpStatus.BAD_REQUEST);
       }
 
-      return StudentApplyJobHistories;
+      return StudentApplyJobHistories.sort((a,b)=>{
+        return b.dateAppply as any - (a.dateAppply as any)
+      });
     } catch (error) {
       console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);

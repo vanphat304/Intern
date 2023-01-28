@@ -8,9 +8,9 @@ function BoxGeneral() {
   const { isLoading, data: companies = [] } = useQuery({
     queryFn: () => Service.getCompanies(),
     queryKey: [QUERY_KEY_COMPANY],
-    cacheTime: CACHE_TIME,
-    staleTime: STALE_TIME,
-    refetchOnWindowFocus: false,
+    // cacheTime: CACHE_TIME,
+    // staleTime: STALE_TIME,
+    // refetchOnWindowFocus: false,
   });
 
   return (

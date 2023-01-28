@@ -47,7 +47,9 @@ export class StudentService {
           },
         });
 
-      return listStudent;
+      return listStudent.sort((a,b)=>{
+        return b.createdAt as any - (a.createdAt as any)
+      });
     } catch (error) {
       console.log(error);
       throw error;
@@ -73,13 +75,14 @@ export class StudentService {
     }
   }
 
-  async getStudentByParams(): Promise<Array<Pick<Student, 'id' | 'firstName' | 'lastName'>>> {
+  async getStudentByParams(): Promise<Array<Pick<Student, 'id' | 'firstName' | 'lastName' | 'identifierStudent'>>> {
     try {
       const students = await this.prisma.student.findMany({
         select: {
           id: true,
           firstName: true,
           lastName: true,
+          identifierStudent:true,
         },
       });
       return students;

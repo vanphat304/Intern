@@ -14,6 +14,7 @@ type InputText = {
   message?: string;
   direct?: boolean;
   isLink?:boolean;
+  handleKeyDown? : (a:any)=>void
 };
 
 const InternText = ({
@@ -28,6 +29,7 @@ const InternText = ({
   message = '',
   direct = false,
   isLink =false,
+  handleKeyDown ,
   ...rest
 }: InputText) => {
   const {
@@ -47,7 +49,9 @@ const InternText = ({
           {label}
         </label>
         <input
+         onKeyDown={handleKeyDown}
           type={type}
+          maxLength={50}
           className={`${
             errors[name] ? 'border-red-600' : 'focus:ring-gray-600 focus:border-gray-700'
           } outline-none  border border-gray-400 ${

@@ -19,7 +19,9 @@ export class StudentProposalService {
 
       if (isSubmit && isSubmit.status === STATUS.SUMBMITED) {
         throw new HttpException(
-          `Công ty ${isSubmit.nameCompany} đang được xem xét , vui lòng chờ kết quả trước khi để xuất thêm công ty`,
+          `Công ty ${
+            isSubmit.nameCompany.toString().substring(0, 12) + '...'
+          } đang được xem xét , vui lòng chờ kết quả trước khi để xuất thêm công ty`,
           HttpStatus.BAD_REQUEST,
         );
       }
@@ -38,15 +40,26 @@ export class StudentProposalService {
 
   async getListStudentProposal(query): Promise<Array<StudentProposal>> {
     try {
-      const { pageNumber, pageSize, searchItem, studentId } = query;
+      const { pageNumber, pageSize, searchItem, identifierStudent } = query;
 
       const listStudentProposal: Array<StudentProposal> =
         await this.prisma.studentProposal.findMany({
           skip: (pageNumber - 1) * pageSize || 0,
           take: pageSize * 1 || 10,
+          include: {
+            student: {
+              select: {
+                identifierStudent: true,
+                firstName: true,
+                lastName: true,
+              },
+            },
+          },
           where: {
-            studentId: {
-              contains: studentId || '',
+            student: {
+              identifierStudent: {
+                contains: identifierStudent || '',
+              },
             },
             OR: [
               {
@@ -58,7 +71,9 @@ export class StudentProposalService {
             ],
           },
         });
-      return listStudentProposal;
+      return listStudentProposal.sort((a,b)=>{
+        return b.createdAt as any - (a.createdAt as any)
+      });
     } catch (error) {
       console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
@@ -69,7 +84,14 @@ export class StudentProposalService {
     try {
       const StudentProposal: StudentProposal = await this.prisma.studentProposal.findFirst({
         where: {
-          id,
+          OR: [
+            {
+              studentId: id,
+            },
+            {
+              id,
+            },
+          ],
         },
       });
       return StudentProposal;
@@ -88,13 +110,32 @@ export class StudentProposalService {
 
   async updateStudentProposal(dto: StudentProposal) {
     const { id, ...rest } = dto;
+
     try {
+      const isSubmit = await this.prisma.studentProposal.findFirst({
+        where: {
+          studentId: {
+            equals: dto.studentId,
+          },
+        },
+      });
+
+      if (isSubmit && isSubmit.status === STATUS.SUMBMITED) {
+        throw new HttpException(
+          `Công ty ${
+            isSubmit.nameCompany.toString().substring(0, 20) + '...'
+          } đang chờ phê duyệt vùi lòng chờ kết quả trước khi cập nhật thông tin`,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+
       const result = await this.prisma.studentProposal.update({
         where: {
           id,
         },
         data: {
           ...rest,
+          status: STATUS.SUMBMITED,
         },
       });
       return result;

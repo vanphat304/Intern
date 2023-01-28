@@ -37,7 +37,7 @@ const schema = yup.object({
     .string()
     .required()
     .matches(
-      /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/,
+      /(([03+[2-9]|05+[6|8|9]|07+[0|6|7|8|9]|08+[1-9]|09+[1-4|6-9]]){3})+[0-9]{7}\b/g,
       'số điện thoại không đúng định dạng',
     ),
   week1: yup.string().required('Trường này bắt buộc nhập'),
@@ -62,10 +62,12 @@ const status = Object.keys(STATUS).map((item) => ({
   value: item,
 }));
 
-const ModalDetail = ({ handleCloseDetail }: any) => {
+const ModalDetail = ({ handleCloseDetail, id }: any) => {
   const methods = useForm({
     resolver: yupResolver(schema),
   });
+
+  console.log({ id });
 
   const [{ userLogin }] = useAuthStore();
 
@@ -73,6 +75,17 @@ const ModalDetail = ({ handleCloseDetail }: any) => {
     mutationFn: (params: {}) => Service.addStudentProposal(params),
     onSuccess: (data) => {
       toast.success('Đề xuất thông tin công ty thành công');
+      handleCloseDetail();
+    },
+    onError: (error: AxiosError<{ error: { message: string }; statusCode: string }>) => {
+      console.log(error);
+      toast.error(error?.response?.data?.error.message);
+    },
+  });
+  const { isLoading: isLoadingUpdate, mutate: updateStudentProposal } = useMutation({
+    mutationFn: (params: {}) => Service.updateStudentProposal(params),
+    onSuccess: (data) => {
+      toast.success('cập nhật thông tin công ty thành công');
       handleCloseDetail();
     },
     onError: (error: AxiosError<{ error: { message: string }; statusCode: string }>) => {
@@ -98,36 +111,38 @@ const ModalDetail = ({ handleCloseDetail }: any) => {
 
   const handleSubmitForm = () => {
     return handleSubmit((data) => {
-      addStudentProposal({ ...data, studentId: (userLogin as any)?.id });
+      if (id !== IS_ADD) {
+        updateStudentProposal({ ...data, studentId: (userLogin as any)?.id });
+      } else addStudentProposal({ ...data, studentId: (userLogin as any)?.id });
     });
   };
 
-  // const { isFetching } = useQuery({
-  //   enabled: id !== IS_ADD,
-  //   queryKey: [id],
-  //   refetchOnWindowFocus: false,
-  //   queryFn: () => Service.getStudentProposal({ id }),
-  //   onSuccess(data) {
-  //     Object.keys(data).forEach((item) => {
-  //       if (datesFormat.includes(item)) {
-  //         setValue(item, formatDateTime(data[item]));
-  //       } else {
-  //         setValue(item, data[item]);
-  //       }
-  //     });
-  //   },
-  // });
+  const { isFetching } = useQuery({
+    enabled: id !== IS_ADD,
+    queryKey: [id, 'studentProposal'],
+    refetchOnWindowFocus: false,
+    queryFn: () => Service.getStudentProposal({ id }),
+    onSuccess(data) {
+      Object.keys(data).forEach((item) => {
+        if (datesFormat.includes(item)) {
+          setValue(item, formatDateTime(data[item]));
+        } else {
+          setValue(item, data[item]);
+        }
+      });
+    },
+  });
 
   const footer = () => (
     <InternFooterModalContainer
-      ButtonSubmit={<InternButtonSubmit isLoading={isLoading} onClick={handleSubmitForm()} />}
+      ButtonSubmit={<InternButtonSubmit isLoading={isLoading || isLoadingUpdate} onClick={handleSubmitForm()} />}
       ButtonCancel={<InternButtonCancel onClick={handleCloseDetail} />}
     />
   );
 
   return (
     <InternModalContainer
-      isLoading={isLoading}
+      isLoading={isLoading || isFetching}
       closeModal={handleCloseDetail}
       footerModal={footer()}
       headerText={'ĐỀ XUÁT CÔNG TY THỰC TẬP'}

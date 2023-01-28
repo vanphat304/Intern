@@ -38,7 +38,9 @@ export class CompanyService {
         },
       });
 
-      return listCompany;
+      return listCompany.sort((a,b)=>{
+        return b.createdAt as any - (a.createdAt as any)
+      });;
     } catch (error) {
       console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);

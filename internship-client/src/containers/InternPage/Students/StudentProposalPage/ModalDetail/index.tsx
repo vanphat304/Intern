@@ -122,7 +122,7 @@ const ModalDetail = ({
     });
   };
 
-  const { isFetching } = useQuery({
+  const { isFetching , data } = useQuery({
     enabled: id !== IS_ADD,
     queryKey: [id],
     refetchOnWindowFocus: false,
@@ -138,16 +138,19 @@ const ModalDetail = ({
     },
   });
 
+  
+
   const footer = () => (
     <InternFooterModalContainer
-      ButtonSubmit={<InternButtonApprove isLoading={isLoading} onClick={handleSubmitForm()} />}
+      ButtonSubmit={<InternButtonApprove isShow={data?.status === STATUS.SUMBMITED} isLoading={isLoading} onClick={handleSubmitForm()} />}
       ButtonCancel={<InternButtonCancel onClick={handleCloseDetail} />}
       ButtonDelete={
         <InternButtonReject
+        isShow={data?.status === STATUS.SUMBMITED}
           onClick={() => {
             handleOpenReject(id);
           }}
-          isShow={id !== IS_ADD}
+          
         />
       }
     />
