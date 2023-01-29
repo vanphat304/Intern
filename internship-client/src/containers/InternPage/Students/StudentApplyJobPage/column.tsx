@@ -22,12 +22,6 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     title: 'firstName',
     dataIndex: ['student', 'firstName'],
     key: 'firstName',
-    // render: (value: string) => {
-    //   return value
-    //     ?.replace(/(<([^>]+)>)/gi, '')
-    //     .toString()
-    //     .substring(0, 12);
-    // },
   },
 
   {
@@ -45,9 +39,9 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     dataIndex: 'fileCV',
     key: 'fileCV',
     render: (value: string) => (
-      <Link to={value} target={'_blank'}>
+      <a href={value} rel="noreferrer" target={'_blank'}>
         <span className="text-blue-600">{value}</span>
-      </Link>
+      </a>
     ),
   },
 
@@ -56,45 +50,15 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     dataIndex: 'fileScore',
     key: 'fileScore',
     render: (value: string) => (
-      <Link to={value} target={'_blank'}>
+      <a href={value} rel="noreferrer" target={'_blank'}>
         <span className="text-blue-600">{value}</span>
-      </Link>
+      </a>
     ),
   },
   {
     title: 'status',
     dataIndex: 'status',
     key: 'status',
-  },
-  {
-    title: 'referenceName',
-    dataIndex: 'referenceName',
-    key: 'referenceName',
-  },
-  {
-    title: 'referenceEmail',
-    dataIndex: 'referenceEmail',
-    key: 'referenceEmail',
-  },
-  {
-    title: 'referencePhoneNumber',
-    dataIndex: 'referencePhoneNumber',
-    key: 'referencePhoneNumber',
-  },
-  {
-    title: 'addressIntern',
-    dataIndex: 'addressIntern',
-    key: 'addressIntern',
-  },
-  {
-    title: 'linkWebsite',
-    dataIndex: 'linkWebsite',
-    key: 'linkWebsite',
-    render: (value: string) => (
-      <Link to={value} target={'_blank'}>
-        {value}
-      </Link>
-    ),
   },
 
   {

@@ -72,6 +72,7 @@ function JobDescription() {
     numberRecur,
     salary,
     addressToInterview,
+    workingForm
   } = JobDescription;
 
   console.log({ JobDescription });
@@ -126,7 +127,9 @@ function JobDescription() {
                     <CalendarFilled className="border text-green-800 bg-green-300 w-8 h-8 rounded-full flex items-center justify-center" />
                     <p className=" text-sm pl-4 text-slate-500 flex flex-col">
                       <span className="text-base font-semibold text-black">Hình thức làm việc</span>
-                      Toàn thời gian / bán thời gian
+                      {
+                        workingForm
+                      }
                     </p>
                   </div>{' '}
                 </div>

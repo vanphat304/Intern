@@ -52,7 +52,7 @@ function Search() {
                 option.props.children?.toString()?.toLowerCase()?.indexOf(value.toLowerCase()) >= 0
               }
               placeholder="Lĩnh vực công ty"
-              style={{ width: '100%' }}
+              style={{ width: '100%' , border:'solid 1px #f1f1f1' , borderRadius:'5px'}}
               onChange={onChange}
             >
               {specializes.map((item) => {
@@ -74,7 +74,7 @@ function Search() {
                 option.props.children?.toString()?.toLowerCase()?.indexOf(value.toLowerCase()) >= 0
               }
               className="form-control select_form-findJob"
-              style={{ width: '100%' }}
+              style={{ width: '100%' , border:'solid 1px #f1f1f1' , borderRadius:'5px'}}
               onChange={onChangeSelect}
               name="addressProvinceId"
             >

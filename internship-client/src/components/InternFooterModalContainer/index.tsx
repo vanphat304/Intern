@@ -12,18 +12,15 @@ const InternFooterModalContainer = ({
   ButtonCancel,
 }: typeButtonFootetModal) => {
   return (
-    <div className=" grid grid-cols-12 align-bottom justify-end p-2 mr-4 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-      <div className="col-span-2">{ButtonDelete}</div>
-      <div className="col-span-8">
-        <div className="grid grid-cols-10">
-          <div className="col-end-13">{ButtonCancel}</div>
-        </div>
-      </div>
-      <div className="col-span-2">
-        <div className="grid grid-cols-10">
-          <div className="col-start-1">{ButtonSubmit}</div>
-        </div>
-      </div>
+    <div className="flex justify-between px-4">
+      <div>{ButtonDelete}</div>
+
+    <div className='flex'>
+      <div className="col-end-13">{ButtonCancel}</div>
+
+      <div className="col-start-1 ml-5">{ButtonSubmit}</div>
+
+    </div>
     </div>
   );
 };

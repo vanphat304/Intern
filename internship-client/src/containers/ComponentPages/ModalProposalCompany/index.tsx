@@ -25,7 +25,9 @@ const schema = yup.object({
   nameCompany: yup.string().required('Trường này bắt buộc nhập'),
   introduceCompany: yup.string().required('Trường này bắt buộc nhập'),
   scale: yup.string().required('Trường này bắt buộc nhập'),
-  addressCompany: yup.string().required('Trường này bắt buộc nhậpp'),
+  addressCompany: yup.string().required('Trường này bắt buộc nhập'),
+  addressProvinceId: yup.string().required('Trường này bắt buộc nhập'),
+  addressDistrictId: yup.string().required('Trường này bắt buộc nhập'),
   legalRepresentative: yup.string().required('Trường này bắt buộc nhập'),
   introducePosition: yup.string().required('Trường này bắt buộc nhập'),
   addressIntern: yup.string().required('Trường này bắt buộc nhập'),
@@ -62,10 +64,32 @@ const status = Object.keys(STATUS).map((item) => ({
   value: item,
 }));
 
+
+
 const ModalDetail = ({ handleCloseDetail, id }: any) => {
   const methods = useForm({
     resolver: yupResolver(schema),
   });
+
+  const { data: districts = [] } = useQuery({
+    queryFn: () => Service.getCompanyDistrict({}),
+    queryKey: [QUERY_KEY_COMPANY, 'district'],
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
+    refetchOnWindowFocus: false,
+  });
+  
+  console.log({ districts });
+  
+  const { data: provinces = [] } = useQuery({
+    queryFn: () => Service.getCompanyProvince({}),
+    queryKey: [QUERY_KEY_COMPANY, 'province'],
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
+    refetchOnWindowFocus: false,
+  });
+  
+  console.log({ provinces });
 
   console.log({ id });
 
@@ -111,14 +135,15 @@ const ModalDetail = ({ handleCloseDetail, id }: any) => {
 
   const handleSubmitForm = () => {
     return handleSubmit((data) => {
-      if (id !== IS_ADD) {
+      if (isProps) {
         updateStudentProposal({ ...data, studentId: (userLogin as any)?.id });
       } else addStudentProposal({ ...data, studentId: (userLogin as any)?.id });
     });
   };
 
-  const { isFetching } = useQuery({
-    enabled: id !== IS_ADD,
+  
+
+  const { isFetching  , data : isProps} = useQuery({
     queryKey: [id, 'studentProposal'],
     refetchOnWindowFocus: false,
     queryFn: () => Service.getStudentProposal({ id }),
@@ -164,6 +189,24 @@ const ModalDetail = ({ handleCloseDetail, id }: any) => {
               <InternSelect colSpan={6} data={scaleCompanies} name="scale" label="Quy mô công ty" />
               <InternText colSpan={6} name="linkWebsite" label="website công ty" />
             </InternRow>
+             <InternRow withAutoCol={12}>
+              <InternSelect
+                colSpan={6}
+                name="addressProvinceId"
+                label="Chọn tỉnh thành ( địa chỉ )"
+                keyName="name"
+                keyValue="id"
+                data={provinces}
+              />
+              <InternSelect
+                colSpan={6}
+                name="addressDistrictId"
+                label="Chọn khu vực ( địa chỉ )"
+                keyName="name"
+                keyValue="id"
+                data={districts}
+              />
+            </InternRow>
             <InternRow>
               <InternText labelSpan={1} name="addressCompany" label="địa chỉ công ty" />
             </InternRow>
@@ -192,6 +235,7 @@ const ModalDetail = ({ handleCloseDetail, id }: any) => {
                 label="Thông tin người giám sát thực tâp"
               />
             </InternRow>
+           
             <InternRow withAutoCol={12}>
               <InternText
                 colSpan={6}

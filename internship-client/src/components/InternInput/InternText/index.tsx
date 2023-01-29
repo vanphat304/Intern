@@ -43,7 +43,7 @@ const InternText = ({
         <label
           htmlFor={label}
           className={`block ${labelSpan ? 'col-span-1' : 'col-span-2'} text-xl font-normal ${
-            direct ? 'text-left' : 'text-right'
+            direct ? 'text-left col-span-4' : 'text-right'
           }  pr-2 text-gray-900`}
         >
           {label}

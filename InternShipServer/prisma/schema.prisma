@@ -43,6 +43,11 @@ enum RATING {
   PERTTYGOOD
 }
 
+enum WOKINGFORM {
+  PART_TIME
+  FULL_TIME
+}
+
 enum Role {
   USER
   ADMIN
@@ -62,17 +67,19 @@ model NotificationStudent {
 }
 
 model Province {
-  id      String    @id @default(uuid())
-  code    String
-  name    String
-  Company Company[]
+  id              String            @id @default(uuid())
+  code            String
+  name            String
+  Company         Company[]
+  StudentProposal StudentProposal[]
 }
 
 model District {
-  id      String    @id @default(uuid())
-  code    String
-  name    String
-  Company Company[]
+  id              String            @id @default(uuid())
+  code            String
+  name            String
+  Company         Company[]
+  StudentProposal StudentProposal[]
 }
 
 model SpecializeCompany {
@@ -124,6 +131,12 @@ model StudentProposal {
   speacialize      String
   specilizeCompany SpecializeCompany @relation(fields: [speacialize], references: [id])
 
+  addressProvinceId String
+  Province          Province @relation(fields: [addressProvinceId], references: [id])
+
+  addressDistrictId String
+  District          District @relation(fields: [addressDistrictId], references: [id])
+
   createdAt    DateTime @default(now())
   updateAt     DateTime @updatedAt
   studentId    String   @unique
@@ -152,9 +165,9 @@ model Company {
   specializeCompanyId String
   SpecializeCompany   SpecializeCompany @relation(fields: [specializeCompanyId], references: [id])
   address             String?
-
-  addressProvinceId String
-  Province          Province @relation(fields: [addressProvinceId], references: [id])
+  isStudentProp       Boolean?          @default(false)
+  addressProvinceId   String
+  Province            Province          @relation(fields: [addressProvinceId], references: [id])
 
   addressDistrictId String
   District          District @relation(fields: [addressDistrictId], references: [id])
@@ -176,6 +189,7 @@ model JobDecripton {
   decriptionJob      String            @db.Text
   salary             Float?
   numberRecur        Float?
+  workingForm        WOKINGFORM?       @default(PART_TIME)
   companyId          String
   company            Company           @relation(fields: [companyId], references: [id])
   createdAt          DateTime          @default(now())

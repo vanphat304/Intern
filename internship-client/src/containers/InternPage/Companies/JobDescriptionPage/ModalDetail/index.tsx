@@ -27,30 +27,40 @@ import { Company } from '../../../../../types/companies.type';
 import InternButtonTableDelete from '../../../../../components/InternButtonTableDelete';
 import InternTextEditor from '../../../../../components/InternTextEditor';
 import { JobDescription } from '../../../../../types/jobdescription.type';
+import { WOKINGFORM } from '../../../../../types/workingForm.type';
 
 const schema = yup.object({
   jobTitle: yup.string().required('trường này bắt buộc nhập'),
-  decriptionJob: yup.string().required('trường này bắt buộc nhập').max(2000,'Tối đã 2000 ký tự'),
-  salary: yup.string().required('trường này bắt buộc nhập').max(14,'Nhập tối đã 14 chữ số'),
-  numberRecur: yup.string().required('trường này bắt buộc nhập').max(14,'Nhập tối đã 14 chữ số'),
+  decriptionJob: yup.string().required('trường này bắt buộc nhập').max(2000, 'Tối đã 2000 ký tự'),
+  salary: yup.string().required('trường này bắt buộc nhập').max(14, 'Nhập tối đã 14 chữ số'),
+  workingForm: yup.string().required('Trường này bắt buộc nhập'),
+  numberRecur: yup.string().required('trường này bắt buộc nhập').max(14, 'Nhập tối đã 14 chữ số'),
   companyId: yup.string().required('trường này bắt buộc nhập'),
   timeStartApply: yup.date().typeError('trường bắt buộc nhập'),
   timeEndAppply: yup
-    .date().typeError('trường bắt buộc nhập')
+    .date()
+    .typeError('trường bắt buộc nhập')
     .when('timeStartApply', (timeStartApply, schema) => {
       return isValidDate(timeStartApply)
         ? schema.min(timeStartApply, 'Ngày kết thúc nộp phải lớn hơn ngày bắt đầu nộp')
         : schema.required('trường này bắt buộc nhập');
     }),
-  timeToIntverview: yup.date().typeError('trường bắt buộc nhập')
-  .when(
-    'timeEndAppply',(timeEndAppply, schema) =>{
-     return isValidDate(timeEndAppply) 
-     ? schema.min(timeEndAppply, 'Ngày phỏng vấn phải lớn hơn ngày kết thúc nộp cv') 
-     : schema;
+  timeToIntverview: yup
+    .date()
+    .typeError('trường bắt buộc nhập')
+    .when('timeEndAppply', (timeEndAppply, schema) => {
+      return isValidDate(timeEndAppply)
+        ? schema.min(timeEndAppply, 'Ngày phỏng vấn phải lớn hơn ngày kết thúc nộp cv')
+        : schema;
     }),
   addressToInterview: yup.string().required('trường này bắt buộc nhập'),
 });
+
+const workingForms = Object.keys(WOKINGFORM).map((item) => ({
+  id: item,
+  name: item,
+  value: item,
+}));
 
 const ModalDetail = ({ handleCloseDetail, id, handleSearch, handleOpenDelete }: any) => {
   const methods = useForm({
@@ -171,6 +181,14 @@ const ModalDetail = ({ handleCloseDetail, id, handleSearch, handleOpenDelete }: 
             <InternRow withAutoCol={12}>
               <InternText colSpan={6} name="salary" type="number" label="Mức lương " />
               <InternText colSpan={6} name="numberRecur" type="number" label="Số lượng tuyển" />
+            </InternRow>
+            <InternRow>
+              <InternSelect
+                data={workingForms}
+                labelSpan={1}
+                name="workingForm"
+                label="Hình thức làm việc"
+              />
             </InternRow>
             <InternRow>
               <InternTextEditor labelSpan={1} name="decriptionJob" label="Mô tả công việc" />
