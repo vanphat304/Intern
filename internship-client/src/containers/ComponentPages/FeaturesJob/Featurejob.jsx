@@ -7,6 +7,8 @@ import { Service } from '../../../services/service';
 import { CACHE_TIME, QUERY_KEY_COMPANY, QUERY_KEY_JOB_COM, STALE_TIME } from '../../../enums';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useSearchAppStore } from '../../../store/searchStore';
+import InternButtonLike from '../../../components/InternButtonLike';
+import { useAuthStore } from '../../../store';
 
 const settings = {
   dots: true,
@@ -27,7 +29,7 @@ const settingMultipleItem = {
 function FeatureJob() {
   const [search, setSearchJob] = useSearchAppStore();
 
-  console.log({ search });
+  const [{ userLogin }] = useAuthStore();
 
   const { isLoading, data: jobDescriptionCompanies = [] } = useQuery({
     queryFn: () => Service.getJobDescriptionCompany({ search }),
@@ -45,7 +47,6 @@ function FeatureJob() {
     refetchOnWindowFocus: false,
   });
 
-  console.log({ jobDescriptionCompanies });
   return (
     <div>
       <div className="box-featurejob">
@@ -74,14 +75,13 @@ function FeatureJob() {
           <Slider {...settingMultipleItem}>
             {districts.map((item) => {
               return (
-              
                 <button
                   className={`${
                     item.id === search.addressDistrictId
                       ? 'text-white mx-2 p-2 bg-green-600 rounded-full'
                       : 'bg-blue-50 mx-2 p-2 rounded-full'
                   }`}
-                  style={{width:'100px'}}
+                  style={{ width: '100px' }}
                   onClick={() => {
                     console.log('item', item.id);
                     setSearchJob({
@@ -95,7 +95,6 @@ function FeatureJob() {
                 >
                   {item.name}
                 </button>
-              
               );
             })}
           </Slider>
@@ -107,32 +106,38 @@ function FeatureJob() {
               <div className="grid">
                 <div className="row">
                   {jobDescriptionCompanies?.map((item) => {
+                    const { StudentLikeJob } = item;
+                    let isLike = StudentLikeJob.map((item) => item?.studentId).includes(
+                      userLogin?.id,
+                    );
                     return (
                       <div className="cl-3">
-                        <Link to={`/job-description/${item?.jobId}`}>
-                          <div className="feature_boxJob-item">
-                            <div className="boxJob_title">
-                              <div className="boxJob_title-img">
-                                <img src={item?.company?.logo} alt="logo" />
-                              </div>
-
-                              <div className="boxJob_title-des">
-                                <span className="boxJob_title-des-name">{item?.jobTitle}</span>
-                                <span className="boxJob_title-des-cpn">
-                                  {item?.company?.nameCompany}
-                                </span>
-                              </div>
-                              <div className="button_saveJob">
-                                <button>
-                                  <HeartOutlined />
-                                </button>
-                              </div>
+                        <div className="feature_boxJob-item">
+                          <div className="boxJob_title">
+                            <div className="boxJob_title-img">
+                              <img src={item?.company?.logo} alt="logo" />
                             </div>
-                            <div className="boxJob_adress">
-                              <span>{item?.company?.address}</span>
+
+                            <div className="boxJob_title-des">
+                              <Link to={`/job-description/${item?.jobId}`}>
+                                <span className="boxJob_title-des-name">{item?.jobTitle}</span>
+                              </Link>
+                              <span className="boxJob_title-des-cpn">
+                                {item?.company?.nameCompany}
+                              </span>
+                            </div>
+                            <div className="button_saveJob">
+                              <InternButtonLike
+                                init={isLike}
+                                studentId={userLogin?.id}
+                                jobId={item?.jobId}
+                              />
                             </div>
                           </div>
-                        </Link>
+                          <div className="boxJob_adress">
+                            <span>{item?.company?.address}</span>
+                          </div>
+                        </div>
                       </div>
                     );
                   })}

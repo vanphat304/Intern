@@ -1,11 +1,13 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { StudentApplyJob } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { Response } from 'express';
+import { ImportExportService } from 'src/import-export/import-export.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class StudentApplyJobsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService , private exportExcel : ImportExportService) {}
 
   async addStudentApplyJob(dto: StudentApplyJob) {
     try {
@@ -19,6 +21,33 @@ export class StudentApplyJobsService {
       console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
+  }
+
+  async exportStudentApply (res : Response){
+    const listStudentApplyJob: Array<StudentApplyJob> =
+    await this.prisma.studentApplyJob.findMany({
+      include: {
+        student: {
+          select: {
+            firstName: true,
+            lastName: true,
+          },
+        },
+        jobDecription: {
+          select: {
+            jobTitle: true,
+            company: {
+              select: {
+                nameCompany: true,
+              },
+            },
+          },
+        },
+      },
+   
+    });
+
+    return this.exportExcel.exportExcel(res,listStudentApplyJob)
   }
 
   async getListStudentApplyJob(query): Promise<Array<StudentApplyJob>> {

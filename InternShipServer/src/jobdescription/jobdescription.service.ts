@@ -17,8 +17,8 @@ export class JobDescriptionService {
       });
       return JobDecripton;
     } catch (error) {
-      console.log({error});
-      
+      console.log({ error });
+
       if (error instanceof PrismaClientKnownRequestError) {
         if ((error.code = 'P2003')) {
           throw new HttpException(
@@ -70,9 +70,9 @@ export class JobDescriptionService {
         },
       });
 
-      return listJobDecripton.sort((a,b)=>{
-        return b.createdAt as any - (a.createdAt as any)
-      });;
+      return listJobDecripton.sort((a, b) => {
+        return (b.createdAt as any) - (a.createdAt as any);
+      });
     } catch (error) {
       throw error;
     }
@@ -145,6 +145,16 @@ export class JobDescriptionService {
               nameCompany: true,
               logo: true,
               address: true,
+              Province: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+          StudentLikeJob: {
+            select: {
+              studentId: true,
             },
           },
         },
@@ -156,9 +166,55 @@ export class JobDescriptionService {
           HttpStatus.BAD_REQUEST,
         );
       }
-      return results.sort((a,b)=>{
-        return b.createdAt as any - (a.createdAt as any)
-      });;
+      return results.sort((a, b) => {
+        return (b.createdAt as any) - (a.createdAt as any);
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+  async getListJobDesLiked(reqParams: ReqParams) {
+    try {
+      const results = await this.prisma.jobDecripton.findMany({
+        where: {
+          StudentLikeJob: {
+            some: {
+              studentId: reqParams.studentId,
+            },
+          },
+        },
+        include: {
+          company: {
+            select: {
+              nameCompany: true,
+              logo: true,
+              address: true,
+              Province: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+          StudentLikeJob: {
+            select: {
+              studentId: true,
+            },
+          },
+        },
+      });
+
+      if (!results) {
+        throw new HttpException(
+          `can't find Job Description with student ${reqParams.studentId}`,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      console.log({results});
+      
+      return results.sort((a, b) => {
+        return (b.createdAt as any) - (a.createdAt as any);
+      });
     } catch (error) {
       throw error;
     }
@@ -197,11 +253,16 @@ export class JobDescriptionService {
               address: true,
             },
           },
+          StudentLikeJob: {
+            select: {
+              studentId: true,
+            },
+          },
         },
       });
-      return results.sort((a,b)=>{
-        return b.createdAt as any - (a.createdAt as any)
-      });;
+      return results.sort((a, b) => {
+        return (b.createdAt as any) - (a.createdAt as any);
+      });
     } catch (error) {
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }

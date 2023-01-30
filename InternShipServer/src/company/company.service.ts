@@ -27,6 +27,7 @@ export class CompanyService {
         skip: (pageNumber - 1) * pageSize || 0,
         take: pageSize * 1 || 10,
         where: {
+          isStudentProp: false,
           OR: [
             {
               nameCompany: {
@@ -38,9 +39,9 @@ export class CompanyService {
         },
       });
 
-      return listCompany.sort((a,b)=>{
-        return b.createdAt as any - (a.createdAt as any)
-      });;
+      return listCompany.sort((a, b) => {
+        return (b.createdAt as any) - (a.createdAt as any);
+      });
     } catch (error) {
       console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
@@ -51,7 +52,7 @@ export class CompanyService {
     try {
       const listSpecializeCompany: Array<SpecializeCompany> =
         await this.prisma.specializeCompany.findMany();
-        
+
       return listSpecializeCompany;
     } catch (error) {
       console.log(error);
@@ -83,6 +84,9 @@ export class CompanyService {
     try {
       const listCompany: Array<Pick<Company, 'id' | 'nameCompany'>> =
         await this.prisma.company.findMany({
+          where: {
+            isStudentProp: false,
+          },
           select: {
             id: true,
             nameCompany: true,

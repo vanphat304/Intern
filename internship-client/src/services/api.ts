@@ -121,6 +121,7 @@ export const API = {
   jobDescription_update: 'jobdescription/update',
   jobDescription_jobCompany: 'jobdescription/job-company',
   jobDescription_filter: 'jobdescription/filter',
+  jobDescription_like: 'jobdescription/like',
 
   // student proposal
   studentProposal: 'student-proposal',
@@ -148,4 +149,9 @@ export const API = {
   student_work_company_id: 'student-work-company/{id}',
   student_work_company_update: 'student-work-company/update',
   student_work_company_report_id: 'student-work-company/report/{id}',
+
+  //student like job
+  student_like_job:'student-like-job/like',
+  student_un_like_job:'student-like-job/unlike',
+
 };

@@ -109,6 +109,7 @@ model Student {
   studentApplyJob     StudentApplyJob[]
   studentworkCompany  StudentWorkCompany?
   NotificationStudent NotificationStudent[]
+  StudentLikeJob      StudentLikeJob[]
 
   @@index([class])
   @@map("students")
@@ -199,9 +200,24 @@ model JobDecripton {
   timeToIntverview   DateTime?         @default(now())
   addressToInterview String?
   studentApplyJob    StudentApplyJob[]
+  StudentLikeJob     StudentLikeJob[]
 
   @@index([jobTitle])
   @@map("jobdecriptions")
+}
+
+model StudentLikeJob {
+  jobId         String
+  jobDecription JobDecripton @relation(fields: [jobId], references: [jobId])
+
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id])
+
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+
+  @@id([jobId, studentId])
+  @@map("studentlikeJobs")
 }
 
 model StudentApplyJob {

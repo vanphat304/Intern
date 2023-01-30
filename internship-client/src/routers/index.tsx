@@ -23,6 +23,7 @@ import CustomPrivateRoute from './customPrivateRoute/customPrivateRoute';
 import { HistoryApply } from '../containers/ComponentPages/HistoryApply';
 import ReportCompany from '../containers/ComponentPages/ReportCompany';
 import { useAuthStore } from '../store';
+import JobSave from '../containers/ComponentPages/JobSave';
 
 type typeRenderComponent = {
   Component: React.FunctionComponent<any>;
@@ -43,6 +44,9 @@ const Routers = () => {
           <Route path="/job-description/:id" element={<JobDescription />}></Route>
           <Route element={<CustomPrivateRoute redirectPath="/auth/login" check={userLogin} />}>
             <Route path="/history-apply" element={<HistoryApply />}></Route>
+          </Route>
+          <Route element={<CustomPrivateRoute redirectPath="/auth/login" check={userLogin} />}>
+            <Route path="/job-saved" element={<JobSave />}></Route>
           </Route>
           <Route path="/report-company" element={<ReportCompany />}></Route>
         </Route>

@@ -12,6 +12,7 @@ import { StudentProposalModule } from './student-proposal/student-proposal.modul
 import { StudentWorkCompanyModule } from './student-work-company/student-work-company.module';
 import { NotficationModule } from './notfication/notfication.module';
 import { ImportExportModule } from './import-export/import-export.module';
+import { StudentLikeJobModule } from './student-like-job/student-like-job.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { ImportExportModule } from './import-export/import-export.module';
     StudentWorkCompanyModule,
     NotficationModule,
     ImportExportModule,
+    StudentLikeJobModule,
   ],
 })
 export class AppModule {}

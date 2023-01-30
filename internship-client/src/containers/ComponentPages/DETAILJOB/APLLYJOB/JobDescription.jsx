@@ -19,6 +19,7 @@ import {
   CACHE_TIME,
   QUERY_KEY_CHECK,
   QUERY_KEY_JOB_DES_DETAIL,
+  QUERY_KEY_STUDENT_PROPS_ID,
   STALE_TIME,
   datesFormat,
 } from '../../../../enums';
@@ -28,24 +29,34 @@ import { useAuthStore } from '../../../../store';
 function JobDescription() {
   const [modalApply, setModalApply] = useState(null);
   const { id } = useParams();
-  const [{userLogin}] = useAuthStore();
+  const [{ userLogin }] = useAuthStore();
   const navigate = useNavigate();
+
+  const { data: isProposal } = useQuery({
+    enabled: !!userLogin,
+    queryFn: () => Service.getStudentProposal({ id: userLogin?.id }),
+    queryKey: [QUERY_KEY_STUDENT_PROPS_ID, userLogin?.id],
+    refetchOnWindowFocus: false,
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
+  });
 
   const handleOpenApplyJob = () => {
     if (!userLogin) {
       toast('Bạn vui lòng đăng nhập để ứng tuyển ');
       navigate('/auth/login');
+    } else if (!!isProposal) {
+      toast('Sinh viên đã đề xuất công ty ngoài, vui lòng không ứng tuyển thêm !');
     } else {
       setModalApply(1);
     }
   };
   const handleCloseApplyJob = () => {
     setModalApply(null);
-    refetchIsApplied()
-
+    refetchIsApplied();
   };
 
-  const { data: isApplied = false ,refetch : refetchIsApplied } = useQuery({
+  const { data: isApplied = false, refetch: refetchIsApplied } = useQuery({
     queryFn: () => Service.checkIsJobApply({ idStudent: userLogin.id, jobId: id }),
     refetchOnWindowFocus: false,
     queryKey: [QUERY_KEY_CHECK, id],
@@ -72,7 +83,7 @@ function JobDescription() {
     numberRecur,
     salary,
     addressToInterview,
-    workingForm
+    workingForm,
   } = JobDescription;
 
   console.log({ JobDescription });
@@ -99,7 +110,13 @@ function JobDescription() {
                   isApplied ? 'bg-slate-700 cursor-not-allowed' : 'bg-green-600'
                 }`}
               >
-                {isApplied ? 'ĐÃ ỨNG TUYỂN' : 'ỨNG TUYỂN NGAY'}
+                {isApplied ? `ĐÃ ỨNG TUYỂN` : <span>
+                    ỨNG TUYỂN NGAY
+                    
+                  </span>}
+                  { !!isProposal && <p className='text-xs font-thin normal-case'>
+                      không dành cho bạn =.=
+                    </p>}
               </button>
               <button className="p-2 text-green-500 border-solid border border-green-500 rounded-lg">
                 Lưu tin
@@ -127,9 +144,7 @@ function JobDescription() {
                     <CalendarFilled className="border text-green-800 bg-green-300 w-8 h-8 rounded-full flex items-center justify-center" />
                     <p className=" text-sm pl-4 text-slate-500 flex flex-col">
                       <span className="text-base font-semibold text-black">Hình thức làm việc</span>
-                      {
-                        workingForm
-                      }
+                      {workingForm}
                     </p>
                   </div>{' '}
                 </div>

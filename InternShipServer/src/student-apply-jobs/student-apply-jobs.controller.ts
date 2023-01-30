@@ -9,10 +9,12 @@ import {
   Post,
   Put,
   Query,
+  Res,
   UseInterceptors,
 } from '@nestjs/common';
 import { Student, StudentApplyJob } from '@prisma/client';
 import { StudentApplyJobsService } from './student-apply-jobs.service';
+import { Response } from 'express';
 
 @Controller('student-apply-jobs')
 export class StudentApplyJobsController {
@@ -27,6 +29,11 @@ export class StudentApplyJobsController {
   @Get()
   getListStudentApplyJob(@Query() query): Promise<StudentApplyJob[]> {
     return this.StudentApplyJobService.getListStudentApplyJob(query);
+  }
+
+  @Get('export')
+  exportStudentApply(@Res() res : Response) {
+    return this.StudentApplyJobService.exportStudentApply(res);
   }
 
   @Get('check')

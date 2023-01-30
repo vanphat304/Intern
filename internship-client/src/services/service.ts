@@ -29,6 +29,7 @@ export const Service = {
   getJobDescription: (vars: {}) => API.GET(API.jobDescription_id, { vars }),
   getJobDescriptionCompany: (params: {}) => API.GET(API.jobDescription_jobCompany, { params }),
   getJobDescriptionByCompany: (params: {}) => API.GET(API.jobDescription_filter, { params }),
+  getJobDescriptionByStudentLike: (params: {}) => API.GET(API.jobDescription_like, { params }),
   updateJobDescription: (params: {}) => API.PUT(API.jobDescription_update, { params }),
   addJobDescription: (params: {}) => API.POST(API.jobDescription, { params }),
   deleteJobDescription: (vars: {}) => API.DELETE(API.jobDescription_id, { vars }),
@@ -71,4 +72,9 @@ export const Service = {
   deleteStudentWorkCompany: (vars: {}) => API.DELETE(API.student_work_company_id, { vars }),
   reportCompany: (params: {}, vars: {}) =>
     API.POST(API.student_work_company_report_id, { params, vars }),
+
+  // student like job
+
+  likeJob: (params: {}) => API.POST(API.student_like_job, { params }),
+  unLikeJob: (params: {}) => API.POST(API.student_un_like_job, { params }),
 };

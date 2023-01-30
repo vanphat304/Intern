@@ -1,22 +1,16 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Global, Injectable, NotFoundException } from '@nestjs/common';
 import {Workbook} from 'exceljs'
 import * as tmp from 'tmp'
 import { writeFile } from 'fs/promises'
-
-const data = [
-    {
-        name: 'nvp',
-        email : 'nvp@gmail.com'
-    },
-    {
-        name: 'nvp2',
-        email : 'nvp2@gmail.com'
-    }
-]
+import { Response } from 'express';
 
 @Injectable()
 export class ImportExportService {
-    async exportExcel(){
+    async exportExcel( res : Response ,data : any){
+
+        res.setHeader('Content-disposition', 'attachment; filename=vnp.xlsx');
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
         if(!data){
             throw new NotFoundException("NO data to download")
         }
@@ -33,13 +27,8 @@ export class ImportExportService {
 
         sheet.addRows(rows)
 
-        // let File = await new Promise((resolve, reject )=>{
-        //     tmp.file({
-        //     //   discardDescriptor:true,
-        //     //   prefix : 'myExcelSheet',
-        //     //   postfix:'.xlsx',  
-        //     //   mode: parseInt()
-        //     })
-        // })
+        return book.xlsx.write(res)
+
+
     }
 }

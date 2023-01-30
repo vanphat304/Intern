@@ -78,7 +78,16 @@ function Navbar() {
                       Việc làm đã ứng tuyển
                     </NavLink>
                   </li>
-                  <li className="navbar_menu-item">Việc làm đã lưu</li>
+                  <li className="navbar_menu-item">
+                    <NavLink
+                      className={({ isActive }) =>
+                        `${isActive ? 'text-green-500 font-semibold' : ''}`
+                      }
+                      to={'/job-saved'}
+                    >
+                      Việc làm đã lưu
+                    </NavLink>
+                  </li>
                   <li className="navbar_menu-item">Việc làm phù hợp</li>
                 </ul>
               </div>

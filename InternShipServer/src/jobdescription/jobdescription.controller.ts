@@ -37,6 +37,10 @@ export class JobdescriptionController {
   getListJobDesByCompanyId(@Query() reqParams): Promise<JobDecripton[]> {
     return this.jobDescription.getListJobDesByCompanyId(reqParams);
   }
+  @Get('like')
+  getListJobDesByStudentLiked(@Query() reqParams): Promise<JobDecripton[]> {
+    return this.jobDescription.getListJobDesLiked(reqParams);
+  }
   @Get(':id')
   getJobDecriptonById(@Param('id') id: string): Promise<JobDecripton> {
     return this.jobDescription.getJobDecriptonById(id);
