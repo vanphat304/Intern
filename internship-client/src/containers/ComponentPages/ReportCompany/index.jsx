@@ -83,9 +83,9 @@ const ReportCompany = () => {
   return (
     <div className="grid grid-cols-12">
       <div className="col-span-12 bg-white border border-solid border-slate-300 rounded shadow-md p-4">
-        <p className="font-bold border-l-4 border-green-500 pl-4 mb-4">
+        <p className="font-bold border-l-4 border-blue-500 pl-4 mb-4">
           Đánh giá công ty thực tập{' '}
-          <span className="font-semibold text-green-600 text-lg">
+          <span className="font-semibold text-blue-600 text-lg">
             {dataStudentWork?.company?.nameCompany}
           </span>
         </p>
@@ -113,7 +113,7 @@ const ReportCompany = () => {
 
         <div>
           <button
-            className={`p-2 rounded-lg text-white uppercase font-semibold mb-2 bg-green-600`}
+            className={`p-2 rounded-lg text-white uppercase font-semibold mb-2 bg-blue-600`}
             onClick={handleReportCompany()}
             disabled={isLoading}
           >

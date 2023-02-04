@@ -18,7 +18,7 @@
 }
 .des_company-title{
     padding-left:8px;
-    border-left: 5px solid #00b14f;
+    border-left: 5px solid #2563eb;
 }
 
 .share_CPN,
@@ -68,7 +68,7 @@
 .btn-copy button{
     padding: 15px;
     border-radius: 5px;
-    color: #00b14f;
+    color: #2563eb;
     margin-left: .5rem;
     background-color: #f2fbf6;
 }

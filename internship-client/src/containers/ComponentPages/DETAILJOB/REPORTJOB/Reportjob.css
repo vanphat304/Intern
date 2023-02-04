@@ -17,11 +17,11 @@
 }
 .Reportjob-button button{
     background-color: #fff;
-    border: 1px solid #00b14f;
+    border: 1px solid #2563eb;
     width: 100%;
     padding: .75rem 0;
     font-size: 16px;
-    color: #00b14f;
+    color: #2563eb;
     border-radius: 2px;
 }
 .Reportjob-button button:hover{

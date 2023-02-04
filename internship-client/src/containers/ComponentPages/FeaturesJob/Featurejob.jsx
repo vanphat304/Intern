@@ -78,7 +78,7 @@ function FeatureJob() {
                 <button
                   className={`${
                     item.id === search.addressDistrictId
-                      ? 'text-white mx-2 p-2 bg-green-600 rounded-full'
+                      ? 'text-white mx-2 p-2 bg-blue-600 rounded-full'
                       : 'bg-blue-50 mx-2 p-2 rounded-full'
                   }`}
                   style={{ width: '100px' }}

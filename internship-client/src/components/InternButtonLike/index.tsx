@@ -57,7 +57,7 @@ const InternButtonLike = ({ init = false, studentId, jobId }: typeButtonLike) =>
         </button>
       ) : (
         <button disabled={isLoading} onClick={handleUnLikeJob}>
-          <HeartFilled className="text-green-600" />
+          <HeartFilled className="text-blue-600" />
         </button>
       )}
     </>

@@ -64,7 +64,7 @@ function Navbar() {
                   <li className="navbar_menu-item">
                     <NavLink
                       className={({ isActive }) =>
-                        `${isActive ? 'text-green-500 font-semibold' : ''}`
+                        `${isActive ? 'text-blue-500 font-semibold' : ''}`
                       }
                       to={'/'}
                     >
@@ -74,7 +74,7 @@ function Navbar() {
                   <li className="navbar_menu-item">
                     <NavLink
                       className={({ isActive }) =>
-                        `${isActive ? 'text-green-500 font-semibold' : ''}`
+                        `${isActive ? 'text-blue-500 font-semibold' : ''}`
                       }
                       to={'/history-apply'}
                     >
@@ -84,7 +84,7 @@ function Navbar() {
                   <li className="navbar_menu-item">
                     <NavLink
                       className={({ isActive }) =>
-                        `${isActive ? 'text-green-500 font-semibold' : ''}`
+                        `${isActive ? 'text-blue-500 font-semibold' : ''}`
                       }
                       to={'/job-saved'}
                     >
@@ -192,20 +192,20 @@ function Navbar() {
                             !item.isRead && 'bg-slate-200'
                           } `}
                         >
-                          <span className="hover:text-green-600">
-                            <div className="notifi_title flex items-center hover:text-green-600">
-                              <SnippetsFilled className="text-gray-500 hover:text-green-600" />
-                              <span className="text-gray-500 hover:text-green-600">
+                          <span className="hover:text-blue-600">
+                            <div className="notifi_title flex items-center hover:text-blue-600">
+                              <SnippetsFilled className="text-gray-500 hover:text-blue-600" />
+                              <span className="text-gray-500 hover:text-blue-600">
                                 {item?.content}
                               </span>
                             </div>
-                            <div className="notify_text text-gray-500 hover:text-green-600">
+                            <div className="notify_text text-gray-500 hover:text-blue-600">
                               <p
                                 className="text-red-500"
                                 dangerouslySetInnerHTML={{ __html: item.note }}
                               ></p>
                             </div>
-                            <span className="text-xs text-gray-700 font-light hover:text-green-600">
+                            <span className="text-xs text-gray-700 font-light hover:text-blue-600">
                               {formatDateTime(item?.createdAt, 'DD/MM/YYYY')}
                             </span>
                           </span>

@@ -31,7 +31,7 @@
 }
 
 .Applyjob_detailjob-name {
-    color: #00b14f;
+    color: #2563eb;
     font-size: 22px;
     font-weight: 600;
 }
@@ -62,13 +62,13 @@
     font-weight: 600;
 }
 .butonApply-applynow{
-    background-color: #00b14f;
+    background-color: #2563eb;
     color: #fff;
 }
 .butonApply-savejob{
-    color: #00b14f;
+    color: #2563eb;
     background-color: #fff;
-    border: .5px solid #00b14f;
+    border: .5px solid #2563eb;
 }
 .Applyjob_detailjob-buttonApply button:hover{
     cursor: pointer;

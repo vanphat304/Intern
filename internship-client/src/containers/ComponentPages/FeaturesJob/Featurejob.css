@@ -9,7 +9,7 @@
 }
 .featurejob_seemore {
   font-size: 14px;
-  color: #00b14f;
+  color: #2563eb;
 }
 .featurejob_seemore :hover {
   opacity: 0.3;
@@ -37,7 +37,7 @@
   margin-right: auto;
 }
 .btnAdress button:hover {
-  background-color: #00b14f;
+  background-color: #2563eb;
   color: #fff;
   opacity: 1;
   cursor: pointer;
@@ -65,7 +65,7 @@
   content: '›' !important;
 }
 /* .default-button {
-  background-color: #00b14f;
+  background-color: #2563eb;
   color: #fff;
   opacity: 1 !important;
   cursor: pointer;

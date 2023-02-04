@@ -17,7 +17,7 @@
 .modal_header-position{
     flex: 1;
     margin-left: 1rem;
-    color: #00B14F;
+    color: #2563eb;
 }
 .modal_header-position:hover{
     text-decoration: underline;

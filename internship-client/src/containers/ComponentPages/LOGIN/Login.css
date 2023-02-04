@@ -33,13 +33,13 @@
    height: 100%;
    padding: .5rem;
    margin: 0 auto;
-   color: #00b14f;
+   color: #2563eb;
 }
 .Login_form-group button{
     width: 100%;
     font-size: 16px;
     padding: .75rem;
-    background-color: #00b14f;
+    background-color: #2563eb;
     font-weight: 700;
     color: #fff;
     border-radius: 3px;
@@ -54,7 +54,7 @@
     float: right;
     font-size: 14px;
     font-weight: 700;
-    color: #00b14f;
+    color: #2563eb;
 }
 .forgot_pass:hover{
     cursor: pointer;

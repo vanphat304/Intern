@@ -7,16 +7,16 @@
     cursor: pointer;
 }
 .navbar-right__item-logion{
-    border: 1px solid #00b14f;
-    color: #00b14f;
+    border: 1px solid #2563eb;
+    color: #2563eb;
     background-color: #fff;
 }
 .navbar-right__item-logion:hover{
     background-color: rgba(229,247,237,.5);
 }
 .navbar-right__item-register{
-    background: #00b14f!important;
-    border: 1px solid #00b14f;
+    background: #2563eb!important;
+    border: 1px solid #2563eb;
     color: #fff;
 }
 .navbar-right__item-manager{

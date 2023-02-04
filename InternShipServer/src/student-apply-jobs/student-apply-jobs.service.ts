@@ -248,7 +248,6 @@ export class StudentApplyJobsService {
 
   async checkStudentIsApplied(query): Promise<boolean> {
     const { jobId, studentId } = query;
-    console.log('checkkk',jobId,studentId);
     
     try {
       const check: Array<StudentApplyJob> = await this.prisma.studentApplyJob.findMany({
@@ -400,7 +399,6 @@ export class StudentApplyJobsService {
     { reasonReject }: Pick<StudentApplyJob, 'reasonReject'>,
     subId?: string,
   ) {
-    console.log('rejectttttttt');
 
     try {
       const studentApplyJob = await this.prisma.studentApplyJob.findFirst({

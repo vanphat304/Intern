@@ -28,7 +28,7 @@ export const HistoryApply = () => {
   return (
     <div className="grid grid-cols-12">
       <div className="col-span-12 bg-white border border-solid border-slate-300 rounded shadow-md p-4">
-        <p className="font-normal text-lg border-l-4 ml-1 px-2 border-green-600">Công việc đã ứng tuyển</p>
+        <p className="font-normal text-lg border-l-4 ml-1 px-2 border-blue-600">Công việc đã ứng tuyển</p>
 
         {historyApplies.map((item) => {
           const {

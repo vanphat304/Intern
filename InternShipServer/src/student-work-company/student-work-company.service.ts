@@ -13,12 +13,24 @@ export class StudentWorkCompanyService {
         },
       });
 
+      const { studentId } = StudentWorkCompany;
+
       await this.prisma.studentApplyJob.update({
         where: {
           id: idJobApply,
         },
         data: {
           status: 'WORKED',
+        },
+      });
+
+      await this.prisma.studentApplyJob.updateMany({
+        where: {
+          studentId,
+          status: 'APPROPVED',
+        },
+        data: {
+          status: 'NOT_WORKED',
         },
       });
 

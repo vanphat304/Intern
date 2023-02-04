@@ -25,7 +25,7 @@ import {
   STALE_TIME,
   datesFormat,
 } from '../../../../enums';
-import { formatDateTime } from '../../../../helpers/datetime';
+import { formatDateTime, getDayFromDateTime } from '../../../../helpers/datetime';
 import { useAuthStore } from '../../../../store';
 
 function JobDescription() {
@@ -58,9 +58,7 @@ function JobDescription() {
     } else if (!!isProposal) {
       toast.warning('Sinh viên đã đề xuất công ty ngoài, vui lòng không ứng tuyển thêm !');
     } else if (!!isWorked) {
-      toast.warning(
-        'Sinh viên đã xác nhận thực tập tại công , vui lòng không ứng tuyển thêm !',
-      );
+      toast.warning('Sinh viên đã xác nhận thực tập tại công , vui lòng không ứng tuyển thêm !');
     } else {
       setModalApply(1);
     }
@@ -110,26 +108,40 @@ function JobDescription() {
             <img className="w-3/4 object-contain max-h-full" src={logo} alt={nameCompany} />
           </div>
           <div className="flex-1">
-            <h1 className="text-xl font-semibold text-green-600">{jobTitle}</h1>{' '}
+            <h1 className="text-xl font-semibold text-blue-600">{jobTitle}</h1>{' '}
             <h1 className="text-xl font-semibold my-2">{nameCompany}</h1>
             <span className="text-xs flex items-center">
               <ClockCircleOutlined />\ Hạn nộp hồ sơ: {formatDateTime(timeEndAppply, 'DD/MM/YYYY')}
+              {!getDayFromDateTime(timeEndAppply) && (
+                <span className="text-red-600"> ( hết hạn ứng tuyển !)</span>
+              )}
             </span>
           </div>
           <div className="w-52">
             <div className="flex flex-col ">
               <button
                 onClick={!isApplied && handleOpenApplyJob}
+                disabled={!getDayFromDateTime(timeEndAppply)}
                 className={`p-2 rounded-lg text-white uppercase font-semibold mb-2 ${
-                  isApplied ? 'bg-slate-700 cursor-not-allowed' : 'bg-green-600'
+                  isApplied
+                    ? 'bg-slate-700 cursor-not-allowed'
+                    : !getDayFromDateTime(timeEndAppply)
+                    ? ' border border-red-600 cursor-not-allowed'
+                    : 'bg-blue-600'
                 }`}
               >
-                {isApplied ? `ĐÃ ỨNG TUYỂN` : <span>ỨNG TUYỂN NGAY</span>}
-                {!!isProposal | !!isWorked && (
+                {isApplied ? (
+                  `ĐÃ ỨNG TUYỂN`
+                ) : !getDayFromDateTime(timeEndAppply) ? (
+                  <span className="text-red-600"> HẾT HẠN ỨNG TUYỂN</span>
+                ) : (
+                  <span>ỨNG TUYỂN NGAY</span>
+                )}
+                {!!isProposal | !!isWorked && getDayFromDateTime(timeEndAppply) && (
                   <p className="text-xs font-thin normal-case">không dành cho bạn =.=</p>
                 )}
               </button>
-              <button className="p-2 text-green-500 border-solid border border-green-500 rounded-lg">
+              <button className="p-2 text-blue-500 border-solid border border-blue-500 rounded-lg">
                 Lưu tin
               </button>
             </div>
@@ -139,20 +151,20 @@ function JobDescription() {
         <InternRow withAutoCol={12}>
           <div className="col-span-8">
             <div className="mt-4 bg-white rounded-md p-6">
-              <div className="font-bold border-l-4 border-green-500 pl-4">
+              <div className="font-bold border-l-4 border-blue-500 pl-4">
                 Chi tiết tin tuyển dụng
               </div>
               <div className="flex justify-items-start mt-3">
                 <div className="w-2/4">
                   <div className="flex items-center">
-                    <MoneyCollectOutlined className="border text-green-800 bg-green-300 w-8 h-8 rounded-full flex items-center justify-center" />
+                    <MoneyCollectOutlined className="border text-blue-800 bg-blue-300 w-8 h-8 rounded-full flex items-center justify-center" />
                     <p className=" text-sm pl-4 text-slate-500 flex flex-col">
                       <span className="text-base font-semibold text-black">Mức lương</span>
                       {new Intl.NumberFormat().format(salary) + ' VND'}
                     </p>
                   </div>
                   <div className="flex items-center mt-1">
-                    <CalendarFilled className="border text-green-800 bg-green-300 w-8 h-8 rounded-full flex items-center justify-center" />
+                    <CalendarFilled className="border text-blue-800 bg-blue-300 w-8 h-8 rounded-full flex items-center justify-center" />
                     <p className=" text-sm pl-4 text-slate-500 flex flex-col">
                       <span className="text-base font-semibold text-black">Hình thức làm việc</span>
                       {workingForm}
@@ -161,14 +173,14 @@ function JobDescription() {
                 </div>
                 <div className="w-2/4">
                   <div className="flex items-center">
-                    <UsergroupAddOutlined className="border text-green-800 bg-green-300 w-8 h-8 rounded-full flex items-center justify-center" />
+                    <UsergroupAddOutlined className="border text-blue-800 bg-blue-300 w-8 h-8 rounded-full flex items-center justify-center" />
                     <p className=" text-sm pl-4 text-slate-500 flex flex-col">
                       <span className="text-base font-semibold text-black">Số lượng tuyển</span>
                       {numberRecur + ' Người'}
                     </p>
                   </div>
                   <div className="flex items-center mt-1">
-                    <TrophyFilled className="border text-green-800 bg-green-300 w-8 h-8 rounded-full flex items-center justify-center" />
+                    <TrophyFilled className="border text-blue-800 bg-blue-300 w-8 h-8 rounded-full flex items-center justify-center" />
                     <p className=" text-sm pl-4 text-slate-500 flex flex-col">
                       <span className="text-base font-semibold text-black">Cấp bậc</span>
                       Thực tập
@@ -179,12 +191,12 @@ function JobDescription() {
             </div>
 
             <div className="mt-2 bg-white rounded-md p-6">
-              <div className="font-bold border-l-4 border-green-500 pl-4">Địa điểm làm việc</div>
+              <div className="font-bold border-l-4 border-blue-500 pl-4">Địa điểm làm việc</div>
               <span>{addressToInterview}</span>
             </div>
 
             <div className="mt-2 bg-white rounded-md p-6">
-              <div className="font-bold border-l-4 border-green-500 pl-4">Mô tả công việc</div>
+              <div className="font-bold border-l-4 border-blue-500 pl-4">Mô tả công việc</div>
               <p dangerouslySetInnerHTML={{ __html: decriptionJob }}></p>
             </div>
           </div>

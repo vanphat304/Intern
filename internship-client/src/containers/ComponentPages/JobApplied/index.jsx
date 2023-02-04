@@ -79,7 +79,7 @@ const JobApplied = ({
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  class="w-10 h-10 text-green-600 animate-bounce cursor-pointer"
+                  class="w-10 h-10 text-blue-600 animate-bounce cursor-pointer"
                 >
                   <path
                     fill-rule="evenodd"
@@ -116,13 +116,13 @@ const JobApplied = ({
             {formatDateTime(dateAppply, 'DD/MM/YYYY HH:mm')}
           </p>
           <div className="flex">
-            <span className="text-green-800 bg-green-300 rounded-3xl p-1 flex items-center">
+            <span className="text-blue-800 bg-blue-300 rounded-3xl p-1 flex items-center">
               <EyeFilled />
               <a target={'_blank'} rel="noreferrer" href={fileScore}>
                 file điểm
               </a>
             </span>
-            <span className="text-green-800 bg-green-300 rounded-3xl p-1 flex items-center ml-2">
+            <span className="text-blue-800 bg-blue-300 rounded-3xl p-1 flex items-center ml-2">
               <EyeFilled />
               <a target={'_blank'} rel="noreferrer" href={fileCV}>
                 file CV

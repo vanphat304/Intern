@@ -16,10 +16,15 @@ export const isValidDate = (dateTime) =>
   dateTime ? dayjs(dateTime).isValid() : null
 
 export const getDayFromDateTime = (dateTime) => {
+  if (!isValidDate(dateTime)) {
+    return 0
+  }
+  let day = new Date(dateTime).getTime() - new Date().getTime()
+  if (day < 0) {
+    return 0
+  } return Math.ceil(day / (3600 * 24 * 1000))
 
-console.log('compare',Math.abs( new Date() - new Date(dateTime)))
-  return isValidDate(dateTime) ? new Date((new Date(dateTime).getTime() - new Date().getTime())).getDate() : 0
 }
-export const getCurrentTime = (dateTime = new Date())=> {
-  return isValidDate(dateTime) ? formatDateTime(dateTime , 'DD/MM/YYYY - hh:mm:ss') : null
+export const getCurrentTime = (dateTime = new Date()) => {
+  return isValidDate(dateTime) ? formatDateTime(dateTime, 'DD/MM/YYYY - hh:mm:ss') : null
 }
