@@ -12,7 +12,7 @@ const InternFooterModalContainer = ({
   ButtonCancel,
 }: typeButtonFootetModal) => {
   return (
-    <div className="flex justify-between px-4">
+    <div className="flex border-t pt-4 justify-between px-4">
       <div>{ButtonDelete}</div>
 
     <div className='flex'>

@@ -43,6 +43,7 @@ export class UploadfileController {
     )
     file,
   ) {
+    console.log('filene',file)
     return file;
   }
 

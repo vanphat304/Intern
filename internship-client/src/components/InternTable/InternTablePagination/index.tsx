@@ -6,7 +6,7 @@ import { useQueryString } from '../../../hook/useQueryString';
 type pagination = {
   pageSize?: number;
   totalpageSize?: number;
-  pageNumber?: number;
+  pageNumber: number;
 };
 
 const InternTablePagination = ({
@@ -38,7 +38,7 @@ const InternTablePagination = ({
               </Link>
             )}
           </li>
-          {Array(totalpageSize)
+          {Array(Math.ceil(totalpageSize / pageSize ))
             .fill(0)
             .map((_, index) => {
               const pageSizeNumber = index + 1;
@@ -76,7 +76,7 @@ const InternTablePagination = ({
               );
             })}
           <li>
-            {pageSize === totalpageSize ? (
+            {pageNumber === Math.ceil(totalpageSize / pageSize ) ? (
               <span className="cursor-not-allowed rounded-r-lg border border-gray-300 bg-white py-2 px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 ">
                 Next
               </span>

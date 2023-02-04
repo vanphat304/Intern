@@ -12,15 +12,20 @@ export class StudentController {
   getListStudent(@Query() query): Promise<Array<Omit<Student, 'passwordHashed'>>> {
     return this.studentService.getListStudent(query);
   }
+  @Get('count')
+  getListStudentCount(): Promise<number> {
+    return this.studentService.getListStudentCount();
+  }
   @Get('params')
-  getStudentByParams(): Promise<Array<Pick<Student, 'id' | 'firstName' | 'lastName' |'identifierStudent'>>> {
+  getStudentByParams(): Promise<
+    Array<Pick<Student, 'id' | 'firstName' | 'lastName' | 'identifierStudent'>>
+  > {
     return this.studentService.getStudentByParams();
   }
   @Get(':id')
   getStudentById(@Param('id') id: string): Promise<Student> {
     return this.studentService.getStudentById(id);
   }
-
 
   @Post()
   addNewStudent(@Body() dto: Student) {

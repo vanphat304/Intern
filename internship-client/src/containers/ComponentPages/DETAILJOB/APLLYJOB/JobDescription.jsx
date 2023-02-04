@@ -19,7 +19,9 @@ import {
   CACHE_TIME,
   QUERY_KEY_CHECK,
   QUERY_KEY_JOB_DES_DETAIL,
+  QUERY_KEY_STUDENTS_PROPS,
   QUERY_KEY_STUDENT_PROPS_ID,
+  QUERY_KEY_STUDENT_WORK_ID,
   STALE_TIME,
   datesFormat,
 } from '../../../../enums';
@@ -40,13 +42,25 @@ function JobDescription() {
     cacheTime: CACHE_TIME,
     staleTime: STALE_TIME,
   });
+  const { data: isWorked } = useQuery({
+    enabled: !!userLogin,
+    queryFn: () => Service.getStudentWorkCompany({ id: userLogin?.id }),
+    queryKey: [QUERY_KEY_STUDENT_WORK_ID, userLogin?.id],
+    refetchOnWindowFocus: false,
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
+  });
 
   const handleOpenApplyJob = () => {
     if (!userLogin) {
-      toast('Bạn vui lòng đăng nhập để ứng tuyển ');
+      toast.warning('Bạn vui lòng đăng nhập để ứng tuyển ');
       navigate('/auth/login');
     } else if (!!isProposal) {
-      toast('Sinh viên đã đề xuất công ty ngoài, vui lòng không ứng tuyển thêm !');
+      toast.warning('Sinh viên đã đề xuất công ty ngoài, vui lòng không ứng tuyển thêm !');
+    } else if (!!isWorked) {
+      toast.warning(
+        'Sinh viên đã xác nhận thực tập tại công , vui lòng không ứng tuyển thêm !',
+      );
     } else {
       setModalApply(1);
     }
@@ -57,7 +71,7 @@ function JobDescription() {
   };
 
   const { data: isApplied = false, refetch: refetchIsApplied } = useQuery({
-    queryFn: () => Service.checkIsJobApply({ idStudent: userLogin.id, jobId: id }),
+    queryFn: () => Service.checkIsJobApply({ studentId: userLogin.id, jobId: id }),
     refetchOnWindowFocus: false,
     queryKey: [QUERY_KEY_CHECK, id],
     cacheTime: CACHE_TIME,
@@ -110,13 +124,10 @@ function JobDescription() {
                   isApplied ? 'bg-slate-700 cursor-not-allowed' : 'bg-green-600'
                 }`}
               >
-                {isApplied ? `ĐÃ ỨNG TUYỂN` : <span>
-                    ỨNG TUYỂN NGAY
-                    
-                  </span>}
-                  { !!isProposal && <p className='text-xs font-thin normal-case'>
-                      không dành cho bạn =.=
-                    </p>}
+                {isApplied ? `ĐÃ ỨNG TUYỂN` : <span>ỨNG TUYỂN NGAY</span>}
+                {!!isProposal | !!isWorked && (
+                  <p className="text-xs font-thin normal-case">không dành cho bạn =.=</p>
+                )}
               </button>
               <button className="p-2 text-green-500 border-solid border border-green-500 rounded-lg">
                 Lưu tin

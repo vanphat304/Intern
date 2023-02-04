@@ -19,6 +19,7 @@ import InternModalDelete from '../../../../components/InterModalContainer/Intern
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import { JobDescriptions } from '../../../../types/jobdescription.type';
+import { filterObjectFalsy } from '../../../../helpers/object';
 
 type searchItemType = {
   searchItem: string;
@@ -29,7 +30,7 @@ const JobDescriptionPage = () => {
   const [modalDetailId, setModalDetailId] = useState<number | null>(null);
   const [modalDeleteId, setModalDeleteId] = useState<number | null>(null);
 
-  const [queryString, setUrlSearchParams, {companyId}] = useQueryString('companyId');
+  const [queryString, setUrlSearchParams, { companyId }] = useQueryString('companyId');
 
   const { pageNumber, pageSize, searchItem } = queryString;
 
@@ -64,9 +65,16 @@ const JobDescriptionPage = () => {
     staleTime: STALE_TIME,
     keepPreviousData: true,
   });
+  const { data: counts } = useQuery({
+    queryKey: [QUERY_KEY_JOB_DES + 'count'],
+    queryFn: () => Service.getJobDescriptionsCounts({ ...queryString, companyId }),
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
+    keepPreviousData: true,
+  });
 
   const handleSearch = (searchItem: searchItemType) => {
-    setUrlSearchParams({ ...queryString, ...searchItem });
+    setUrlSearchParams({ ...queryString, ...filterObjectFalsy(searchItem) });
   };
 
   return (
@@ -74,6 +82,7 @@ const JobDescriptionPage = () => {
       <StudentSearch onClick={handleSearch as (a: searchItemType | void) => void} />
       <InternButtonAddNew col={6} onClick={() => handleOpenDetail(IS_ADD)} />
       <InternTable
+        counts={counts}
         columns={columnsJobDescriptions({
           handleOpenDetail: handleOpenDetail,
           handleOpenDelete: handleOpenDelete,

@@ -12,8 +12,9 @@ const LeftMenu = () => {
       <li>
         <img src={logo} alt="logo" />
       </li>
-      {COMPONENTS_LEFT_MENU.map(({ title, subMenu, code }) => {
-        return <InternItemMenu title={title} subMenu={subMenu} code={code} key={code} />;
+      {COMPONENTS_LEFT_MENU.map(({ title, subMenu, code , Icon }) => {
+        
+        return <InternItemMenu title={title} subMenu={subMenu} code={code} key={code} Icon={Icon} />;
       })}
     </ul>
   );

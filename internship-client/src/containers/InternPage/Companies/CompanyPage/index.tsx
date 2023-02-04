@@ -8,7 +8,14 @@ import ModalDetail from './ModalDetail';
 import StudentSearch from './StudentSearch';
 import { useQueryString } from '../../../../hook/useQueryString';
 import { Service } from '../../../../services/service';
-import { CACHE_TIME, IS_ADD, IS_DELETE, QUERY_KEY_COMPANY, QUERY_KEY_STUDENTS, STALE_TIME } from '../../../../enums';
+import {
+  CACHE_TIME,
+  IS_ADD,
+  IS_DELETE,
+  QUERY_KEY_COMPANY,
+  QUERY_KEY_STUDENTS,
+  STALE_TIME,
+} from '../../../../enums';
 import InternModalDelete from '../../../../components/InterModalContainer/InternModalDelete';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
@@ -57,6 +64,13 @@ const CompanyPage = () => {
     staleTime: STALE_TIME,
     keepPreviousData: true,
   });
+  const { data: counts } = useQuery({
+    queryKey: [QUERY_KEY_COMPANY + 'count'],
+    queryFn: () => Service.getCompaniesCount(queryString),
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
+    keepPreviousData: true,
+  });
 
   const handleSearch = (searchItem: searchItemType) => {
     setUrlSearchParams({ ...queryString, ...searchItem });
@@ -67,6 +81,7 @@ const CompanyPage = () => {
       <StudentSearch onClick={handleSearch as (a: searchItemType | void) => void} />
       <InternButtonAddNew col={6} onClick={() => handleOpenDetail(IS_ADD)} />
       <InternTable
+        counts={counts}
         columns={columnsCompanies({
           handleOpenDetail: handleOpenDetail,
           handleOpenDelete: handleOpenDelete,

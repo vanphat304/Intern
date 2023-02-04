@@ -9,8 +9,10 @@ import { Service } from '../../../services/service';
 import { toast } from 'react-toastify';
 import { useAuthStore } from '../../../store';
 const JobApplied = ({
+  refetch,
   status,
   jobId,
+  idJobApply,
   jobTitle,
   nameCompany,
   dateAppply,
@@ -21,7 +23,11 @@ const JobApplied = ({
 }) => {
   const [modalConfirm, setModalConfirm] = useState(null);
 
-  const [{ userLogin : {id} }] = useAuthStore();
+  const [
+    {
+      userLogin: { id },
+    },
+  ] = useAuthStore();
   const handleCloseModalConfirm = () => {
     setModalConfirm(null);
   };
@@ -34,6 +40,7 @@ const JobApplied = ({
     mutationFn: (params) => Service.addStudentWorkCompany(params),
     onSuccess: () => {
       toast('Xác nhận nới thực tập thành công');
+      refetch();
       handleCloseModalConfirm();
     },
     onError: () => {
@@ -44,6 +51,7 @@ const JobApplied = ({
   const handleConfirm = () => {
     const dataSubmit = {
       studentId: id,
+      idJobApply,
       companyId,
       decription: '',
     };
@@ -61,11 +69,33 @@ const JobApplied = ({
           </p>
           <p className="text-slate-500 text-lg uppercase">{nameCompany}</p>
         </div>
+
+        {status === STATUS.APPROPVED && (
+          <div className="flex items-center flex-col mr-6">
+            <p className="text-slate-300 font-normal flex items-center">Xác nhận nơi thực tập</p>
+            <div className="flex">
+              <span onClick={status === STATUS.APPROPVED && handleOpenModalConfirm}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-10 h-10 text-green-600 animate-bounce cursor-pointer"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </span>
+            </div>
+          </div>
+        )}
+
         <div className="flex items-center flex-col mr-6">
           <p className="text-slate-300 font-normal flex items-center">Trạng thái</p>
           <div className="flex">
             <span
-              onClick={status === STATUS.APPROPVED && handleOpenModalConfirm}
               className={`${
                 status === STATUS.SUMBMITED
                   ? 'bg-yellow-200 text-yellow-800'

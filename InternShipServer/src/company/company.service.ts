@@ -19,6 +19,10 @@ export class CompanyService {
     }
   }
 
+  async getListCompanyCount() {
+    return await this.prisma.company.count();
+  }
+
   async getListCompany(query): Promise<Array<Company>> {
     try {
       const { pageNumber, pageSize, searchItem } = query;

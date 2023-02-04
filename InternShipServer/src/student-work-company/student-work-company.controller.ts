@@ -8,6 +8,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { StudentWorkCompany } from '@prisma/client';
 import { StudentWorkCompanyService } from './student-work-company.service';
@@ -18,13 +19,20 @@ export class StudentWorkCompanyController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  addStudentWorkCompany(@Body() dto: StudentWorkCompany): Promise<StudentWorkCompany> {
-    return this.StudentWorkCompanyService.addStudentWorkCompany(dto);
+  addStudentWorkCompany(@Body() dto): Promise<StudentWorkCompany> {
+    const {idJobApply , ...studentWork} = dto;
+    return this.StudentWorkCompanyService.addStudentWorkCompany(idJobApply , studentWork);
   }
   @Get()
-  getListStudentWorkCompany(): Promise<StudentWorkCompany[]> {
-    return this.StudentWorkCompanyService.getListStudentWorkCompany();
+  getListStudentWorkCompany( @Query() query): Promise<StudentWorkCompany[]> {
+    return this.StudentWorkCompanyService.getListStudentWorkCompany(query);
   }
+
+  @Get('/count')
+  getListStudentWorkCompanyRecords( @Query() query): Promise<number> {
+    return this.StudentWorkCompanyService.getTotalRecord();
+  }
+
   @Get(':id')
   getStudentWorkCompanyById(@Param('id') id: string): Promise<StudentWorkCompany> {
     return this.StudentWorkCompanyService.getStudentWorkCompanyById(id);

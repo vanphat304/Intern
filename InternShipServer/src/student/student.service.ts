@@ -9,6 +9,15 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 export class StudentService {
   constructor(private prisma: PrismaService, private auth: AuthService) {}
 
+  async getListStudentCount() {
+    return await this.prisma.student.count({
+      where: {
+        role: {
+          equals: 'USER',
+        },
+      },
+    });
+  }
   async getListStudent(query): Promise<Array<Omit<Student, 'passwordHashed'>>> {
     try {
       const { pageNumber, pageSize, searchItem } = query;
@@ -47,8 +56,8 @@ export class StudentService {
           },
         });
 
-      return listStudent.sort((a,b)=>{
-        return b.createdAt as any - (a.createdAt as any)
+      return listStudent.sort((a, b) => {
+        return (b.createdAt as any) - (a.createdAt as any);
       });
     } catch (error) {
       console.log(error);
@@ -75,14 +84,16 @@ export class StudentService {
     }
   }
 
-  async getStudentByParams(): Promise<Array<Pick<Student, 'id' | 'firstName' | 'lastName' | 'identifierStudent'>>> {
+  async getStudentByParams(): Promise<
+    Array<Pick<Student, 'id' | 'firstName' | 'lastName' | 'identifierStudent'>>
+  > {
     try {
       const students = await this.prisma.student.findMany({
         select: {
           id: true,
           firstName: true,
           lastName: true,
-          identifierStudent:true,
+          identifierStudent: true,
         },
       });
       return students;

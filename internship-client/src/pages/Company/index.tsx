@@ -20,7 +20,6 @@ const CompanyDetail = () => {
 
   const { banner, logo, nameCompany, website, scale , introduce , address } = companyDetail || {};
 
-  console.log({ companyDetail });
 
   return (
     <>

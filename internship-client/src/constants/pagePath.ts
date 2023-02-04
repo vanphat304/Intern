@@ -1,6 +1,6 @@
 import CompanyPage from '../containers/InternPage/Companies/CompanyPage';
 import JobDescriptionPage from '../containers/InternPage/Companies/JobDescriptionPage';
-import ResultApplyJobPage from '../containers/InternPage/Results/ResultApplyJobPage';
+import ResultApplyJobPage, { CompanyIcon, StudentIcon } from '../containers/InternPage/Results/ResultApplyJobPage';
 import StudentApplyForJobPage from '../containers/InternPage/Students/StudentApplyJobPage';
 import StudentPage from '../containers/InternPage/Students/StudentPage';
 import StudentProposalPage from '../containers/InternPage/Students/StudentProposalPage';
@@ -68,12 +68,13 @@ export const COMPONENTS_PRIVATE_ADMIN_FLATTED_MAP = Object.keys(COMPONENTS_PRIVA
     }),
   )
   .flat();
+  export const COMPONENTS_LEFT_MENU = [
 
-export const COMPONENTS_LEFT_MENU = [
   {
     code: 'students',
     title: 'Sinh Viên',
     path: '/students',
+    Icon : StudentIcon,
     subMenu: Object.keys(COMPONENTS_PRIVATE_ADMIN_ROUTER['Students']).map((i) => {
       let objectKeyNestedType = COMPONENTS_PRIVATE_ADMIN_ROUTER['Students'];
       type objectNestedKeyType = keyof typeof objectKeyNestedType;
@@ -84,6 +85,8 @@ export const COMPONENTS_LEFT_MENU = [
     code: 'companies',
     title: 'Công Ty',
     path: '/Companies',
+    Icon : CompanyIcon,
+
     subMenu: Object.keys(COMPONENTS_PRIVATE_ADMIN_ROUTER['Companies']).map((i) => {
       let objectKeyNestedType = COMPONENTS_PRIVATE_ADMIN_ROUTER['Companies'];
       type objectNestedKeyType = keyof typeof objectKeyNestedType;
@@ -94,6 +97,8 @@ export const COMPONENTS_LEFT_MENU = [
     code: 'results',
     title: 'Kết quả',
     path: '/ResultApplyJobs',
+    Icon : ResultApplyJobPage,
+
     subMenu: Object.keys(COMPONENTS_PRIVATE_ADMIN_ROUTER['Results']).map((i) => {
       let objectKeyNestedType = COMPONENTS_PRIVATE_ADMIN_ROUTER['Results'];
       type objectNestedKeyType = keyof typeof objectKeyNestedType;

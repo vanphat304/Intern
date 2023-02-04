@@ -22,10 +22,16 @@ export class StudentProposalController {
   addStudentProposal(@Body() dto: StudentProposal): Promise<StudentProposal> {
     return this.studentProposal.addStudentProposal(dto);
   }
+
   @Get()
   getListStudentProposal(@Query() query): Promise<StudentProposal[]> {
     return this.studentProposal.getListStudentProposal(query);
   }
+  @Get('count')
+  getListStudentProposalCount(): Promise<number> {
+    return this.studentProposal.getListStudentProposalCount();
+  }
+
   @Get(':id')
   getStudentProposalById(@Param('id') id: string): Promise<StudentProposal> {
     return this.studentProposal.getStudentProposalById(id);
@@ -43,9 +49,12 @@ export class StudentProposalController {
     return this.studentProposal.approveStudentProposal(id);
   }
   @Put('reject/:id')
-  rejectStudent(@Param('id') id: string, @Body() reasonReject: Pick<StudentProposal, 'reasonReject'>) {
-    console.log({reasonReject});
-    
+  rejectStudent(
+    @Param('id') id: string,
+    @Body() reasonReject: Pick<StudentProposal, 'reasonReject'>,
+  ) {
+    console.log({ reasonReject });
+
     return this.studentProposal.rejectStudentProposal(id, reasonReject);
   }
 }

@@ -8,6 +8,7 @@ export const Service = {
   registerAuth: (params: {}) => API.POST(API.registerAuth, { params }),
   //student
   getStudents: (params: {}) => API.GET(API.student, { params }),
+  getStudentsCount: (params: {}) => API.GET(API.student_count, { params }),
   getStudent: (vars: {}) => API.GET(API.student_id, { vars }),
   getStudentParams: (params?: {}) => API.GET(API.student_params, { params }),
   updateStudent: (params: {}) => API.PUT(API.student_update, { params }),
@@ -15,6 +16,7 @@ export const Service = {
 
   //company
   getCompanies: (params: {}) => API.GET(API.company, { params }),
+  getCompaniesCount: (params: {}) => API.GET(API.company_count, { params }),
   getCompanySpecialize: (params: {}) => API.GET(API.company_specialize, { params }),
   getCompanyDistrict: (params: {}) => API.GET(API.company_district, { params }),
   getCompanyProvince: (params: {}) => API.GET(API.company_province, { params }),
@@ -26,6 +28,7 @@ export const Service = {
 
   // job description
   getJobDescriptions: (params: {}) => API.GET(API.jobDescription, { params }),
+  getJobDescriptionsCounts: (params: {}) => API.GET(API.jobDescription_count, { params }),
   getJobDescription: (vars: {}) => API.GET(API.jobDescription_id, { vars }),
   getJobDescriptionCompany: (params: {}) => API.GET(API.jobDescription_jobCompany, { params }),
   getJobDescriptionByCompany: (params: {}) => API.GET(API.jobDescription_filter, { params }),
@@ -37,6 +40,7 @@ export const Service = {
   //student-proposal
 
   getStudentProposals: (params: {}) => API.GET(API.studentProposal, { params }),
+  getStudentProposalsCount: (params: {}) => API.GET(API.studentProposal_count, { params }),
   getStudentProposal: (vars: {}) => API.GET(API.studentProposal_id, { vars }),
   updateStudentProposal: (params: {}) => API.PUT(API.studentProposal_update, { params }),
   addStudentProposal: (params: {}) => API.POST(API.studentProposal, { params }),
@@ -48,6 +52,7 @@ export const Service = {
   // student apply job
 
   getStudentApplyJobs: (params: {}) => API.GET(API.studentApplyJob, { params }),
+  getStudentApplyJobsCount: (params: {}) => API.GET(API.studentApplyJob_count, { params }),
   getStudentApplyJob: (vars: {}) => API.GET(API.studentApplyJob_id, { vars }),
   updateStudentApplyJob: (params: {}) => API.PUT(API.studentApplyJob_update, { params }),
   addStudentApplyJob: (params: {}) => API.POST(API.studentApplyJob, { params }),
@@ -57,6 +62,9 @@ export const Service = {
   approveStudentApplyJob: (vars: {}) => API.PUT(API.studentApplyJob_approve_id, { vars }),
   getHistoryApplies: (vars: {}) => API.GET(API.studentApplyJob_history_apply, { vars }),
   checkIsJobApply: (params: {}) => API.GET(API.studentApplyJob_check, { params }),
+  exportStudentApplyJob: (params: {}) => API.EXPORT_EXCEL(API.studentApplyJob_export, { params }),
+  importStudentApplyJob: (params: {}) =>
+    API.POST_ATTACH_FILE(API.studentApplyJob_import, { params }),
 
   // student notification
 
@@ -66,6 +74,7 @@ export const Service = {
   // student work company
 
   getStudentsWorkCompany: (params: {}) => API.GET(API.student_work_company, { params }),
+  getStudentsWorkCompanyCount: (params: {}) => API.GET(API.student_work_company_count, { params }),
   getStudentWorkCompany: (vars: {}) => API.GET(API.student_work_company_id, { vars }),
   updateStudentWorkCompany: (params: {}) => API.PUT(API.student_work_company_update, { params }),
   addStudentWorkCompany: (params: {}) => API.POST(API.student_work_company, { params }),

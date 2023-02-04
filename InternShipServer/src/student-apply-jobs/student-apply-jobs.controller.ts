@@ -2,23 +2,34 @@ import {
   Body,
   Controller,
   Delete,
+  FileTypeValidator,
   Get,
   HttpCode,
   HttpStatus,
+  MaxFileSizeValidator,
   Param,
+  ParseFilePipe,
   Post,
   Put,
   Query,
   Res,
+  UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { Student, StudentApplyJob } from '@prisma/client';
+import { STATUS, Student, StudentApplyJob } from '@prisma/client';
 import { StudentApplyJobsService } from './student-apply-jobs.service';
 import { Response } from 'express';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import path from 'path';
+import { ImportExportService } from 'src/import-export/import-export.service';
 
 @Controller('student-apply-jobs')
 export class StudentApplyJobsController {
-  constructor(private StudentApplyJobService: StudentApplyJobsService) {}
+  constructor(
+    private StudentApplyJobService: StudentApplyJobsService,
+    private importResult: ImportExportService,
+  ) {}
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -30,10 +41,55 @@ export class StudentApplyJobsController {
   getListStudentApplyJob(@Query() query): Promise<StudentApplyJob[]> {
     return this.StudentApplyJobService.getListStudentApplyJob(query);
   }
+  @Get('count')
+  getListStudentApplyJobCount(): Promise<number> {
+    return this.StudentApplyJobService.getListStudentApplyJobCount();
+  }
 
   @Get('export')
-  exportStudentApply(@Res() res : Response) {
-    return this.StudentApplyJobService.exportStudentApply(res);
+  exportStudentApply(@Res() res: Response, @Query() query) {
+    return this.StudentApplyJobService.exportStudentApply(res, query);
+  }
+  @Post('import')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadFile(
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 100000000 }),
+          // new FileTypeValidator({ fileType:'^.*\.(jpg|JPG|gif|GIF|doc|DOC|pdf|PDF)$' }),
+        ],
+      }),
+    )
+    file,
+  ) {
+    const data = await this.importResult.readFile(file);
+
+    console.log({ data });
+
+    const result = await Promise.all(
+      data
+        .filter((item) => item.value === STATUS.APPROPVED || item.value === STATUS.REJECTED)
+        .map(({ value, id, description, subId }) => {
+          switch (value) {
+            case STATUS.APPROPVED:
+              return this.StudentApplyJobService.approveStudentApplyJob(id, subId);
+            case STATUS.REJECTED:
+              return this.StudentApplyJobService.rejectStudentApplyJob(
+                id,
+                {
+                  reasonReject: description,
+                },
+                subId,
+              );
+            default:
+              break;
+          }
+        }),
+    );
+    console.log({ result });
+
+    return data;
   }
 
   @Get('check')

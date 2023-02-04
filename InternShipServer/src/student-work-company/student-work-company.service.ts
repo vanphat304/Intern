@@ -5,13 +5,23 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class StudentWorkCompanyService {
   constructor(private prisma: PrismaService) {}
-  async addStudentWorkCompany(dto: StudentWorkCompany) {
+  async addStudentWorkCompany(idJobApply: string, dto: StudentWorkCompany) {
     try {
       const StudentWorkCompany: StudentWorkCompany = await this.prisma.studentWorkCompany.create({
         data: {
           ...dto,
         },
       });
+
+      await this.prisma.studentApplyJob.update({
+        where: {
+          id: idJobApply,
+        },
+        data: {
+          status: 'WORKED',
+        },
+      });
+
       return StudentWorkCompany;
     } catch (error) {
       console.log(error);
@@ -19,13 +29,25 @@ export class StudentWorkCompanyService {
     }
   }
 
-  async getListStudentWorkCompany(): Promise<Array<StudentWorkCompany>> {
+  async getListStudentWorkCompany(query): Promise<Array<StudentWorkCompany>> {
+    const { studentId, companyId, pageSize, pageNumber } = query;
+
     try {
       const listStudentWorkCompany: Array<StudentWorkCompany> =
         await this.prisma.studentWorkCompany.findMany({
+          skip: (pageNumber - 1) * pageSize || 0,
+          take: pageSize * 1 || 10,
           include: {
             company: true,
             student: true,
+          },
+          where: {
+            companyId: {
+              contains: companyId || '',
+            },
+            studentId: {
+              contains: studentId || '',
+            },
           },
         });
 
@@ -34,6 +56,10 @@ export class StudentWorkCompanyService {
       console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
+  }
+
+  async getTotalRecord() {
+    return await this.prisma.studentWorkCompany.count();
   }
 
   async getStudentWorkCompanyById(studentId: string): Promise<StudentWorkCompany> {

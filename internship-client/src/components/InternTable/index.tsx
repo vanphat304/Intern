@@ -5,11 +5,13 @@ import InternTablePagination from './InternTablePagination';
 import { datesFormat } from '../../enums';
 import { formatDateTime } from '../../helpers/datetime';
 import { getNestedValue } from '../../helpers/object';
+import { useQueryString } from '../../hook/useQueryString';
 
 type tableType = {
   columns: Array<any>;
   dataSource: Array<any>;
   isLoading?: boolean;
+  counts?: number;
 };
 
 type columnType = {
@@ -20,7 +22,10 @@ type columnType = {
 
 type studentType = 'id' | 'email' | 'avatar';
 
-const InternTable = ({ columns = [], dataSource, isLoading = false }: tableType) => {
+const InternTable = ({ columns = [], dataSource, isLoading = false, counts = 10 }: tableType) => {
+  const [queryString] = useQueryString();
+  const { pageNumber, pageSize } = queryString;
+
   return (
     <>
       {isLoading ? (
@@ -81,6 +86,12 @@ const InternTable = ({ columns = [], dataSource, isLoading = false }: tableType)
                                 : data[dataIndex as studentType]}
                             </td>
                           );
+                        } else if (key === 'index') {
+                          return (
+                            <td key={dataIndex} className="text-center py-4 px-6">
+                              {index + 1}
+                            </td>
+                          );
                         } else if (key !== 'action') {
                           return (
                             <Fragment key={indexColumn}>
@@ -102,7 +113,7 @@ const InternTable = ({ columns = [], dataSource, isLoading = false }: tableType)
                               )}
                             </Fragment>
                           );
-                          } else {
+                        } else {
                           return (
                             <td
                               key={key}
@@ -112,7 +123,9 @@ const InternTable = ({ columns = [], dataSource, isLoading = false }: tableType)
                                   : 'bg-slate-100 hover:bg-slate-300'
                               } text-center py-4 px-6 sticky  right-0 z-10`}
                             >
-                              {render ? render(data.id || data.jobId || data.studentId) : data[dataIndex as studentType]}
+                              {render
+                                ? render(data.id || data.jobId || data.studentId)
+                                : data[dataIndex as studentType]}
                             </td>
                           );
                         }
@@ -138,7 +151,7 @@ const InternTable = ({ columns = [], dataSource, isLoading = false }: tableType)
               </tfoot>
             </table>
           </div>
-          <InternTablePagination />
+          <InternTablePagination pageNumber={pageNumber as number} totalpageSize={counts} />
         </>
       )}
     </>

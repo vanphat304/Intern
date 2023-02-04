@@ -56,6 +56,13 @@ const StudentPage = () => {
     staleTime: STALE_TIME,
     keepPreviousData: true,
   });
+  const { data: counts } = useQuery({
+    queryKey: [QUERY_KEY_STUDENTS + 'counts'],
+    queryFn: () => Service.getStudentsCount(queryString),
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
+    keepPreviousData: true,
+  });
 
   const handleSearch = (searchItem: searchItemType) => {
     setUrlSearchParams({ ...queryString, ...searchItem });
@@ -66,6 +73,7 @@ const StudentPage = () => {
       <StudentSearch onClick={handleSearch as (a: searchItemType | void) => void} />
       {/* <InternButtonAddNew col={6} onClick={() => handleOpenDetail(IS_ADD)} /> */}
       <InternTable
+        counts={counts}
         columns={columnsStudent({
           handleOpenDetail: handleOpenDetail,
           handleOpenDelete: handleOpenDelete,

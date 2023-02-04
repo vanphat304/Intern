@@ -12,6 +12,7 @@ import {
   CACHE_TIME,
   IS_ADD,
   IS_DELETE,
+  IS_IMPORT,
   QUERY_KEY_STUDENTS,
   QUERY_KEY_STUDENTS_APPLY_JOB,
   QUERY_KEY_STUDENTS_PROPS,
@@ -19,11 +20,17 @@ import {
 } from '../../../../enums';
 import InternModalDelete from '../../../../components/InterModalContainer/InternModalDelete';
 import { toast } from 'react-toastify';
-import { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { StudentProposals } from '../../../../types/studentProposal.type';
 import InternModalReject from '../../../../components/InterModalContainer/InternModalReject';
 import { StudentApplyJob, StudentApplyJobs } from '../../../../types/studentApplyJob.type';
-
+import { filterObjectFalsy } from '../../../../helpers/object';
+import InternButtonExport from '../../../../components/InternButton/InternExport';
+import InternButtonImport from '../../../../components/InternButton/InternImport';
+import InternModalImport from '../../../../components/InterModalContainer/InternModalImport';
+import { path } from '../../../../services/base';
+import {saveAs} from 'file-saver'
+import { getCurrentTime } from '../../../../helpers/datetime';
 type searchItemType = {
   searchItem: string;
 };
@@ -32,16 +39,19 @@ const StudentApplyJobPage = () => {
   const [modalDetailId, setModalDetailId] = useState<number | null>(null);
   const [modalDeleteId, setModalDeleteId] = useState<number | null>(null);
   const [modalRejectId, setModalRejectId] = useState<number | null>(null);
+  const [modalImport, setModalImport] = useState<number | null>(null);
 
-  const [queryString, setUrlSearchParams] = useQueryString();
+  const [queryString, setUrlSearchParams, , restParams] = useQueryString();
 
-  const { pageNumber, pageSize, searchItem } = queryString;
+  const { pageNumber, pageSize } = queryString;
 
   const handleOpenDetail = useCallback((id = IS_ADD) => setModalDetailId(id), []);
   const handleCloseDetail = useCallback(() => setModalDetailId(null), []);
 
   const handleOpenDelete = useCallback((id = IS_DELETE) => setModalDeleteId(id), []);
   const handleCloseDelete = useCallback(() => setModalDeleteId(null), []);
+  const handleOpenModalImport = useCallback((id = IS_IMPORT) => setModalImport(id), []);
+  const handleCloseModalImport = useCallback(() => setModalImport(null), []);
 
   const handleOpenReject = useCallback((id = IS_DELETE) => setModalRejectId(id), []);
   const handleCloseReject = useCallback(() => setModalRejectId(null), []);
@@ -57,6 +67,40 @@ const StudentApplyJobPage = () => {
     onError(error: AxiosError<{ message: string; statusCode: string }>) {
       console.log(error);
       toast.error(error?.response?.data?.message);
+    },
+  });
+
+  const fileName= `danh sách sinh viên ứng tuyển thực tập export ngày ${getCurrentTime()}`
+
+  const importData = async (formData: FormData) => {
+    const data = await axios.post(`${path}/student-apply-jobs/import`, formData);
+    return data;
+  };
+
+  const { isLoading: isLoadingImport, mutate: importStudentApplyJob } = useMutation({
+    mutationFn: (file: FormData) => importData(file),
+    onSuccess: (data) => {
+      refetch();
+      handleCloseModalImport();
+      toast.success('import file thành công');
+    },
+    onError(error: AxiosError<{ message: string; statusCode: string }>) {
+      console.log('sdfsdfsdf',error);
+      toast.error(error?.response?.data?.message);
+    },
+  });
+
+  const { isLoading: isLoadingExport, mutate: exportStudentApplyJob } = useMutation({
+    mutationFn: (params: {}) => Service.exportStudentApplyJob(params),
+    onSuccess: (data) => {
+      saveAs(data,`${fileName}.xlsx`)
+      refetch();
+      handleCloseModalImport();
+      toast.success('export file thành công');
+    },
+    onError(error: AxiosError<{ message: string; statusCode: string }>) {
+      console.log(error);
+      toast.error(error.message);
     },
   });
 
@@ -84,27 +128,31 @@ const StudentApplyJobPage = () => {
   );
 
   const { data, isLoading, refetch } = useQuery({
-    queryKey: [QUERY_KEY_STUDENTS_APPLY_JOB, pageNumber, pageSize, searchItem],
-    queryFn: () => Service.getStudentApplyJobs(queryString),
+    queryKey: [QUERY_KEY_STUDENTS_APPLY_JOB, pageNumber, pageSize, { ...restParams }],
+    queryFn: () => Service.getStudentApplyJobs({ ...queryString, ...restParams }),
     cacheTime: CACHE_TIME,
     staleTime: STALE_TIME,
     keepPreviousData: true,
   });
 
-  console.log({ data });
-
   const handleSearch = (searchItem: searchItemType) => {
-    setUrlSearchParams({ ...queryString, ...searchItem });
+    console.log({ searchItem });
+
+    setUrlSearchParams({ ...queryString, ...filterObjectFalsy(searchItem) });
   };
 
   return (
     <>
       <StudentSearch onClick={handleSearch as (a: searchItemType | void) => void} />
-      <InternButtonAddNew col={6} onClick={() => handleOpenDetail(IS_ADD)} />
+      <InternButtonAddNew col={2} onClick={() => handleOpenDetail(IS_ADD)}>
+        <InternButtonImport onClick={handleOpenModalImport} />
+        <InternButtonExport
+          onClick={() => exportStudentApplyJob({ ...queryString, ...restParams })}
+        />
+      </InternButtonAddNew>
       <InternTable
         columns={columnsStudentProposal({
           handleOpenDetail: handleOpenDetail,
-          // handleOpenDelete: handleOpenDelete,
         })}
         dataSource={data as StudentApplyJobs}
         isLoading={isLoading}
@@ -124,6 +172,13 @@ const StudentApplyJobPage = () => {
           isLoading={isLoadingDelete}
           onClick={handleDelete}
           closeModal={handleCloseDelete}
+        />
+      )}
+      {modalImport && (
+        <InternModalImport
+          isLoading={isLoadingImport}
+          onClick={importStudentApplyJob}
+          closeModal={handleCloseModalImport}
         />
       )}
       {modalRejectId && (

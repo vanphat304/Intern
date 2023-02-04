@@ -20,6 +20,7 @@ import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 
 import { StudentWorkCompanies } from '../../../../types/studentWorkCompany.type';
+import { filterObjectFalsy } from '../../../../helpers/object';
 
 type searchItemType = {
   searchItem: string;
@@ -29,7 +30,7 @@ const StudentWorkCompanyPage = () => {
   const [modalDetailId, setModalDetailId] = useState<number | null>(null);
   const [modalDeleteId, setModalDeleteId] = useState<number | null>(null);
 
-  const [queryString, setUrlSearchParams] = useQueryString();
+  const [queryString, setUrlSearchParams,,restParams] = useQueryString();
 
   const { pageNumber, pageSize, searchItem } = queryString;
 
@@ -58,17 +59,26 @@ const StudentWorkCompanyPage = () => {
   }, [deleteStudentWorkCompany, modalDeleteId]);
 
   const { data =[], isLoading, refetch } = useQuery({
-    queryKey: [QUERY_KEY_STUDENTS_WORK, pageNumber, pageSize, searchItem],
-    queryFn: () => Service.getStudentsWorkCompany (queryString),
+    queryKey: [QUERY_KEY_STUDENTS_WORK, pageNumber, pageSize , {...restParams} ],
+    queryFn: () => Service.getStudentsWorkCompany ({ ...queryString, ...restParams }),
     cacheTime: CACHE_TIME,
     staleTime: STALE_TIME,
     keepPreviousData: true,
   });
 
-  console.log({ data });
+  const { data : counts  } = useQuery({
+    queryKey: ['total'],
+    queryFn: () => Service.getStudentsWorkCompanyCount ({ ...queryString, ...restParams }),
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
+    keepPreviousData: true,
+  });
+
 
   const handleSearch = (searchItem: searchItemType) => {
-    setUrlSearchParams({ ...queryString, ...searchItem });
+    console.log({ searchItem });
+
+    setUrlSearchParams({ ...queryString, ...filterObjectFalsy(searchItem) });
   };
 
   return (
@@ -76,6 +86,7 @@ const StudentWorkCompanyPage = () => {
       <StudentSearch onClick={handleSearch as (a: searchItemType | void) => void} />
       <InternButtonAddNew col={6} onClick={() => handleOpenDetail(IS_ADD)} />
       <InternTable
+      counts={counts}
         columns={columnsStudentWork({
           handleOpenDetail: handleOpenDetail,
         })}

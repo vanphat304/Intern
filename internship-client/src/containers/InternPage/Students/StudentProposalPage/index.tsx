@@ -32,10 +32,10 @@ const StudentProposalPage = () => {
   const [modalDeleteId, setModalDeleteId] = useState<number | null>(null);
   const [modalRejectId, setModalRejectId] = useState<number | null>(null);
 
-  const [queryString, setUrlSearchParams, { identifierStudent }] = useQueryString('identifierStudent');  
+  const [queryString, setUrlSearchParams, { identifierStudent }] =
+    useQueryString('identifierStudent');
 
-  console.log({identifierStudent});
-  
+  console.log({ identifierStudent });
 
   const { pageNumber, pageSize, searchItem } = queryString;
 
@@ -87,16 +87,22 @@ const StudentProposalPage = () => {
 
   const { data, isLoading, refetch } = useQuery({
     queryKey: [QUERY_KEY_STUDENTS_PROPS, pageNumber, pageSize, searchItem, identifierStudent],
-    queryFn: () => Service.getStudentProposals({ ...queryString , identifierStudent }),
+    queryFn: () => Service.getStudentProposals({ ...queryString, identifierStudent }),
     cacheTime: CACHE_TIME,
     staleTime: STALE_TIME,
     keepPreviousData: true,
   });
 
+  const { data: counts } = useQuery({
+    queryKey: [QUERY_KEY_STUDENTS_PROPS + 'counts'],
+    queryFn: () => Service.getStudentProposalsCount({ ...queryString, identifierStudent }),
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
+    keepPreviousData: true,
+  });
 
-  const handleSearch = (searchItem: searchItemType ) => {
-
-    setUrlSearchParams({ ...queryString, ...filterObjectFalsy(searchItem)  });
+  const handleSearch = (searchItem: searchItemType) => {
+    setUrlSearchParams({ ...queryString, ...filterObjectFalsy(searchItem) });
   };
 
   return (
@@ -104,6 +110,7 @@ const StudentProposalPage = () => {
       <StudentSearch onClick={handleSearch as (a: searchItemType | void) => void} />
       <InternButtonAddNew col={6} onClick={() => handleOpenDetail(IS_ADD)} />
       <InternTable
+        counts={counts}
         columns={columnsStudentProposal({
           handleOpenDetail: handleOpenDetail,
           // handleOpenDelete: handleOpenDelete,

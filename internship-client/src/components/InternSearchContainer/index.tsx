@@ -5,49 +5,52 @@ import InternRow from '../InternRow';
 import { useForm, FormProvider } from 'react-hook-form';
 
 type searchItemType = {
-  searchItem : string ;
-}
+  searchItem: string;
+};
 
 type typeInternSearch = {
   onClick: (a: searchItemType) => void;
-  placeHolder? : string;
-  children? : React.ReactNode;
+  placeHolder?: string;
+  children?: React.ReactNode;
+  hidden?: boolean;
 };
 
-const InternSearch = ({ onClick , placeHolder="Nhập từ khóa tìm kiếm" , children }: typeInternSearch) => {
+const InternSearch = ({
+  onClick,
+  hidden = false,
+  placeHolder = 'Nhập từ khóa tìm kiếm',
+  children,
+}: typeInternSearch) => {
   const methods = useForm({ criteriaMode: 'all' });
   const { getValues } = methods;
 
   const handleSearch = () => {
-    onClick(getValues() as searchItemType );
+    onClick(getValues() as searchItemType);
   };
-  const handleEnter = (event : any )=> {
-
+  const handleEnter = (event: any) => {
     if (event.key === 'Enter') {
-      onClick(getValues() as searchItemType );
+      onClick(getValues() as searchItemType);
     }
   };
 
   return (
     <InternRow>
       <FormProvider {...methods}>
-     <InternRow gap={6} withAutoCol={12}>
-          <InternText
-            handleKeyDown={handleEnter}
-            name="searchItem"
-            colSpan={4}
-            label="Tìm kiếm"
-            placeholder={placeHolder}
-            type="search"
-            direct
-            
+        <InternRow gap={6} withAutoCol={12}>
+          {!hidden && (
+            <InternText
+              handleKeyDown={handleEnter}
+              name="searchItem"
+              colSpan={4}
+              label="Tìm kiếm"
+              placeholder={placeHolder}
+              type="search"
+              direct
             />
-          {
-            children
-          }
+          )}
+          {children}
           <InternButtonSearch col={2} onClick={handleSearch} />
-          </InternRow>
-        
+        </InternRow>
       </FormProvider>
     </InternRow>
   );

@@ -9,8 +9,8 @@ export class StudentProposalService {
 
   async addStudentProposal(dto: StudentProposal) {
     try {
-      console.log("adđ");
-      
+      console.log('adđ');
+
       const isSubmit = await this.prisma.studentProposal.findFirst({
         where: {
           studentId: {
@@ -38,6 +38,10 @@ export class StudentProposalService {
       console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
+  }
+
+  async getListStudentProposalCount() {
+    return await this.prisma.studentProposal.count();
   }
 
   async getListStudentProposal(query): Promise<Array<StudentProposal>> {
@@ -169,8 +173,17 @@ export class StudentProposalService {
             id,
           },
         });
-        const { studentId, nameCompany, addressCompany,speacialize, introduceCompany, linkWebsite, scale ,addressDistrictId , addressProvinceId } =
-          props;
+        const {
+          studentId,
+          nameCompany,
+          addressCompany,
+          speacialize,
+          introduceCompany,
+          linkWebsite,
+          scale,
+          addressDistrictId,
+          addressProvinceId,
+        } = props;
         let company: Company = await this.prisma.company.create({
           data: {
             nameCompany: nameCompany,
@@ -178,29 +191,27 @@ export class StudentProposalService {
             banner: null,
             scale: scale,
             website: linkWebsite,
-            specializeCompanyId:speacialize,
+            specializeCompanyId: speacialize,
             address: addressCompany,
             isStudentProp: true,
             addressProvinceId,
             addressDistrictId,
             introduce: introduceCompany,
-            rating: 0
-
+            rating: 0,
           },
         });
 
-        const {id : companyId} = company;
-        console.log({companyId});
-        
+        const { id: companyId } = company;
+        console.log({ companyId });
 
         await this.prisma.studentWorkCompany.create({
-          data:{
+          data: {
             companyId,
-            decription:'Sinh viên tự để xuất',
-            rating:'NONE',
-            studentId: studentId
-          }
-        })
+            decription: 'Sinh viên tự để xuất',
+            rating: 'NONE',
+            studentId: studentId,
+          },
+        });
 
         await this.prisma.notificationStudent.create({
           data: {
@@ -212,8 +223,8 @@ export class StudentProposalService {
       return result;
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
-        console.log({error});
-        
+        console.log({ error });
+
         if ((error.code = 'P2003')) {
           throw new HttpException(
             `không thể tìm thấy thông tin với id ${id}`,

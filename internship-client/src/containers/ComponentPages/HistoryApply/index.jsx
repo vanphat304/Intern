@@ -12,7 +12,7 @@ export const HistoryApply = () => {
     },
   ] = useAuthStore();
 
-  const { data: historyApplies = [] } = useQuery({
+  const { data: historyApplies = [] , refetch } = useQuery({
     queryFn: () => Service.getHistoryApplies({ id }),
     queryKey: [QUERY_KEY_HISTORY, id],
     cacheTime: CACHE_TIME,
@@ -37,6 +37,7 @@ export const HistoryApply = () => {
             fileScore,
             jobId,
             status,
+            id : idJobApply,
             jobDecription: {
               jobTitle,
               companyId,
@@ -45,7 +46,9 @@ export const HistoryApply = () => {
           } = item;
           return (
             <JobApplied
+              refetch={refetch}
               status={status}
+              idJobApply={idJobApply}
               logo={logo}
               key={item.id}
               jobId={jobId}

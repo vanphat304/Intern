@@ -43,11 +43,14 @@ function Navbar() {
     <>
       <div className="Container_Navbar">
         <div className="navbar-header">
-          <img
-            src="https://sinhvien.hufi.edu.vn/Content/AConfig/images/sv_logo_dashboard.png"
-            alt="logo-huit"
-            title="logo huit"
-          />
+          <Link to={'/'}>
+            <img
+            className='cursor-pointer'
+              src="https://sinhvien.hufi.edu.vn/Content/AConfig/images/sv_logo_dashboard.png"
+              alt="logo-huit"
+              title="logo huit"
+            />
+          </Link>
         </div>
 
         {/*  navbar left : */}
@@ -168,7 +171,7 @@ function Navbar() {
                 <input type="checkbox" id="notify" />
                 <BellFilled />
                 {notifications.filter((item) => !item.isRead)?.length !== 0 && (
-                  <span className="notification-count">
+                  <span className="notification-count animate-ping">
                     {notifications.filter((item) => !item.isRead)?.length}
                   </span>
                 )}
@@ -176,7 +179,6 @@ function Navbar() {
                 <div className="nav_notify-dropdown">
                   <div className="header">
                     <span className="title-header">Thông báo</span>
-                    <span id="check-header">Đánh dấu tất cả là đã đọc</span>
                   </div>
                   <ul className="nav_notify_menu">
                     {notifications.map((item) => {
@@ -262,7 +264,9 @@ function Navbar() {
         )}
       </div>
 
-      {modalDetailId && <ModalProposalCompany id = {userLogin.id} handleCloseDetail={handleCloseDetail} />}
+      {modalDetailId && (
+        <ModalProposalCompany id={userLogin.id} handleCloseDetail={handleCloseDetail} />
+      )}
     </>
   );
 }

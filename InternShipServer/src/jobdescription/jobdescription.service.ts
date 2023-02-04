@@ -31,6 +31,11 @@ export class JobDescriptionService {
     }
   }
 
+  
+  async getListJobDecriptonCount() {
+    return this.prisma.jobDecripton.count();
+  }
+
   async getListJobDecripton(query): Promise<Array<JobDecripton>> {
     try {
       const { pageNumber, pageSize, searchItem, companyId } = query;
@@ -210,8 +215,8 @@ export class JobDescriptionService {
           HttpStatus.BAD_REQUEST,
         );
       }
-      console.log({results});
-      
+      console.log({ results });
+
       return results.sort((a, b) => {
         return (b.createdAt as any) - (a.createdAt as any);
       });

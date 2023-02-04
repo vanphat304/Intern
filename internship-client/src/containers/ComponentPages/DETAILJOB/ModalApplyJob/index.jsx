@@ -18,12 +18,44 @@ import { toast } from 'react-toastify';
 import { useAuthStore } from '../../../../store';
 
 const ModalDetail = ({ title, id, handleCloseDetail }) => {
-  
-    const schema = yup.object({
-      fileCV: yup.string().required('Trường này bát buộc nhập'),
-      fileScore: yup.string().required('Trường này bát buộc nhập'),
-    });
-  const [{userLogin}] = useAuthStore();
+  const schema = yup.object().shape({
+    fileScore: yup.mixed().required('Trường này bắt buộc nhập'),
+
+    fileCV: yup.mixed().required('Trường này bắt buộc nhập'),
+  });
+  // const schema = yup.object().shape({
+  //   fileScore: yup
+  //     .mixed()
+  //     .required('Trường này bắt buộc nhập')
+  //     .test('fileSize', 'kích thước file quá lớn', (value) => {
+  //       return value && value[0].size <= 5000000;
+  //     })
+  //     .test('type', 'hỗ trợ định dạng .docx, .doc, .pdf', (value) => {
+  //       return (
+  //         value &&
+  //         (value[0].type === 'application/msword') |
+  //           (value[0].type ===
+  //             'application/vnd.openxmlformats-officedocument.wordprocessingml.document') |
+  //           (value[0].type === 'application/pdf')
+  //       );
+  //     }),
+  //   fileCV: yup
+  //     .mixed()
+  //     .required('Trường này bắt buộc nhập')
+  //     .test('fileSize', 'kích thước file quá lớn', (value) => {
+  //       return value && value[0].size <= 5000000;
+  //     })
+  //     .test('type', 'hỗ trợ định dạng .docx, .doc, .pdf', (value) => {
+  //       return (
+  //         value &&
+  //         (value[0].type === 'application/msword') |
+  //           (value[0].type ===
+  //             'application/vnd.openxmlformats-officedocument.wordprocessingml.document') |
+  //           (value[0].type === 'application/pdf')
+  //       );
+  //     }),
+  // });
+  const [{ userLogin }] = useAuthStore();
   const methods = useForm({
     resolver: yupResolver(schema),
   });
@@ -42,7 +74,6 @@ const ModalDetail = ({ title, id, handleCloseDetail }) => {
       toast.error('Có lỗi trong quá trình xử lý');
     },
   });
-
 
   const handleApplyJob = () => {
     return handleSubmit((data) => {
@@ -69,13 +100,18 @@ const ModalDetail = ({ title, id, handleCloseDetail }) => {
       closeModal={handleCloseDetail}
       footerModal={footer()}
       headerText={'Ứng tuyển cho vị trí ' + title}
-
     >
       <InternRow>
         <FormProvider {...methods}>
           <form>
             <InternRow withAutoCol={1}>
-              <InternUpload namePreview="fileCVpreview" direct label="Chọn file CV" name="fileCV" />
+              <InternUpload
+                fileSupport=".docx, .doc, .pdf"
+                namePreview="fileCVpreview"
+                direct
+                label="Chọn file CV"
+                name="fileCV"
+              />
             </InternRow>
             {watch('fileCVpreview') && (
               <InternRow withAutoCol={12}>
@@ -98,6 +134,7 @@ const ModalDetail = ({ title, id, handleCloseDetail }) => {
 
             <InternRow withAutoCol={1}>
               <InternUpload
+                fileSupport=".docx, .doc, .pdf"
                 namePreview="fileSCpreview"
                 direct
                 label="Chọn file điểm"

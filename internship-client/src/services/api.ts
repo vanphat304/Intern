@@ -101,12 +101,14 @@ export const API = {
   loginAuth: 'auth/signin',
   registerAuth: 'auth/register',
   student: 'student',
+  student_count: 'student/count',
   student_id: 'student/{id}',
   student_update: 'student/update',
   student_params: 'student/params',
 
   // company
   company: 'company',
+  company_count: 'company/count',
   company_id: 'company/{id}',
   company_update: 'company/update',
   company_params: 'company/params',
@@ -117,6 +119,7 @@ export const API = {
   // job description
 
   jobDescription: 'jobdescription',
+  jobDescription_count: 'jobdescription/count',
   jobDescription_id: 'jobdescription/{id}',
   jobDescription_update: 'jobdescription/update',
   jobDescription_jobCompany: 'jobdescription/job-company',
@@ -125,6 +128,7 @@ export const API = {
 
   // student proposal
   studentProposal: 'student-proposal',
+  studentProposal_count: 'student-proposal/count',
   studentProposal_id: 'student-proposal/{id}',
   studentProposal_update: 'student-proposal/update',
   studentProposal_approve_id: 'student-proposal/approve/{id}',
@@ -132,12 +136,15 @@ export const API = {
 
   // student apply job
   studentApplyJob: 'student-apply-jobs',
+  studentApplyJob_count: 'student-apply-jobs/count',
   studentApplyJob_id: 'student-apply-jobs/{id}',
   studentApplyJob_history_apply: 'student-apply-jobs/history-apply/{id}',
   studentApplyJob_check: 'student-apply-jobs/check',
   studentApplyJob_update: 'student-apply-jobs/update',
   studentApplyJob_approve_id: 'student-apply-jobs/approve/{id}',
   studentApplyJob_reject_id: 'student-apply-jobs/reject/{id}',
+  studentApplyJob_export: 'student-apply-jobs/export',
+  studentApplyJob_import: 'student-apply-jobs/import',
 
   //student notification
   notification: 'notification',
@@ -146,6 +153,7 @@ export const API = {
 
   //student work at company
   student_work_company: 'student-work-company',
+  student_work_company_count: 'student-work-company/count',
   student_work_company_id: 'student-work-company/{id}',
   student_work_company_update: 'student-work-company/update',
   student_work_company_report_id: 'student-work-company/report/{id}',

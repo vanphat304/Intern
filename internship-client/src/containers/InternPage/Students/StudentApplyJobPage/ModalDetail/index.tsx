@@ -70,13 +70,12 @@ const ModalDetail = ({
     formState: { errors },
   } = methods;
 
-  const { isFetching , data  }  = useQuery({
+  const { isFetching, data } = useQuery({
     enabled: id !== IS_ADD,
     queryKey: [id],
     refetchOnWindowFocus: false,
     queryFn: () => Service.getStudentApplyJob({ id }),
     onSuccess(data) {
-
       Object.keys(data).forEach((item) => {
         if (datesFormat.includes(item)) {
           setValue(item, formatDateTime(data[item]));
@@ -104,13 +103,13 @@ const ModalDetail = ({
     },
   });
 
-  const {status} = data || {}
+  const { status } = data || {};
   const footer = () => (
     <InternFooterModalContainer
       ButtonSubmit={
         <InternButtonApprove
           isLoading={isLoading}
-          isShow={status === STATUS.SUMBMITED || status === STATUS.PENDING}
+          isShow={status === STATUS.SUMBMITED}
           onClick={() => {
             approveStudentApplyJob(id);
           }}
@@ -122,7 +121,7 @@ const ModalDetail = ({
           onClick={() => {
             handleOpenReject(id);
           }}
-          isShow={status === STATUS.SUMBMITED || status === STATUS.PENDING}
+          isShow={status === STATUS.SUMBMITED}
         />
       }
     />

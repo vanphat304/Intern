@@ -4,6 +4,8 @@ import InternSelect from '../../../../components/InternInput/InterSelect';
 import { useQuery } from '@tanstack/react-query';
 import { Service } from '../../../../services/service';
 import { Student } from '../../../../types/students.type';
+import { Company } from '../../../../types/companies.type';
+import { STATUS } from '../../../../types/status.type';
 
 type searchItemType = {
   searchItem: string;
@@ -18,21 +20,57 @@ const StudentSearch = ({ onClick }: typeInternSearch) => {
     queryKey: ['keyParamsStudents'],
     queryFn: () => Service.getStudentParams(),
   });
+
+  const { data: companies = [] } = useQuery({
+    queryKey: ['keyParamsCompanies'],
+    queryFn: () => Service.getCompanyParams(),
+  });
+
+  console.log({ companies });
+
   return (
-    <InternSearch placeHolder="Nhập tên sinh viên để tìm kiếm" onClick={onClick}>
-      {/* <InternSelect
+    <InternSearch hidden placeHolder="Nhập tên sinh viên để tìm kiếm" onClick={onClick}>
+      <InternSelect
         placeholder="Chọn sinh viên cần tìm kiếm"
         direct
         data={students?.map(
-          ({ id, firstName, lastName }: Pick<Student, 'id' | 'firstName' | 'lastName'>) => ({
-            name: `${lastName} ${firstName}`,
+          ({
+            id,
+            firstName,
+            lastName,
+            identifierStudent,
+          }: Pick<Student, 'id' | 'firstName' | 'lastName' | 'identifierStudent'>) => ({
+            name: identifierStudent,
             value: id,
           }),
         )}
         colSpan={4}
-        label="Công ty"
+        label="Mã số sinh viên"
         name="studentId"
-      /> */}
+      />
+      <InternSelect
+        placeholder="Chọn Công ty cần tìm kiếm"
+        direct
+        data={companies?.map(({ id, nameCompany }: Pick<Company, 'id' | 'nameCompany'>) => ({
+          name: nameCompany,
+          value: id,
+        }))}
+        colSpan={4}
+        label="Công ty"
+        name="companyId"
+      />
+      <InternSelect
+        placeholder="Chọn trạng thái"
+        direct
+        data={Object.values(STATUS).map((item) => ({
+          name: item,
+          value: item,
+          id: item,
+        }))}
+        colSpan={4}
+        label="Trạng thái"
+        name="status"
+      />
     </InternSearch>
   );
 };

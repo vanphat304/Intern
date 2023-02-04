@@ -14,6 +14,11 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     key: 'jobDecription',
   },
   {
+    title: 'Mã số sinh viên',
+    dataIndex: ['student', 'identifierStudent'],
+    key: 'mssv',
+  },
+  {
     title: 'nameCompany',
     dataIndex: ['jobDecription', 'company', 'nameCompany'],
     key: 'nameCompany',

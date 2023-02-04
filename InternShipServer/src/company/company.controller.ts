@@ -28,10 +28,13 @@ export class CompanyController {
   getListCompany(@Query() query): Promise<Company[]> {
     return this.companyService.getListCompany(query);
   }
+  @Get('count')
+  getListCompanyCount(@Query() query): Promise<number> {
+    return this.companyService.getListCompanyCount();
+  }
 
   @Get('/specialize')
   getListSpecialize(): Promise<SpecializeCompany[]> {
-    
     return this.companyService.getListSpecialize();
   }
   @Get('/district')

@@ -11,6 +11,7 @@ export const datesFormat = [
 ];
 export const IS_ADD = 1;
 export const IS_DELETE = 2;
+export const IS_IMPORT = 3;
 export const QUERY_KEY_STUDENTS = 'STUDENTS';
 export const QUERY_KEY_COMPANY = 'COMPANIES';
 export const QUERY_KEY_COMPANY_DETAIL = 'COMPANIES';
@@ -25,6 +26,7 @@ export const QUERY_KEY_JOB_COM = 'QUERY_KEY_JOB_COM';
 export const QUERY_KEY_CHECK = 'QUERY_KEY_CHECK';
 export const QUERY_KEY_GET_COMP_REPORT = 'QUERY_KEY_GET_COMP_REPORT'; 
 export const QUERY_KEY_STUDENT_PROPS_ID = 'QUERY_KEY_STUDENT_PROPS_ID'; 
+export const QUERY_KEY_STUDENT_WORK_ID = 'QUERY_KEY_STUDENT_WORK_ID'; 
 
 export const initialConfigEditor = {
   plugins: 'code',

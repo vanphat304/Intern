@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import InternRow from '../../InternRow';
 
 type typeButton = {
@@ -6,6 +6,7 @@ type typeButton = {
   col?: number;
   isShow?: boolean;
   isLoading?: boolean;
+  children?:ReactNode;
 };
 
 const InternButtonAddNew = ({
@@ -13,12 +14,13 @@ const InternButtonAddNew = ({
   col = 1,
   isLoading = false,
   isShow = false,
+  children,
   ...rest
 }: typeButton) => {
   return (
     <InternRow withAutoCol={col} {...rest}>
       <div className="col-span-4 my-2">
-        <button
+      <button
           onClick={onClick}
           type="button"
           className={`text-white bg-blue-600  border border-blue-600 font-bold uppercase py-2 w-32 rounded-3xl  hover:border-blue-800${
@@ -47,6 +49,9 @@ const InternButtonAddNew = ({
             'THÊM MỚI'
           )}
         </button>
+        {
+          children
+        }
       </div>
     </InternRow>
   );

@@ -38,7 +38,7 @@ const ReportCompany = () => {
     queryFn: () => Service.getStudentWorkCompany({ id: userLogin.id }),
     queryKey: [QUERY_KEY_GET_COMP_REPORT, userLogin.id],
     cacheTime: CACHE_TIME,
-    staleTimeq: STALE_TIME,
+    staleTime: STALE_TIME,
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
       Object.keys(data).forEach((key) => {
@@ -62,6 +62,13 @@ const ReportCompany = () => {
 
   const handleReportCompany = () => {
     return handleSubmit((data) => {
+
+      if (!dataStudentWork) {
+        toast.error('Sinh viên chưa đi thực tập');
+        navigate('/history-apply');
+        return;
+      }
+
       const { decription, rating } = data;
       const dataSubmit = {
         decription,
@@ -70,7 +77,6 @@ const ReportCompany = () => {
         companyId: dataStudentWork?.companyId,
       };
       reportCompany(dataSubmit);
-      console.log({ data });
     });
   };
 
@@ -78,10 +84,9 @@ const ReportCompany = () => {
     <div className="grid grid-cols-12">
       <div className="col-span-12 bg-white border border-solid border-slate-300 rounded shadow-md p-4">
         <p className="font-bold border-l-4 border-green-500 pl-4 mb-4">
-          Đánh giá công ty thực tập <span className='font-semibold text-green-600 text-lg'>
-            {
-               dataStudentWork?.company?.nameCompany
-            }
+          Đánh giá công ty thực tập{' '}
+          <span className="font-semibold text-green-600 text-lg">
+            {dataStudentWork?.company?.nameCompany}
           </span>
         </p>
         <FormProvider {...methods}>
@@ -100,7 +105,7 @@ const ReportCompany = () => {
                 colSpan={12}
                 direct
                 name="decription"
-                label="Phản ánh tỉnh hình thực tập tại công ty"
+                label="Phản ánh tình hình thực tập tại công ty"
               />
             </InternRow>
           </form>
