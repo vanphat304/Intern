@@ -13,8 +13,6 @@ const CustomPrivateRoute = ({
   redirectPath = '/not-found',
   children = <Outlet />,
 }: propsRoutePrivateType) => {
-  console.log({ check });
-
   if (check) {
     return children;
   } else {

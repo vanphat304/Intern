@@ -58,7 +58,6 @@ const InternModalImport = ({
 
   const handleSubmitForm = () => {
     return handleSubmit((dto: any) => {
-      console.log({ dto });
       const file = dto.file[0];
 
       if (!file) return;
@@ -68,8 +67,6 @@ const InternModalImport = ({
       onClick && onClick(formData);
     });
   };
-
-  console.log({ errors });
 
   return (
     <div

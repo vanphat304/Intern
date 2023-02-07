@@ -35,8 +35,6 @@ const StudentProposalPage = () => {
   const [queryString, setUrlSearchParams, { identifierStudent }] =
     useQueryString('identifierStudent');
 
-  console.log({ identifierStudent });
-
   const { pageNumber, pageSize, searchItem } = queryString;
 
   const handleOpenDetail = useCallback((id = IS_ADD) => setModalDetailId(id), []);
@@ -57,7 +55,6 @@ const StudentProposalPage = () => {
       toast.success('delete success');
     },
     onError(error: AxiosError<{ message: string; statusCode: string }>) {
-      console.log(error);
       toast.error(error?.response?.data?.message);
     },
   });
@@ -108,7 +105,6 @@ const StudentProposalPage = () => {
   return (
     <>
       <StudentSearch onClick={handleSearch as (a: searchItemType | void) => void} />
-      <InternButtonAddNew col={6} onClick={() => handleOpenDetail(IS_ADD)} />
       <InternTable
         counts={counts}
         columns={columnsStudentProposal({

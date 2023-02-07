@@ -15,7 +15,6 @@ export class StudentLikeJobService {
       });
       return result;
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -34,7 +33,6 @@ export class StudentLikeJobService {
 
       return result;
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }

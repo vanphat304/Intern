@@ -8,7 +8,7 @@ export const columnsJobDescriptions = ({ handleOpenDetail, handleOpenDelete }: a
     key: 'index',
   },
   {
-    title: 'jobTitle',
+    title: 'Tên công việc',
     dataIndex: 'jobTitle',
     key: 'jobTitle',
     render: (value: string) => {
@@ -17,7 +17,7 @@ export const columnsJobDescriptions = ({ handleOpenDetail, handleOpenDelete }: a
   },
 
   {
-    title: 'decriptionJob',
+    title: 'Mô tả công việc',
     dataIndex: 'decriptionJob',
     key: 'decriptionJob',
     render: (value: string) => {
@@ -26,37 +26,37 @@ export const columnsJobDescriptions = ({ handleOpenDetail, handleOpenDelete }: a
   },
 
   {
-    title: 'salary',
+    title: 'múc lương (.VND)',
     dataIndex: 'salary',
     key: 'salary',
   },
   {
-    title: 'numberRecur',
+    title: 'Số lương tuyển',
     dataIndex: 'numberRecur',
     key: 'numberRecur',
   },
   {
-    title: 'nameCompany',
+    title: 'Tên Công ty',
     dataIndex: ['company', 'nameCompany'],
     key: 'nameCompany',
   },
   {
-    title: 'timeStartApply',
+    title: 'Thời giân nộp hồ sơ',
     dataIndex: 'timeStartApply',
     key: 'timeStartApply',
   },
   {
-    title: 'timeEndAppply',
+    title: 'Thời gian kết thúc nhận',
     dataIndex: 'timeEndAppply',
     key: 'timeEndAppply',
   },
   {
-    title: 'timeToIntverview',
+    title: 'Thời gian phỏng vấn',
     dataIndex: 'timeToIntverview',
     key: 'timeToIntverview',
   },
   {
-    title: 'addressToInterview',
+    title: 'Địa chỉ phỏng vấn',
     dataIndex: 'addressToInterview',
     key: 'addressToInterview',
     render: (value: string) => {

@@ -57,7 +57,7 @@ const InternTable = ({ columns = [], dataSource, isLoading = false, counts = 10 
                             {object.title}
                           </th>
                         ) : (
-                          <th key={object.key} scope="col" className="py-3 px-6 border text-base">
+                          <th key={object.key} scope="col" className="py-3 whitespace-nowrap w-8 px-6 border text-base">
                             {object.title}
                           </th>
                         )}
@@ -80,7 +80,7 @@ const InternTable = ({ columns = [], dataSource, isLoading = false, counts = 10 
                       {columns?.map(({ dataIndex, key, render }, indexColumn) => {
                         if (key !== 'action' && render) {
                           return (
-                            <td key={dataIndex} className="text-center py-4 px-6">
+                            <td key={dataIndex} className="text-center py-4 px-6 whitespace-nowrap">
                               {render
                                 ? render(getNestedValue(dataIndex, data))
                                 : data[dataIndex as studentType]}
@@ -88,7 +88,7 @@ const InternTable = ({ columns = [], dataSource, isLoading = false, counts = 10 
                           );
                         } else if (key === 'index') {
                           return (
-                            <td key={dataIndex} className="text-center py-4 px-6">
+                            <td key={dataIndex} className="text-center py-4 px-6 whitespace-nowrap">
                               {index + 1}
                             </td>
                           );
@@ -98,12 +98,12 @@ const InternTable = ({ columns = [], dataSource, isLoading = false, counts = 10 
                               {dataIndex === 'logo' ? (
                                 <td
                                   key={dataIndex}
-                                  className="py-4 px-6 flex justify-center align-middle"
+                                  className="py-4 px-6 flex justify-center align-middle whitespace-nowrap"
                                 >
                                   <img src={data['logo']} alt="img" className="w-20 h-auto" />
                                 </td>
                               ) : (
-                                <td key={dataIndex} className="text-center py-4 px-6">
+                                <td key={dataIndex} className="text-center py-4 px-6 whitespace-nowrap">
                                   {dataIndex !== 'index'
                                     ? datesFormat.includes(dataIndex)
                                       ? formatDateTime(data[dataIndex as studentType])

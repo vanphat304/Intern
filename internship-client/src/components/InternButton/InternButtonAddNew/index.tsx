@@ -6,7 +6,8 @@ type typeButton = {
   col?: number;
   isShow?: boolean;
   isLoading?: boolean;
-  children?:ReactNode;
+  hidden?: boolean;
+  children?: ReactNode;
 };
 
 const InternButtonAddNew = ({
@@ -15,17 +16,18 @@ const InternButtonAddNew = ({
   isLoading = false,
   isShow = false,
   children,
+  hidden = false,
   ...rest
 }: typeButton) => {
   return (
     <InternRow withAutoCol={col} {...rest}>
       <div className="col-span-4 my-2">
-      <button
+        <button
           onClick={onClick}
           type="button"
-          className={`text-white bg-blue-600  border border-blue-600 font-bold uppercase py-2 w-32 rounded-3xl  hover:border-blue-800${
-            isLoading ? 'cursor-not-allowed' : ''
-          } `}
+          className={`text-white bg-blue-600  border border-blue-600 font-bold uppercase ${
+            hidden ? 'hidden' : ''
+          } py-2 w-32 rounded-3xl  hover:border-blue-800${isLoading ? 'cursor-not-allowed' : ''} `}
         >
           {isLoading ? (
             <>
@@ -35,7 +37,14 @@ const InternButtonAddNew = ({
                 fill="none"
                 viewBox="0 0 24 24"
               >
-              <circle className="opacity-25" cx={12} cy={12} r={10} stroke="currentColor" strokeWidth={4} />
+                <circle
+                  className="opacity-25"
+                  cx={12}
+                  cy={12}
+                  r={10}
+                  stroke="currentColor"
+                  strokeWidth={4}
+                />
 
                 <path
                   className="opacity-75"
@@ -49,9 +58,7 @@ const InternButtonAddNew = ({
             'THÊM MỚI'
           )}
         </button>
-        {
-          children
-        }
+        {children}
       </div>
     </InternRow>
   );

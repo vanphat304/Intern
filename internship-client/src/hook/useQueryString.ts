@@ -15,8 +15,6 @@ export const useQueryString = <T>(key?: T): [typeSearchParams, (a: any) => void,
   const [URLSearchParams, SetURLSearchParams] = useSearchParams();
   const searchParamsObject = Object.fromEntries([...URLSearchParams]);
 
-  console.log({ searchParamsObject });
-
   const pageNumber = Number(searchParamsObject?.pageNumber) || DEFAULT_PAGE_NUMBER;
   const pageSize = Number(searchParamsObject?.pageSize) || DEFAULT_PAGE_SIZE;
   const searchItem = searchParamsObject?.searchItem || '';
@@ -24,8 +22,6 @@ export const useQueryString = <T>(key?: T): [typeSearchParams, (a: any) => void,
   const propsKeysSearch = searchParamsObject?.[key as string] || '';
 
   const restParams = { pageNumber, pageSize, searchItem, ...searchParamsObject };
-
-  console.log({ propsKeysSearch });
 
   return [
     {

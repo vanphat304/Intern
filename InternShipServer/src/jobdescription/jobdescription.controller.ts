@@ -9,10 +9,14 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
-import { JobDecripton } from '@prisma/client';
+import { JobDecripton, Role } from '@prisma/client';
 import { ReqParams } from './dto';
 import { JobDescriptionService } from './jobdescription.service';
+import { AuthGuard } from '@nestjs/passport';
+import { RolesGuard } from 'src/auth/rolesGuard/roles.guard';
+import { Roles } from 'src/auth/rolesGuard/roles.decorator';
 
 @Controller('jobdescription')
 export class JobdescriptionController {
@@ -20,6 +24,7 @@ export class JobdescriptionController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
+  @UseGuards(AuthGuard('jwtGuard'))
   addJobDecripton(@Body() dto: JobDecripton): Promise<JobDecripton> {
     return this.jobDescription.addJobDecripton(dto);
   }
@@ -28,12 +33,11 @@ export class JobdescriptionController {
     return this.jobDescription.getListJobDecripton(query);
   }
   @Get('count')
-  getListJobDecriptonCounrt(): Promise<number> {
+  getListJobDecriptonCount(): Promise<number> {
     return this.jobDescription.getListJobDecriptonCount();
   }
   @Get('/job-company')
   getListJobCompany(@Query() query) {
-    console.log({query});
     
     return this.jobDescription.getListJobWithCompany(query);
   }
@@ -42,6 +46,7 @@ export class JobdescriptionController {
     return this.jobDescription.getListJobDesByCompanyId(reqParams);
   }
   @Get('like')
+  @UseGuards(AuthGuard('jwtGuard'))
   getListJobDesByStudentLiked(@Query() reqParams): Promise<JobDecripton[]> {
     return this.jobDescription.getListJobDesLiked(reqParams);
   }
@@ -51,10 +56,14 @@ export class JobdescriptionController {
   }
 
   @Put('update')
+  @Roles(Role.ADMIN)
+  @UseGuards(AuthGuard('jwtGuard'), RolesGuard)
   updateJobDecripton(@Body() dto: JobDecripton) {
     return this.jobDescription.updateJobDecripton(dto);
   }
   @Delete(':id')
+  @Roles(Role.ADMIN)
+  @UseGuards(AuthGuard('jwtGuard'), RolesGuard)
   deleteJobDecripton(@Param('id') id: string) {
     return this.jobDescription.deleteJobDecripton(id);
   }

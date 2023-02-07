@@ -24,7 +24,6 @@ const InternModalDelete = ({
   closeModal,
   ...rest
 }: internModalType) => {
-  console.log('delete');
 
   return (
     <div

@@ -14,7 +14,6 @@ export class CompanyService {
       });
       return company;
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -47,7 +46,6 @@ export class CompanyService {
         return (b.createdAt as any) - (a.createdAt as any);
       });
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -59,7 +57,6 @@ export class CompanyService {
 
       return listSpecializeCompany;
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -69,7 +66,6 @@ export class CompanyService {
       const listDistrict: Array<District> = await this.prisma.district.findMany();
       return listDistrict;
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -79,7 +75,6 @@ export class CompanyService {
       const listProvince: Array<Province> = await this.prisma.province.findMany();
       return listProvince;
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -99,7 +94,6 @@ export class CompanyService {
 
       return listCompany;
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -113,7 +107,6 @@ export class CompanyService {
       });
       return Company;
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -131,7 +124,6 @@ export class CompanyService {
       });
       return result;
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }

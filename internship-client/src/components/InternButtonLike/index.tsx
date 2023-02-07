@@ -18,20 +18,16 @@ const InternButtonLike = ({ init = false, studentId, jobId }: typeButtonLike) =>
     mutationFn: (params: { studentId: string | undefined; jobId: string | undefined }) =>
       Service.likeJob(params),
     onSuccess: (data) => {
-      console.log({ data });
     },
     onError: (error) => {
-      console.log(error);
     },
   });
   const { isLoading: isLoadingUnlike, mutate: unLikeJob } = useMutation({
     mutationFn: (params: { studentId: string | undefined; jobId: string | undefined }) =>
       Service.unLikeJob(params),
     onSuccess: (data) => {
-      console.log({ data });
     },
     onError: (error) => {
-      console.log(error);
     },
   });
 

@@ -13,7 +13,7 @@ import InternRow from '../../../../../components/InternRow';
 import { Service } from '../../../../../services/service';
 import InternSelect from '../../../../../components/InternInput/InterSelect';
 import InternDatePicker from '../../../../../components/InternInput/InternDatepicker';
-import { Major } from '../../../../../types/major.type';
+import { MAJOR, Major } from '../../../../../types/major.type';
 import { Role } from '../../../../../types/role.type';
 import { toast } from 'react-toastify';
 import { Student } from '../../../../../types/students.type';
@@ -40,11 +40,6 @@ const schema = yup.object({
   anotherContact: yup.string(),
 });
 
-const majors = Object.keys(Major).map((item) => ({
-  id: item,
-  name: item,
-  value: item,
-}));
 
 const roles = Object.keys(Role).map((item) => ({
   id: item,
@@ -65,7 +60,6 @@ const ModalDetail = ({ handleCloseDetail, id, handleSearch, handleOpenDelete }: 
       handleCloseDetail();
     },
     onError(error: AxiosError<{ message: string; statusCode: string }>) {
-      console.log(error);
       toast.error(error?.response?.data?.message);
     },
   });
@@ -134,7 +128,7 @@ const ModalDetail = ({ handleCloseDetail, id, handleSearch, handleOpenDelete }: 
             </InternRow>
 
             <InternRow withAutoCol={12}>
-              <InternSelect colSpan={6} data={majors} name="majors" label="Chuyên ngành" />
+              <InternSelect colSpan={6} data={MAJOR} name="majors" label="Chuyên ngành" />
               <InternText colSpan={6} name="class" label="Tên lớp" />
             </InternRow>
             <InternRow withAutoCol={12}>

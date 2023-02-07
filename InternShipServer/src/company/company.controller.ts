@@ -9,9 +9,13 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
-import { Company, District, Province, SpecializeCompany } from '@prisma/client';
+import { Company, District, Province, Role, SpecializeCompany } from '@prisma/client';
 import { CompanyService } from './company.service';
+import { AuthGuard } from '@nestjs/passport';
+import { Roles } from 'src/auth/rolesGuard/roles.decorator';
+import { RolesGuard } from 'src/auth/rolesGuard/roles.guard';
 
 @Controller('company')
 export class CompanyController {
@@ -19,9 +23,9 @@ export class CompanyController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
+  @Roles(Role.ADMIN)
+  @UseGuards(AuthGuard('jwtGuard'), RolesGuard)
   addCompany(@Body() dto: Company): Promise<Company> {
-    console.log({ dto });
-
     return this.companyService.addCompany(dto);
   }
   @Get('')
@@ -57,10 +61,14 @@ export class CompanyController {
     return this.companyService.getCompanyById(id);
   }
   @Put('update')
+  @Roles(Role.ADMIN)
+  @UseGuards(AuthGuard('jwtGuard'), RolesGuard)
   updateCompany(@Body() dto: Company) {
     return this.companyService.updateCompany(dto);
   }
   @Delete(':id')
+  @Roles(Role.ADMIN)
+  @UseGuards(AuthGuard('jwtGuard'), RolesGuard)
   deleteCompany(@Param('id') id: string) {
     return this.companyService.deleteCompany(id);
   }

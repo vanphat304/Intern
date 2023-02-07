@@ -15,9 +15,9 @@ export const formatDateTime = (dateTime, format = FORMAT_DATE_TIME) =>
 export const isValidDate = (dateTime) =>
   dateTime ? dayjs(dateTime).isValid() : null
 
-export const getDayFromDateTime = (dateTime) => {
+export const  getDayFromDateTime = (dateTime) => {
   if (!isValidDate(dateTime)) {
-    return 0
+    return false
   }
   let day = new Date(dateTime).getTime() - new Date().getTime()
   if (day < 0) {

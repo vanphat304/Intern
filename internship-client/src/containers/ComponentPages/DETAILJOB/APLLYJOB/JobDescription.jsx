@@ -98,7 +98,6 @@ function JobDescription() {
     workingForm,
   } = JobDescription;
 
-  console.log({ JobDescription });
 
   return (
     <>
@@ -137,7 +136,7 @@ function JobDescription() {
                 ) : (
                   <span>ỨNG TUYỂN NGAY</span>
                 )}
-                {!!isProposal | !!isWorked && getDayFromDateTime(timeEndAppply) && (
+                {!!isProposal || !!isWorked  && (
                   <p className="text-xs font-thin normal-case">không dành cho bạn =.=</p>
                 )}
               </button>

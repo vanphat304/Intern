@@ -18,7 +18,7 @@ import InternText from '../../../components/InternInput/InternText';
 import InternTextEditor from '../../../components/InternTextEditor';
 import InternSelect from '../../../components/InternInput/InterSelect';
 import InternTextArea from '../../../components/InternInput/InternTextArea';
-import { ScaleCompany } from '../../../types/scale';
+import { SCALE_COMPANY, ScaleCompany } from '../../../types/scale';
 import { useAuthStore } from '../../../store';
 
 const schema = yup.object({
@@ -64,8 +64,6 @@ const status = Object.keys(STATUS).map((item) => ({
   value: item,
 }));
 
-
-
 const ModalDetail = ({ handleCloseDetail, id }: any) => {
   const methods = useForm({
     resolver: yupResolver(schema),
@@ -78,9 +76,7 @@ const ModalDetail = ({ handleCloseDetail, id }: any) => {
     staleTime: STALE_TIME,
     refetchOnWindowFocus: false,
   });
-  
-  console.log({ districts });
-  
+
   const { data: provinces = [] } = useQuery({
     queryFn: () => Service.getCompanyProvince({}),
     queryKey: [QUERY_KEY_COMPANY, 'province'],
@@ -88,10 +84,6 @@ const ModalDetail = ({ handleCloseDetail, id }: any) => {
     staleTime: STALE_TIME,
     refetchOnWindowFocus: false,
   });
-  
-  console.log({ provinces });
-
-  console.log({ id });
 
   const [{ userLogin }] = useAuthStore();
 
@@ -102,7 +94,6 @@ const ModalDetail = ({ handleCloseDetail, id }: any) => {
       handleCloseDetail();
     },
     onError: (error: AxiosError<{ error: { message: string }; statusCode: string }>) => {
-      console.log(error);
       toast.error(error?.response?.data?.error.message);
     },
   });
@@ -113,7 +104,6 @@ const ModalDetail = ({ handleCloseDetail, id }: any) => {
       handleCloseDetail();
     },
     onError: (error: AxiosError<{ error: { message: string }; statusCode: string }>) => {
-      console.log(error);
       toast.error(error?.response?.data?.error.message);
     },
   });
@@ -141,9 +131,7 @@ const ModalDetail = ({ handleCloseDetail, id }: any) => {
     });
   };
 
-  
-
-  const { isFetching  , data : isProps} = useQuery({
+  const { isFetching, data: isProps } = useQuery({
     queryKey: [id, 'studentProposal'],
     refetchOnWindowFocus: false,
     queryFn: () => Service.getStudentProposal({ id }),
@@ -160,7 +148,9 @@ const ModalDetail = ({ handleCloseDetail, id }: any) => {
 
   const footer = () => (
     <InternFooterModalContainer
-      ButtonSubmit={<InternButtonSubmit isLoading={isLoading || isLoadingUpdate} onClick={handleSubmitForm()} />}
+      ButtonSubmit={
+        <InternButtonSubmit isLoading={isLoading || isLoadingUpdate} onClick={handleSubmitForm()} />
+      }
       ButtonCancel={<InternButtonCancel onClick={handleCloseDetail} />}
     />
   );
@@ -186,10 +176,10 @@ const ModalDetail = ({ handleCloseDetail, id }: any) => {
               />
             </InternRow>
             <InternRow withAutoCol={12}>
-              <InternSelect colSpan={6} data={scaleCompanies} name="scale" label="Quy mô công ty" />
+              <InternSelect colSpan={6} data={SCALE_COMPANY} name="scale" label="Quy mô công ty" />
               <InternText colSpan={6} name="linkWebsite" label="website công ty" />
             </InternRow>
-             <InternRow withAutoCol={12}>
+            <InternRow withAutoCol={12}>
               <InternSelect
                 colSpan={6}
                 name="addressProvinceId"
@@ -235,7 +225,7 @@ const ModalDetail = ({ handleCloseDetail, id }: any) => {
                 label="Thông tin người giám sát thực tâp"
               />
             </InternRow>
-           
+
             <InternRow withAutoCol={12}>
               <InternText
                 colSpan={6}

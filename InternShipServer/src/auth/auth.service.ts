@@ -27,6 +27,15 @@ export class AuthService {
     };
   }
 
+  async decodedToken(token: string): Promise<{ id: string }> {
+    const secret: string = this.config.get('JWT_SECRET');
+    const data = this.jwtService.verifyAsync(token, {
+      secret,
+    });
+
+    return data;
+  }
+
   async scriptPassword(password: string): Promise<string> {
     const salt: string = await genSalt(10);
     const hashed: string = await hash(password, salt);
@@ -57,8 +66,6 @@ export class AuthService {
       return this.signToken(userRegister);
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
-        console.log({error});
-        
         if ((error.code = 'P2002')) {
           throw new HttpException(
             `Unique constraint failed on the ${error?.meta?.target?.toString()}`,
@@ -79,13 +86,12 @@ export class AuthService {
       },
     });
     if (!user) {
-      throw new HttpException('Credentials incorrect', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Tài khoản mật khẩu không chính xác', HttpStatus.BAD_REQUEST);
     }
     const isPasswordMatch: boolean = await this.comparePassword(password, user.passwordHashed);
-    console.log({ isPasswordMatch });
 
     if (!isPasswordMatch) {
-      throw new HttpException('Credentials incorrect', HttpStatus.BAD_GATEWAY);
+      throw new HttpException('Tài khoản mật khẩu không chính xác', HttpStatus.BAD_GATEWAY);
     }
     return this.signToken(user);
   }

@@ -8,22 +8,22 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     key: 'index',
   },
   {
-    title : 'MSSV',
+    title : 'Mã số sinh viên',
     dataIndex : ['student','identifierStudent'],
     key :'MSSV'
   },
   {
-    title : 'FirstName',
+    title : 'Tên',
     dataIndex : ['student','firstName'],
     key :'FirstName'
   },
   {
-    title : 'LastName',
+    title : 'Họ , tên lót',
     dataIndex : ['student','lastName'],
     key :'LastName'
   },
   {
-    title: 'nameCompany',
+    title: 'Tên công ty',
     dataIndex: 'nameCompany',
     key: 'nameCompany',
     render: (value: string) => {
@@ -34,7 +34,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     },
   },
   {
-    title: 'introduceCompany',
+    title: 'Giới thiệu công ty',
     dataIndex: 'introduceCompany',
     key: 'introduceCompany',
     render: (value: string) => {
@@ -46,13 +46,13 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
   },
 
   {
-    title: 'scale',
+    title: 'Quy mô công ty',
     dataIndex: 'scale',
     key: 'scale',
 
   },
   {
-    title: 'addressCompany',
+    title: 'Địa chỉ công ty',
     dataIndex: 'addressCompany',
     key: 'addressCompany',
     render: (value: string) => {
@@ -63,12 +63,12 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     },
   },
   {
-    title: 'legalRepresentative',
+    title: 'Thông tin người đại diện',
     dataIndex: 'legalRepresentative',
     key: 'legalRepresentative',
   },
   {
-    title: 'introducePosition',
+    title: 'giới thiệu vị trí thực tập',
     dataIndex: 'introducePosition',
     key: 'introducePosition',
     render: (value: string) => {
@@ -79,22 +79,22 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     },
   },
   {
-    title: 'referenceName',
+    title: 'Người giám sát',
     dataIndex: 'referenceName',
     key: 'referenceName',
   },
   {
-    title: 'referenceEmail',
+    title: 'Email ngươi giám sát',
     dataIndex: 'referenceEmail',
     key: 'referenceEmail',
   },
   {
-    title: 'referencePhoneNumber',
+    title: 'SĐT người giám sát',
     dataIndex: 'referencePhoneNumber',
     key: 'referencePhoneNumber',
   },
   {
-    title: 'addressIntern',
+    title: 'Địa chỉ thực tập',
     dataIndex: 'addressIntern',
     key: 'addressIntern',
     render: (value: string) => {
@@ -105,7 +105,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     },
   },
   {
-    title: 'linkWebsite',
+    title: 'Địa chỉ Website công ty',
     dataIndex: 'linkWebsite',
     key: 'linkWebsite',
     render : (value : string)=> { return <a href={value} target={'_blank'}>
@@ -113,7 +113,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     </a> }
   },
   {
-    title: 'specializeCompany',
+    title: 'Lĩnh vực công ty',
     dataIndex: 'specializeCompany',
     key: 'specializeCompany',
   },
@@ -123,7 +123,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
   //   key: 'studentName',
   // },
   {
-    title: 'week1',
+    title: 'Thông tin mô tả tuần 1',
     dataIndex: 'week1',
     key: 'week1',
     render: (value: string) => {
@@ -134,7 +134,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     },
   },
   {
-    title: 'week2',
+    title: 'Thông tin mô tả tuần 2',
     dataIndex: 'week2',
     key: 'week2',
     render: (value: string) => {
@@ -145,7 +145,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     },
   },
   {
-    title: 'week3',
+    title: 'Thông tin mô tả tuần 3',
     dataIndex: 'week3',
     key: 'week3',
     render: (value: string) => {
@@ -156,7 +156,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     },
   },
   {
-    title: 'week4',
+    title: 'Thông tin mô tả tuần 4',
     dataIndex: 'week4',
     key: 'week4',
     render: (value: string) => {
@@ -167,7 +167,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     },
   },
   {
-    title: 'week5',
+    title: 'Thông tin mô tả tuần 5',
     dataIndex: 'week5',
     key: 'week5',
     render: (value: string) => {
@@ -178,7 +178,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     },
   },
   {
-    title: 'week6',
+    title: 'Thông tin mô tả tuần 6',
     dataIndex: 'week6',
     key: 'week6',
     render: (value: string) => {
@@ -189,7 +189,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     },
   },
   {
-    title: 'week7',
+    title: 'Thông tin mô tả tuần 7',
     dataIndex: 'week7',
     key: 'week7',
     render: (value: string) => {
@@ -200,7 +200,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     },
   },
   {
-    title: 'week8',
+    title: 'Thông tin mô tả tuần 8',
     dataIndex: 'week8',
     key: 'week8',
     render: (value: string) => {
@@ -211,7 +211,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     },
   },
   {
-    title: 'status',
+    title: 'Trạng thái',
     dataIndex: 'status',
     key: 'status',
   },

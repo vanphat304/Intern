@@ -186,7 +186,6 @@ function Navbar() {
                         <li
                           onClick={() => {
                             !item.isRead && readNotification(item.id);
-                            console.log('123');
                           }}
                           className={`nav_notify_menu-item hover:bg-slate-300 ${
                             !item.isRead && 'bg-slate-200'
@@ -248,7 +247,6 @@ function Navbar() {
                     <li className="navbar_menu-item">Đổi mật khẩu</li>
                     <li
                       onClick={() => {
-                        console.log('data');
                         setAuth({ type: 'LOGOUT', data: null });
                         window.location.href = '/';
                       }}

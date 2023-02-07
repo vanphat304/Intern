@@ -9,7 +9,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     key: 'index',
   },
   {
-    title: 'jobDecription',
+    title: 'Tên công việc',
     dataIndex: ['jobDecription', 'jobTitle'],
     key: 'jobDecription',
   },
@@ -19,23 +19,23 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     key: 'mssv',
   },
   {
-    title: 'nameCompany',
+    title: 'Tên công ty',
     dataIndex: ['jobDecription', 'company', 'nameCompany'],
     key: 'nameCompany',
   },
   {
-    title: 'firstName',
+    title: 'Tên',
     dataIndex: ['student', 'firstName'],
     key: 'firstName',
   },
 
   {
-    title: 'lastName',
+    title: 'Họ , tên lót',
     dataIndex: ['student', 'lastName'],
     key: 'lastName',
   },
   {
-    title: 'dateAppply',
+    title: 'Ngầy ứng tuyển',
     dataIndex: 'dateAppply',
     key: 'dateAppply',
   },
@@ -51,7 +51,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
   },
 
   {
-    title: 'fileScore',
+    title: 'filr điểm',
     dataIndex: 'fileScore',
     key: 'fileScore',
     render: (value: string) => (
@@ -61,7 +61,7 @@ export const columnsStudentProposal = ({ handleOpenDetail, handleOpenDelete }: a
     ),
   },
   {
-    title: 'status',
+    title: 'trạng thái',
     dataIndex: 'status',
     key: 'status',
   },

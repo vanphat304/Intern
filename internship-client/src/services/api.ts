@@ -38,7 +38,6 @@ const parseUrl = (url = '', vars: any) => {
 export const API = {
   GET: async (url = '', data: dataTypeParams) => {
     const { vars, params } = data;
-    console.log(data);
 
     const result = await axiosInstance.get(parseUrl(url, vars), {
       params,
@@ -70,8 +69,6 @@ export const API = {
   },
   POST_ATTACH_FILE: async (url = '', data: dataTypeParams) => {
     const { vars, params } = data;
-
-    console.log({ data });
 
     // const result = await axiosInstance.post(parseUrl(url, vars), jsonToFormData(params), {
     const result = await axiosInstance.post(parseUrl(url, vars), params, {
@@ -159,7 +156,6 @@ export const API = {
   student_work_company_report_id: 'student-work-company/report/{id}',
 
   //student like job
-  student_like_job:'student-like-job/like',
-  student_un_like_job:'student-like-job/unlike',
-
+  student_like_job: 'student-like-job/like',
+  student_un_like_job: 'student-like-job/unlike',
 };

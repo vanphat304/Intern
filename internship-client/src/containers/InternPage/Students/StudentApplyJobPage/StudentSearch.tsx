@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Service } from '../../../../services/service';
 import { Student } from '../../../../types/students.type';
 import { Company } from '../../../../types/companies.type';
-import { STATUS } from '../../../../types/status.type';
+import { STATUES, STATUS } from '../../../../types/status.type';
 
 type searchItemType = {
   searchItem: string;
@@ -25,8 +25,6 @@ const StudentSearch = ({ onClick }: typeInternSearch) => {
     queryKey: ['keyParamsCompanies'],
     queryFn: () => Service.getCompanyParams(),
   });
-
-  console.log({ companies });
 
   return (
     <InternSearch hidden placeHolder="Nhập tên sinh viên để tìm kiếm" onClick={onClick}>
@@ -62,11 +60,7 @@ const StudentSearch = ({ onClick }: typeInternSearch) => {
       <InternSelect
         placeholder="Chọn trạng thái"
         direct
-        data={Object.values(STATUS).map((item) => ({
-          name: item,
-          value: item,
-          id: item,
-        }))}
+        data={STATUES}
         colSpan={4}
         label="Trạng thái"
         name="status"

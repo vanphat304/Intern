@@ -90,7 +90,6 @@ function Search() {
           <div className="input-data search-submit">
             <button
               onClick={() => {
-                console.log(getValues());
                 setSearchItem({ type: 'SEARCH_JOB', data: { ...getValues() } });
               }}
               className="btn btn-search btn-primary btn-primary-hover"

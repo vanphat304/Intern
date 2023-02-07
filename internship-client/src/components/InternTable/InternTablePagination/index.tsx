@@ -18,8 +18,6 @@ const InternTablePagination = ({
 
   const [params] = useQueryString();
 
-  console.log({ params });
-
   return (
     <div className="mt-6 flex justify-center">
       <nav aria-label="pageSize navigation example">
@@ -38,13 +36,13 @@ const InternTablePagination = ({
               </Link>
             )}
           </li>
-          {Array(Math.ceil(totalpageSize / pageSize ))
+          {Array(Math.ceil(totalpageSize / pageSize))
             .fill(0)
             .map((_, index) => {
               const pageSizeNumber = index + 1;
               const isActive = pageSize === pageSizeNumber;
               if (index === 3) {
-                index+=4
+                index += 4;
                 return (
                   <li key={pageSizeNumber}>
                     <Link
@@ -76,7 +74,7 @@ const InternTablePagination = ({
               );
             })}
           <li>
-            {pageNumber === Math.ceil(totalpageSize / pageSize ) ? (
+            {pageNumber === Math.ceil(totalpageSize / pageSize) ? (
               <span className="cursor-not-allowed rounded-r-lg border border-gray-300 bg-white py-2 px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 ">
                 Next
               </span>

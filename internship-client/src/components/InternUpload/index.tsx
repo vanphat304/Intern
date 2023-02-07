@@ -46,10 +46,8 @@ const InternUpload = ({
   const { isLoading, mutate: uploadFile } = useMutation({
     mutationFn: (params: FormData) => Service.uploadFile({ params }),
     onSuccess: (data) => {
-      console.log({ data });
     },
     onError: (error) => {
-      console.log(error);
     },
   });
 
@@ -61,7 +59,13 @@ const InternUpload = ({
     formData.append('file', file);
     setValue('logoPreview', URL.createObjectURL(file));
     axios
-      .post(`${path}/uploadfile`, formData)
+      .post(`${path}/uploadfile`, formData, {
+        headers: {
+          Authorization: `Bearer ${
+            JSON.parse(localStorage.getItem('tempUser') as string)?.access_token
+          }`,
+        },
+      })
       .then((data: AxiosResponse<{ filename: string }>) => {
         toast('upload file success');
         setValue(namePreview, path + '/uploadfile/' + data.data.filename);
@@ -70,7 +74,6 @@ const InternUpload = ({
         clearErrors(name);
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 
@@ -112,7 +115,7 @@ const InternUpload = ({
           className="col-span-6 col-start-3 text-sm text-gray-500 dark:text-gray-300"
           id="file_input_help"
         >
-         hỗ trợ định dạng : {fileSupport}
+          hỗ trợ định dạng : {fileSupport}
         </p>
         <ErrorMessage
           errors={errors}

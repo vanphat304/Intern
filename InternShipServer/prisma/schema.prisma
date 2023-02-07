@@ -95,7 +95,7 @@ model Student {
   firstName           String?               @db.VarChar(50)
   lastName            String?               @db.VarChar(50)
   passwordHashed      String
-  role                Role                  @default(ADMIN)
+  role                Role                  @default(USER)
   dateOfBirth         DateTime?
   address             String?               @db.Text
   class               String?               @db.VarChar(20)
@@ -256,8 +256,9 @@ model StudentWorkCompany {
   companyId String
   company   Company @relation(fields: [companyId], references: [id])
 
-  rating     RATING @default(NONE)
-  decription String @db.Text
+  rating     RATING  @default(NONE)
+  decription String  @db.Text
+  flag       String?
 
   @@index([rating])
   @@map("studentworkcompanys")

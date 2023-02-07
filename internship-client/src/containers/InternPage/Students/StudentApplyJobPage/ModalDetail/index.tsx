@@ -23,24 +23,12 @@ import { formatDateTime } from '../../../../../helpers/datetime';
 import InternButtonReject from '../../../../../components/InternButton/InternButtonReject';
 import InternButtonApprove from '../../../../../components/InternButton/InternButtonApprove';
 import InternTextEditor from '../../../../../components/InternTextEditor';
-import { STATUS } from '../../../../../types/status.type';
+import { STATUES, STATUS } from '../../../../../types/status.type';
 import { ScaleCompany } from '../../../../../types/scale';
 import InternTextArea from '../../../../../components/InternInput/InternTextArea';
 import { getNestedValue } from '../../../../../helpers/object';
 import InternUpload from '../../../../../components/InternUpload';
 import InternLinkForm from '../../../../../components/InternLinkForm';
-
-const scaleCompanies = Object.keys(ScaleCompany).map((item) => ({
-  id: item,
-  name: item,
-  value: item,
-}));
-
-const statuses = Object.keys(STATUS).map((item) => ({
-  id: item,
-  name: item,
-  value: item,
-}));
 
 const ModalDetail = ({
   handleCloseDetail,
@@ -59,7 +47,6 @@ const ModalDetail = ({
       handleCloseDetail();
     },
     onError: (error: AxiosError<{ message: string; statusCode: string }>) => {
-      console.log(error);
       toast.error(error?.response?.data?.message);
     },
   });
@@ -159,7 +146,7 @@ const ModalDetail = ({
             </InternRow>
             <InternRow withAutoCol={12}>
               <InternDatePicker colSpan={6} name="dateAppply" label="Ngày ứng tuyển" />
-              <InternSelect disabled data={statuses} colSpan={6} name="status" label="Trạng thái" />
+              <InternSelect disabled data={STATUES} colSpan={6} name="status" label="Trạng thái" />
             </InternRow>
           </form>
         </FormProvider>

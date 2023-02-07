@@ -39,6 +39,9 @@ axiosInstance.interceptors.response.use(
       localStorage.clear();
       window.location.href = '/';
     }
+    if ([403].includes(status)) {
+      window.location.href = '/';
+    }
 
     return Promise.reject(error);
   },

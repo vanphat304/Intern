@@ -1,7 +1,7 @@
 import React from 'react';
 import InternSelect from '../../../components/InternInput/InterSelect';
 import InternRow from '../../../components/InternRow';
-import { RATING } from '../../../types/rating.type';
+import { RATING, RATINGS } from '../../../types/rating.type';
 import InternTextEditor from '../../../components/InternTextEditor';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
@@ -13,11 +13,6 @@ import { useAuthStore } from '../../../store';
 import { CACHE_TIME, QUERY_KEY_CHECK, QUERY_KEY_GET_COMP_REPORT, STALE_TIME } from '../../../enums';
 import { useNavigate } from 'react-router-dom';
 
-const RATINGS = Object.keys(RATING).map((item) => ({
-  id: item,
-  name: item,
-  value: item,
-}));
 
 const schema = yup.object({
   rating: yup.string().required('Trường này bắt buộc nhập'),
@@ -58,7 +53,6 @@ const ReportCompany = () => {
     },
   });
 
-  console.log({ dataStudentWork });
 
   const handleReportCompany = () => {
     return handleSubmit((data) => {

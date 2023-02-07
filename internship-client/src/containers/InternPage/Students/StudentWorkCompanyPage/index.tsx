@@ -49,7 +49,6 @@ const StudentWorkCompanyPage = () => {
       toast.success('delete success');
     },
     onError(error: AxiosError<{ message: string; statusCode: string }>) {
-      console.log(error);
       toast.error(error?.response?.data?.message);
     },
   });
@@ -76,7 +75,6 @@ const StudentWorkCompanyPage = () => {
 
 
   const handleSearch = (searchItem: searchItemType) => {
-    console.log({ searchItem });
 
     setUrlSearchParams({ ...queryString, ...filterObjectFalsy(searchItem) });
   };
@@ -84,7 +82,7 @@ const StudentWorkCompanyPage = () => {
   return (
     <>
       <StudentSearch onClick={handleSearch as (a: searchItemType | void) => void} />
-      <InternButtonAddNew col={6} onClick={() => handleOpenDetail(IS_ADD)} />
+      <InternButtonAddNew hidden col={6} onClick={() => handleOpenDetail(IS_ADD)} />
       <InternTable
       counts={counts}
         columns={columnsStudentWork({

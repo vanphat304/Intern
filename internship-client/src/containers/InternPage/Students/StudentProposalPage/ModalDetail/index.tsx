@@ -29,8 +29,8 @@ import { formatDateTime } from '../../../../../helpers/datetime';
 import InternButtonReject from '../../../../../components/InternButton/InternButtonReject';
 import InternButtonApprove from '../../../../../components/InternButton/InternButtonApprove';
 import InternTextEditor from '../../../../../components/InternTextEditor';
-import { STATUS } from '../../../../../types/status.type';
-import { ScaleCompany } from '../../../../../types/scale';
+import { STATUES, STATUS } from '../../../../../types/status.type';
+import { SCALE_COMPANY, ScaleCompany } from '../../../../../types/scale';
 import InternTextArea from '../../../../../components/InternInput/InternTextArea';
 import InternLinkForm from '../../../../../components/InternLinkForm';
 
@@ -69,11 +69,7 @@ const scaleCompanies = Object.keys(ScaleCompany).map((item) => ({
   value: item,
 }));
 
-const status = Object.keys(STATUS).map((item) => ({
-  id: item,
-  name: item,
-  value: item,
-}));
+
 
 const ModalDetail = ({
   handleCloseDetail,
@@ -94,7 +90,6 @@ const ModalDetail = ({
       handleCloseDetail();
     },
     onError: (error: AxiosError<{ message: string; statusCode: string }>) => {
-      console.log(error);
       toast.error(error?.response?.data?.message);
     },
   });
@@ -181,7 +176,7 @@ const ModalDetail = ({
               />
             </InternRow>
             <InternRow withAutoCol={12}>
-              <InternSelect colSpan={6} data={scaleCompanies} name="scale" label="Quy mô công ty" />
+              <InternSelect colSpan={6} data={SCALE_COMPANY} name="scale" label="Quy mô công ty" />
               <InternLinkForm text='linkWebsite' colSpan={6} name="linkWebsite" label="website công ty" />
             </InternRow>
             <InternRow>
@@ -257,7 +252,7 @@ const ModalDetail = ({
               <InternTextEditor labelSpan={1} name="week8" label="Thông tin tuần 8" />
             </InternRow>
             <InternRow withAutoCol={12}>
-              <InternSelect disabled data={status} colSpan={6} name="status" label="Trạng thái" />
+              <InternSelect disabled data={STATUES} colSpan={6} name="status" label="Trạng thái" />
               {watch('status') === STATUS.REJECTED && (
                 <InternTextArea disabled colSpan={6} name="reasonReject" label="Lý do từ chối" />
               )}

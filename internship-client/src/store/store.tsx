@@ -9,8 +9,7 @@ export function createStore<T, R>(initialState: T, reducer: R) {
   const UpdateContext = createContext<Dispatch<any>>((A: any) => {});
   const StoreProvider = ({ children }: children<ReactNode>) => {
     const [state, updateState] = useReducer(reducer as Reducer<any, any>, initialState);
-    console.log({state});
-    
+
     return (
       <UpdateContext.Provider value={updateState}>
         <StateContext.Provider value={state}>{children}</StateContext.Provider>

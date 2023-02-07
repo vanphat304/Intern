@@ -9,8 +9,6 @@ export class StudentProposalService {
 
   async addStudentProposal(dto: StudentProposal) {
     try {
-      console.log('adđ');
-
       const isSubmit = await this.prisma.studentProposal.findFirst({
         where: {
           studentId: {
@@ -35,7 +33,6 @@ export class StudentProposalService {
       });
       return StudentProposal;
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -81,7 +78,6 @@ export class StudentProposalService {
         return (b.createdAt as any) - (a.createdAt as any);
       });
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -202,7 +198,6 @@ export class StudentProposalService {
         });
 
         const { id: companyId } = company;
-        console.log({ companyId });
 
         await this.prisma.studentWorkCompany.create({
           data: {
@@ -223,8 +218,6 @@ export class StudentProposalService {
       return result;
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
-        console.log({ error });
-
         if ((error.code = 'P2003')) {
           throw new HttpException(
             `không thể tìm thấy thông tin với id ${id}`,
@@ -237,8 +230,6 @@ export class StudentProposalService {
   }
 
   async rejectStudentProposal(id: string, { reasonReject }: Pick<StudentProposal, 'reasonReject'>) {
-    console.log({ reasonReject });
-
     try {
       const result = await this.prisma.studentProposal.update({
         where: {
@@ -285,7 +276,7 @@ export class StudentProposalService {
           id,
         },
       });
-      console.log(result);
+
       return result;
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {

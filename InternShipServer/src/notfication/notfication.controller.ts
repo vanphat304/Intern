@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Put, Query, UseGuards } from '@nestjs/common';
 import { NotficationService } from './notfication.service';
 import { NotificationStudent } from '@prisma/client';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('/notification')
 export class NotficationController {
@@ -17,11 +18,13 @@ export class NotficationController {
   }
 
   @Put('update')
+  @UseGuards(AuthGuard('jwtGuard'))
   updateStudent(@Body() dto: Pick<NotificationStudent, 'id'>) {
     const { id } = dto;
     return this.notificationService.updateNotificationById(id);
   }
   @Delete(':id')
+  @UseGuards(AuthGuard('jwtGuard'))
   deleteStudent(@Param('id') id: string) {
     return this.notificationService.deleteNotificationById(id);
   }

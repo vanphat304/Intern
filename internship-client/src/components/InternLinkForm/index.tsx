@@ -13,7 +13,7 @@ type InputText = {
   name?: string;
   direct?: boolean;
   text?: string;
-  place?:string;
+  place?: string;
 };
 
 const InternLinkForm = ({
@@ -31,8 +31,6 @@ const InternLinkForm = ({
   const {
     field: { value },
   } = useController({ control, name });
-
-  console.log({ value });
 
   return (
     <div className={`col-span-${colSpan}`}>

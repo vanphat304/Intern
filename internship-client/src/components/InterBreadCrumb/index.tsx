@@ -6,8 +6,6 @@ import InternRow from '../InternRow';
 function InternBreadCrumb() {
   const location = useLocation();
 
-  console.log({location})
-
   const foundGroup = COMPONENTS_LEFT_MENU.find((item) => location.pathname?.startsWith(item.path));
   const foundSub = foundGroup?.subMenu?.find((subItem) => location.pathname === subItem.path);
 

@@ -12,7 +12,6 @@ if (tempUser) {
 }
 
 function reducer(state: any, action: actionType<string>) {
-  console.log({action})
   switch (action.type) {
     case 'LOGOUT':
       localStorage.removeItem('tempUser');

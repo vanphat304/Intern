@@ -17,8 +17,6 @@ export class JobDescriptionService {
       });
       return JobDecripton;
     } catch (error) {
-      console.log({ error });
-
       if (error instanceof PrismaClientKnownRequestError) {
         if ((error.code = 'P2003')) {
           throw new HttpException(
@@ -31,7 +29,6 @@ export class JobDescriptionService {
     }
   }
 
-  
   async getListJobDecriptonCount() {
     return this.prisma.jobDecripton.count();
   }
@@ -39,7 +36,6 @@ export class JobDescriptionService {
   async getListJobDecripton(query): Promise<Array<JobDecripton>> {
     try {
       const { pageNumber, pageSize, searchItem, companyId } = query;
-      console.log({ query });
 
       const listJobDecripton: Array<JobDecripton> = await this.prisma.jobDecripton.findMany({
         skip: (pageNumber - 1) * pageSize || 0,
@@ -103,7 +99,6 @@ export class JobDescriptionService {
       }
       return JobDecripton;
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
@@ -121,7 +116,6 @@ export class JobDescriptionService {
       });
       return result;
     } catch (error) {
-      console.log({ error });
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -215,7 +209,6 @@ export class JobDescriptionService {
           HttpStatus.BAD_REQUEST,
         );
       }
-      console.log({ results });
 
       return results.sort((a, b) => {
         return (b.createdAt as any) - (a.createdAt as any);
@@ -229,8 +222,6 @@ export class JobDescriptionService {
     const {
       search: { addressDistrictId, addressProvinceId, searchItem, specializeCompanyId },
     } = query;
-    console.log({ searchItem });
-    console.log({ specializeCompanyId });
 
     try {
       const results = await this.prisma.jobDecripton.findMany({

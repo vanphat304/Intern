@@ -23,7 +23,6 @@ export const HistoryApply = () => {
     },
   });
 
-  console.log({ historyApplies });
 
   return (
     <div className="grid grid-cols-12">

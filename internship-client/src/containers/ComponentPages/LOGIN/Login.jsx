@@ -21,20 +21,17 @@ function Login() {
     resolver: yupResolver(schema),
   });
 
-  const [{ userLogin }] = useAuthStore();
   const { mutate: login } = useMutation({
     mutationFn: (params) => Service.loginAuth(params),
     onSuccess: (data) => {
       localStorage.setItem('tempUser', JSON.stringify(data));
-      if (userLogin?.role === 'ADMIN') {
-        window.location.href = '/students/student';
+      if (data?.role === 'ADMIN') {
+        window.location.href = '/admin';
       } else {
         window.location.href = '/';
       }
     },
     onError: (error) => {
-      console.log(error);
-      console.log(error?.response?.data?.message?.toString());
       toast.error(error?.response?.data?.message?.toString());
     },
   });

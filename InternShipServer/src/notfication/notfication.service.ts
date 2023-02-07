@@ -14,23 +14,21 @@ export class NotficationService {
         },
       });
 
-      return notifications.sort((a,b)=>{
-        return b.createdAt as any - (a.createdAt as any)
+      return notifications.sort((a, b) => {
+        return (b.createdAt as any) - (a.createdAt as any);
       });
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
-async  getListNotifications(): Promise<Array<NotificationStudent>> {
+  async getListNotifications(): Promise<Array<NotificationStudent>> {
     try {
       const notifications = await this.prisma.notificationStudent.findMany();
 
-      return notifications.sort((a,b)=>{
-        return b.createdAt as any - (a.createdAt as any)
+      return notifications.sort((a, b) => {
+        return (b.createdAt as any) - (a.createdAt as any);
       });
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -47,7 +45,6 @@ async  getListNotifications(): Promise<Array<NotificationStudent>> {
 
       return notifications;
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -62,7 +59,6 @@ async  getListNotifications(): Promise<Array<NotificationStudent>> {
 
       return notifications;
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }

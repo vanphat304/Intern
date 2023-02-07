@@ -65,7 +65,7 @@ const StudentApplyJobPage = () => {
       toast.success('delete success');
     },
     onError(error: AxiosError<{ message: string; statusCode: string }>) {
-      console.log(error);
+      
       toast.error(error?.response?.data?.message);
     },
   });
@@ -85,7 +85,7 @@ const StudentApplyJobPage = () => {
       toast.success('import file thành công');
     },
     onError(error: AxiosError<{ message: string; statusCode: string }>) {
-      console.log('sdfsdfsdf',error);
+      
       toast.error(error?.response?.data?.message);
     },
   });
@@ -99,7 +99,7 @@ const StudentApplyJobPage = () => {
       toast.success('export file thành công');
     },
     onError(error: AxiosError<{ message: string; statusCode: string }>) {
-      console.log(error);
+      
       toast.error(error.message);
     },
   });
@@ -136,7 +136,7 @@ const StudentApplyJobPage = () => {
   });
 
   const handleSearch = (searchItem: searchItemType) => {
-    console.log({ searchItem });
+    
 
     setUrlSearchParams({ ...queryString, ...filterObjectFalsy(searchItem) });
   };
@@ -144,7 +144,7 @@ const StudentApplyJobPage = () => {
   return (
     <>
       <StudentSearch onClick={handleSearch as (a: searchItemType | void) => void} />
-      <InternButtonAddNew col={2} onClick={() => handleOpenDetail(IS_ADD)}>
+      <InternButtonAddNew hidden={true} col={2} onClick={() => handleOpenDetail(IS_ADD)}>
         <InternButtonImport onClick={handleOpenModalImport} />
         <InternButtonExport
           onClick={() => exportStudentApplyJob({ ...queryString, ...restParams })}

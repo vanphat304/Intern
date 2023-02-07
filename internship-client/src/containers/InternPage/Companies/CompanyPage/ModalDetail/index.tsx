@@ -20,7 +20,7 @@ import { Student } from '../../../../../types/students.type';
 import { CACHE_TIME, IS_ADD, QUERY_KEY_COMPANY, STALE_TIME } from '../../../../../enums';
 import { formatDateTime, isValidDate, parserDateTime } from '../../../../../helpers/datetime';
 import { AxiosError } from 'axios';
-import { ScaleCompany } from '../../../../../types/scale';
+import { SCALE_COMPANY, ScaleCompany } from '../../../../../types/scale';
 import InternTextArea from '../../../../../components/InternInput/InternTextArea';
 import InternUpload from '../../../../../components/InternUpload';
 import { Company } from '../../../../../types/companies.type';
@@ -36,13 +36,8 @@ const schema = yup.object({
   addressDistrictId: yup.string().required('trường này bắt buộc nhập'),
   addressProvinceId: yup.string().required('trường này bắt buộc nhập'),
   specializeCompanyId: yup.string().required('trường này bắt buộc nhập'),
+  website: yup.string().required('trường này bắt buộc nhập'),
 });
-
-const scalesCompany = Object.keys(ScaleCompany).map((item) => ({
-  id: item,
-  name: item,
-  value: item,
-}));
 
 const ModalDetail = ({ handleCloseDetail, id, handleSearch, handleOpenDelete }: any) => {
   const methods = useForm({
@@ -57,8 +52,6 @@ const ModalDetail = ({ handleCloseDetail, id, handleSearch, handleOpenDelete }: 
     refetchOnWindowFocus: false,
   });
 
-  console.log({ specializes });
-
   const { data: districts = [] } = useQuery({
     queryFn: () => Service.getCompanyDistrict({}),
     queryKey: [QUERY_KEY_COMPANY, 'district'],
@@ -66,8 +59,6 @@ const ModalDetail = ({ handleCloseDetail, id, handleSearch, handleOpenDelete }: 
     staleTime: STALE_TIME,
     refetchOnWindowFocus: false,
   });
-
-  console.log({ districts });
 
   const { data: provinces = [] } = useQuery({
     queryFn: () => Service.getCompanyProvince({}),
@@ -77,18 +68,14 @@ const ModalDetail = ({ handleCloseDetail, id, handleSearch, handleOpenDelete }: 
     refetchOnWindowFocus: false,
   });
 
-  console.log({ provinces });
-
   const { isLoading: isLoadingUpdate, mutate: updateCompany } = useMutation({
     mutationFn: (params: Company) => Service.updateCompany(params),
     onSuccess: (data) => {
-      console.log({ data });
       toast.success('update success');
       handleSearch();
       handleCloseDetail();
     },
     onError(error: AxiosError<{ message: string; statusCode: string }>) {
-      console.log(error);
       toast.error(error?.response?.data?.message);
     },
   });
@@ -96,13 +83,11 @@ const ModalDetail = ({ handleCloseDetail, id, handleSearch, handleOpenDelete }: 
   const { isLoading: isLoadingAdd, mutate: addCompany } = useMutation({
     mutationFn: (params: Company) => Service.addCompany(params),
     onSuccess: (data) => {
-      console.log({ data });
       toast.success('add new company success');
       handleSearch();
       handleCloseDetail();
     },
     onError(error: AxiosError<{ message: string; statusCode: string }>) {
-      console.log(error);
       toast.error(error?.response?.data?.message);
     },
   });
@@ -201,11 +186,15 @@ const ModalDetail = ({ handleCloseDetail, id, handleSearch, handleOpenDelete }: 
             <InternRow>
               <InternSelect
                 labelSpan={1}
-                data={scalesCompany}
+                data={SCALE_COMPANY}
                 colSpan={6}
                 name="scale"
                 label="Quy mô công ty"
               />
+            </InternRow>
+
+            <InternRow>
+              <InternText labelSpan={1} colSpan={6} name="website" label="website công ty" />
             </InternRow>
 
             <InternRow>

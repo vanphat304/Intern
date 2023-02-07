@@ -34,7 +34,6 @@ function Register() {
       navigate('/auth/login');
     },
     onError: (error) => {
-      console.log(error);
       toast.error(error?.response?.data?.message);
     },
   });
@@ -44,7 +43,6 @@ function Register() {
     formState: { errors },
   } = methods;
 
-  console.log({ errors });
   const [show, setShow] = useState({
     password: 'password',
     confirmPassword: 'password',

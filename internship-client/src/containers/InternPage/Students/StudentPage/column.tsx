@@ -8,38 +8,38 @@ export const columnsStudent = ({ handleOpenDetail, handleOpenDelete }: any) => [
     key: 'index',
   },
   {
-    title: 'identifierStudent',
+    title: 'Mã số sinh viên',
     dataIndex: 'identifierStudent',
     key: 'identifierStudent',
   },
   {
-    title: 'firstName',
+    title: 'Tên',
     dataIndex: 'firstName',
     key: 'firstName',
   },
 
   {
-    title: 'lastName',
+    title: 'Họ , Tên lót',
     dataIndex: 'lastName',
     key: 'lastName',
   },
   {
-    title: 'dateOfBirth',
+    title: 'Ngày sinh',
     dataIndex: 'dateOfBirth',
     key: 'dateOfBirth',
   },
   {
-    title: 'address',
+    title: 'Địa chỉ',
     dataIndex: 'address',
     key: 'address',
   },
   {
-    title: 'class',
+    title: 'Lớp',
     dataIndex: 'class',
     key: 'class',
   },
   {
-    title: 'majors',
+    title: 'Chuyên ngành',
     dataIndex: 'majors',
     key: 'majors',
   },
@@ -49,12 +49,12 @@ export const columnsStudent = ({ handleOpenDetail, handleOpenDelete }: any) => [
     key: 'email',
   },
   {
-    title: 'phoneNumber',
+    title: 'Số điện thoại',
     dataIndex: 'phoneNumber',
     key: 'phoneNumber',
   },
   {
-    title: 'anotherContact',
+    title: 'Thông tin liên lạc khác',
     dataIndex: 'anotherContact',
     key: 'anotherContact',
   },

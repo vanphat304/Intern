@@ -36,7 +36,6 @@ export class StudentWorkCompanyService {
 
       return StudentWorkCompany;
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -65,7 +64,6 @@ export class StudentWorkCompanyService {
 
       return listStudentWorkCompany;
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -101,7 +99,6 @@ export class StudentWorkCompanyService {
       );
       return StudentWorkCompany;
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -119,7 +116,6 @@ export class StudentWorkCompanyService {
       });
       return result;
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -132,7 +128,6 @@ export class StudentWorkCompanyService {
       });
       return result;
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }

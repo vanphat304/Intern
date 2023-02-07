@@ -27,11 +27,11 @@ import { Company } from '../../../../../types/companies.type';
 import InternButtonTableDelete from '../../../../../components/InternButtonTableDelete';
 import InternTextEditor from '../../../../../components/InternTextEditor';
 import { JobDescription } from '../../../../../types/jobdescription.type';
-import { WOKINGFORM } from '../../../../../types/workingForm.type';
+import { WOKINGFORM, WORKING_FORMS } from '../../../../../types/workingForm.type';
 
 const schema = yup.object({
   jobTitle: yup.string().required('trường này bắt buộc nhập'),
-  decriptionJob: yup.string().required('trường này bắt buộc nhập').max(2000, 'Tối đã 2000 ký tự'),
+  decriptionJob: yup.string().required('trường này bắt buộc nhập').max(3000, 'Tối đã 3000 ký tự'),
   salary: yup.string().required('trường này bắt buộc nhập').max(14, 'Nhập tối đã 14 chữ số'),
   workingForm: yup.string().required('Trường này bắt buộc nhập'),
   numberRecur: yup.string().required('trường này bắt buộc nhập').max(14, 'Nhập tối đã 14 chữ số'),
@@ -56,12 +56,6 @@ const schema = yup.object({
   addressToInterview: yup.string().required('trường này bắt buộc nhập'),
 });
 
-const workingForms = Object.keys(WOKINGFORM).map((item) => ({
-  id: item,
-  name: item,
-  value: item,
-}));
-
 const ModalDetail = ({ handleCloseDetail, id, handleSearch, handleOpenDelete }: any) => {
   const methods = useForm({
     resolver: yupResolver(schema),
@@ -70,13 +64,11 @@ const ModalDetail = ({ handleCloseDetail, id, handleSearch, handleOpenDelete }: 
   const { isLoading: isLoadingUpdate, mutate: updateJobDescription } = useMutation({
     mutationFn: (params: JobDescription) => Service.updateJobDescription(params),
     onSuccess: (data) => {
-      console.log({ data });
       toast.success('update success');
       handleSearch();
       handleCloseDetail();
     },
     onError(error: AxiosError<{ message: string; statusCode: string }>) {
-      console.log(error);
       toast.error(error?.response?.data?.message);
     },
   });
@@ -89,7 +81,6 @@ const ModalDetail = ({ handleCloseDetail, id, handleSearch, handleOpenDelete }: 
       handleCloseDetail();
     },
     onError(error: AxiosError<{ message: string; statusCode: string }>) {
-      console.log(error);
       toast.error(error?.response?.data?.message);
     },
   });
@@ -141,8 +132,6 @@ const ModalDetail = ({ handleCloseDetail, id, handleSearch, handleOpenDelete }: 
     refetchOnWindowFocus: false,
   });
 
-  console.log({ companies });
-
   const footer = () => (
     <InternFooterModalContainer
       ButtonSubmit={
@@ -184,7 +173,7 @@ const ModalDetail = ({ handleCloseDetail, id, handleSearch, handleOpenDelete }: 
             </InternRow>
             <InternRow>
               <InternSelect
-                data={workingForms}
+                data={WORKING_FORMS}
                 labelSpan={1}
                 name="workingForm"
                 label="Hình thức làm việc"

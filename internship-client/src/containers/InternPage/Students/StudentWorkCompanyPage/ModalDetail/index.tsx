@@ -29,13 +29,9 @@ import InternTextArea from '../../../../../components/InternInput/InternTextArea
 import { getNestedValue } from '../../../../../helpers/object';
 import InternUpload from '../../../../../components/InternUpload';
 import InternLinkForm from '../../../../../components/InternLinkForm';
-import { RATING } from '../../../../../types/rating.type';
+import { RATING, RATINGS } from '../../../../../types/rating.type';
 
-const ratings = Object.keys(RATING).map((item) => ({
-  id: item,
-  name: item,
-  value: item,
-}));
+
 
 const ModalDetail = ({
   handleCloseDetail,
@@ -54,7 +50,6 @@ const ModalDetail = ({
       handleCloseDetail();
     },
     onError: (error: AxiosError<{ message: string; statusCode: string }>) => {
-      console.log(error);
       toast.error(error?.response?.data?.message);
     },
   });
@@ -71,7 +66,6 @@ const ModalDetail = ({
     refetchOnWindowFocus: false,
     queryFn: () => Service.getStudentWorkCompany({ id }),
     onSuccess(data) {
-      console.log({data});
       
       setValue('logoPreview', data['company']['logo']);
       Object.keys(data).forEach((item) => {
@@ -151,7 +145,7 @@ const ModalDetail = ({
               </div>
             </InternRow>
             <InternRow>
-              <InternSelect disabled data={ratings} labelSpan={1} name="rating" label="Đánh giá" />
+              <InternSelect disabled data={RATINGS} labelSpan={1} name="rating" label="Đánh giá" />
             </InternRow>
             <InternRow>
               <InternTextEditor

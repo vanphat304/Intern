@@ -18,68 +18,64 @@ export class StudentApplyJobsService {
       });
       return StudentApplyJob;
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
 
   async exportStudentApply(res: Response, query) {
-    const { searchItem, pageSize, pageNumber, studentId, companyId  , status} = query;
+    const { searchItem, pageSize, pageNumber, studentId, companyId, status } = query;
 
     try {
       const listStudentApplyJob: Array<StudentApplyJob> =
-      await this.prisma.studentApplyJob.findMany({
-        skip: (pageNumber - 1) * pageSize || 0,
-        take: pageSize * 1 || 10,
-        where: {
-          AND: [
-            {
-              student: {
-                id: {
-                  contains: studentId || '',
+        await this.prisma.studentApplyJob.findMany({
+          skip: (pageNumber - 1) * pageSize || 0,
+          take: pageSize * 1 || 10,
+          where: {
+            AND: [
+              {
+                student: {
+                  id: {
+                    contains: studentId || '',
+                  },
                 },
               },
-            },
-            {
-              status: {
-                equals: status as STATUS,
+              {
+                status: {
+                  equals: status as STATUS,
+                },
+              },
+              {
+                jobDecription: {
+                  company: {
+                    id: {
+                      contains: companyId || '',
+                    },
+                  },
+                },
+              },
+            ],
+          },
+          include: {
+            student: {
+              select: {
+                firstName: true,
+                lastName: true,
+                identifierStudent: true,
               },
             },
-            {
-              jobDecription: {
+            jobDecription: {
+              select: {
+                jobTitle: true,
+                jobId: true,
                 company: {
-                  id: {
-                    contains: companyId || '',
+                  select: {
+                    nameCompany: true,
                   },
                 },
               },
             },
-          ],
-        },
-        include: {
-          student: {
-            select: {
-              firstName: true,
-              lastName: true,
-              identifierStudent: true,
-            },
           },
-          jobDecription: {
-            select: {
-              jobTitle: true,
-              jobId:true,
-              company: {
-                select: {
-                  nameCompany: true,
-                },
-              },
-            },
-          },
-        },
-      });
-
-      console.log({listStudentApplyJob});
-      
+        });
 
       return this.exportExcel.exportExcel(
         res,
@@ -101,17 +97,15 @@ export class StudentApplyJobsService {
           })),
       );
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
 
-  async getListStudentApplyJobCount(){
-    return await this.prisma.studentApplyJob.count()
+  async getListStudentApplyJobCount() {
+    return await this.prisma.studentApplyJob.count();
   }
   async getListStudentApplyJob(query): Promise<Array<StudentApplyJob>> {
     const { searchItem, pageSize, pageNumber, studentId, companyId, status } = query;
-    
 
     try {
       const listStudentApplyJob: Array<StudentApplyJob> =
@@ -167,7 +161,6 @@ export class StudentApplyJobsService {
         return (b.dateAppply as any) - (a.dateAppply as any);
       });
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -206,7 +199,6 @@ export class StudentApplyJobsService {
 
       return StudentApplyJob;
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -241,14 +233,13 @@ export class StudentApplyJobsService {
         return (b.dateAppply as any) - (a.dateAppply as any);
       });
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
 
   async checkStudentIsApplied(query): Promise<boolean> {
     const { jobId, studentId } = query;
-    
+
     try {
       const check: Array<StudentApplyJob> = await this.prisma.studentApplyJob.findMany({
         where: {
@@ -265,7 +256,6 @@ export class StudentApplyJobsService {
 
       return check.length !== 0;
     } catch (error) {
-      console.log(error);
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -381,8 +371,6 @@ export class StudentApplyJobsService {
       return true;
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
-        console.log({ error });
-
         if ((error.code = 'P2003')) {
           throw new HttpException(
             `không thể tìm thấy thông tin với id ${id}`,
@@ -399,7 +387,6 @@ export class StudentApplyJobsService {
     { reasonReject }: Pick<StudentApplyJob, 'reasonReject'>,
     subId?: string,
   ) {
-
     try {
       const studentApplyJob = await this.prisma.studentApplyJob.findFirst({
         where: {
@@ -424,7 +411,6 @@ export class StudentApplyJobsService {
           status: STATUS.SUMBMITED,
         },
       });
-      console.log({ check });
 
       if (check) {
         const result = await this.prisma.studentApplyJob.update({

@@ -46,13 +46,13 @@ export class StudentService {
                 },
               },
             ],
-            // AND: [
-            //   {
-            //     role: {
-            //       in: 'USER',
-            //     },
-            //   },
-            // ],
+            AND: [
+              {
+                role: {
+                  in: 'USER',
+                },
+              },
+            ],
           },
         });
 
@@ -60,7 +60,6 @@ export class StudentService {
         return (b.createdAt as any) - (a.createdAt as any);
       });
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
@@ -79,7 +78,6 @@ export class StudentService {
 
       return student;
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
@@ -98,7 +96,6 @@ export class StudentService {
       });
       return students;
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
@@ -155,7 +152,6 @@ export class StudentService {
       });
       return result;
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }

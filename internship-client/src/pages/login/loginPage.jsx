@@ -23,7 +23,6 @@ const LoginPage = () => {
       }
     },
     onError: (error) => {
-      console.log(error);
       // alert();
       toast.error(error?.response?.data?.message);
     },

@@ -45,7 +45,8 @@
     border-radius: 3px;
 }
 .Login_form-group button:hover{
-    background-color: #3ba769;
+    background-color: #2563eb;
+    opacity: 0.7;
     cursor: pointer;
 }
 .forgot_pass{

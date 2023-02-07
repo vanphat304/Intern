@@ -24,11 +24,9 @@ function JobSave() {
   const { isLoading: isLoadingUnlike, mutate: unLikeJob } = useMutation({
     mutationFn: (params) => Service.unLikeJob(params),
     onSuccess: (data) => {
-      console.log({ data });
       refetch()
     },
     onError: (error) => {
-      console.log(error);
     },
   });
 

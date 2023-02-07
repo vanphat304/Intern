@@ -70,7 +70,6 @@ const ModalDetail = ({ title, id, handleCloseDetail }) => {
       handleCloseDetail();
     },
     onError: (error) => {
-      console.log({ error });
       toast.error('Có lỗi trong quá trình xử lý');
     },
   });

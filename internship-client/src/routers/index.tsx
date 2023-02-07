@@ -24,6 +24,7 @@ import { HistoryApply } from '../containers/ComponentPages/HistoryApply';
 import ReportCompany from '../containers/ComponentPages/ReportCompany';
 import { useAuthStore } from '../store';
 import JobSave from '../containers/ComponentPages/JobSave';
+import { Role } from '../types/role.type';
 
 type typeRenderComponent = {
   Component: React.FunctionComponent<any>;
@@ -48,7 +49,11 @@ const Routers = () => {
           <Route element={<CustomPrivateRoute redirectPath="/auth/login" check={userLogin} />}>
             <Route path="/job-saved" element={<JobSave />}></Route>
           </Route>
+          <Route element={<CustomPrivateRoute redirectPath="/auth/login" check={userLogin} />}>
           <Route path="/report-company" element={<ReportCompany />}></Route>
+          </Route>
+
+          
         </Route>
 
         <Route path="/auth" element={<FormAuthentication />}>
@@ -60,12 +65,13 @@ const Routers = () => {
           <Route path="/profile" element={<Profile />}></Route>
         </Route>
 
-        <Route element={<CustomPrivateRoute redirectPath="/" />}>
+        <Route element={<CustomPrivateRoute redirectPath="/" check={(userLogin as any)?.role === Role.ADMIN} />}>
           <Route path="/admin" element={<AdminPage />}></Route>
         </Route>
 
         {COMPONENTS_PRIVATE_ADMIN_FLATTED_MAP.map(
           ({ Component, path, code, title }: typeRenderComponent) => (
+        <Route element={<CustomPrivateRoute redirectPath="/" check={(userLogin as any)?.role === Role.ADMIN} />}>
             <Route
               element={
                 <MainLayout>
@@ -77,6 +83,9 @@ const Routers = () => {
               key={path}
               path={path}
             ></Route>
+        </Route>
+
+          
           ),
         )}
 

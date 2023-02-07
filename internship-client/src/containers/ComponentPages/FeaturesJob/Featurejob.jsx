@@ -83,7 +83,6 @@ function FeatureJob() {
                   }`}
                   style={{ width: '100px' }}
                   onClick={() => {
-                    console.log('item', item.id);
                     setSearchJob({
                       type: 'SEARCH_JOB',
                       data: {

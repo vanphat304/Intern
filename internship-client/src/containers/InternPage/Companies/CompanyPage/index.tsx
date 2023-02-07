@@ -48,7 +48,6 @@ const CompanyPage = () => {
       toast.success('delete success');
     },
     onError(error: AxiosError<{ message: string; statusCode: string }>) {
-      console.log(error);
       toast.error(error?.response?.data?.message);
     },
   });

@@ -8,28 +8,28 @@ export const columnsCompanies = ({ handleOpenDetail, handleOpenDelete }: any) =>
     key: 'index',
   },
   {
-    title: 'nameCompany',
+    title: 'Tên công ty',
     dataIndex: 'nameCompany',
     key: 'nameCompany',
   },
   {
-    title: 'logo',
+    title: 'Logo',
     dataIndex: 'logo',
     key: 'logo',
   },
 
   {
-    title: 'scale',
+    title: 'Quy mô',
     dataIndex: 'scale',
     key: 'scale',
   },
   {
-    title: 'address',
+    title: 'Địa chỉ',
     dataIndex: 'address',
     key: 'address',
   },
   {
-    title: 'introduce',
+    title: 'Giới thiệu',
     dataIndex: 'introduce',
     key: 'introduce',
     render: (value: string) => {
