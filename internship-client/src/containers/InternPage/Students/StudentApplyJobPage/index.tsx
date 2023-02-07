@@ -73,7 +73,11 @@ const StudentApplyJobPage = () => {
   const fileName= `danh sách sinh viên ứng tuyển thực tập export ngày ${getCurrentTime()}`
 
   const importData = async (formData: FormData) => {
-    const data = await axios.post(`${path}/student-apply-jobs/import`, formData);
+    const data = await axios.post(`${path}/student-apply-jobs/import`, formData , {
+      headers:{
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('tempUser') as string)?.access_token}`,
+      }
+    });
     return data;
   };
 

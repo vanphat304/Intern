@@ -32,6 +32,12 @@ export class CompanyController {
   getListCompany(@Query() query): Promise<Company[]> {
     return this.companyService.getListCompany(query);
   }
+  
+  @Get('all')
+  getListCompanyAll(@Query() query): Promise<Company[]> {
+    return this.companyService.getListCompanyAll(query);
+  }
+  
   @Get('count')
   getListCompanyCount(@Query() query): Promise<number> {
     return this.companyService.getListCompanyCount();

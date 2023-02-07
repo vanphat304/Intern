@@ -50,6 +50,25 @@ export class CompanyService {
     }
   }
 
+  
+  async getListCompanyAll(query): Promise<Array<Company>> {
+    try {
+      const { pageNumber, pageSize, searchItem } = query;
+
+      const listCompany: Array<Company> = await this.prisma.company.findMany({
+        where: {
+          isStudentProp: false,
+        },
+      });
+
+      return listCompany.sort((a, b) => {
+        return (b.createdAt as any) - (a.createdAt as any);
+      });
+    } catch (error) {
+      throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
+    }
+  }
+
   async getListSpecialize() {
     try {
       const listSpecializeCompany: Array<SpecializeCompany> =

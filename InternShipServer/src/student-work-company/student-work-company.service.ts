@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { StudentWorkCompany } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { RATINGS } from './rating/rating.rate';
 
 @Injectable()
 export class StudentWorkCompanyService {
@@ -27,7 +28,14 @@ export class StudentWorkCompanyService {
       await this.prisma.studentApplyJob.updateMany({
         where: {
           studentId,
-          status: 'APPROPVED',
+          OR: [
+            {
+              status: 'APPROPVED',
+            },
+            {
+              status: 'SUMBMITED',
+            },
+          ],
         },
         data: {
           status: 'NOT_WORKED',
@@ -36,6 +44,8 @@ export class StudentWorkCompanyService {
 
       return StudentWorkCompany;
     } catch (error) {
+      console.log({ error });
+
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);
     }
   }
@@ -114,6 +124,28 @@ export class StudentWorkCompanyService {
           ...rest,
         },
       });
+
+      const { companyId } = result;
+
+      const list = await this.prisma.studentWorkCompany.findMany();
+      const score = list.reduce((prev: any, curr: any) => {
+        return prev + RATINGS.find((item) => item.id === curr.rating)?.value || 1;
+      }, 0);
+
+      const numberStudent = await this.prisma.studentWorkCompany.count({
+        where: {
+          companyId,
+        },
+      });
+      await this.prisma.company.update({
+        where: {
+          id: companyId,
+        },
+        data: {
+          rating: score / numberStudent,
+        },
+      });
+
       return result;
     } catch (error) {
       throw new HttpException({ error }, HttpStatus.BAD_REQUEST);

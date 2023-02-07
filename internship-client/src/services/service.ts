@@ -16,6 +16,7 @@ export const Service = {
 
   //company
   getCompanies: (params: {}) => API.GET(API.company, { params }),
+  getCompaniesAll: (params: {}) => API.GET(API.companyAll, { params }),
   getCompaniesCount: (params: {}) => API.GET(API.company_count, { params }),
   getCompanySpecialize: (params: {}) => API.GET(API.company_specialize, { params }),
   getCompanyDistrict: (params: {}) => API.GET(API.company_district, { params }),

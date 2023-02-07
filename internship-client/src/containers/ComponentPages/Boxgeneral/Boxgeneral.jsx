@@ -6,8 +6,8 @@ import { CACHE_TIME, QUERY_KEY_COMPANY, STALE_TIME } from '../../../enums';
 import { Link } from 'react-router-dom';
 function BoxGeneral() {
   const { isLoading, data: companies = [] } = useQuery({
-    queryFn: () => Service.getCompanies(),
-    queryKey: [QUERY_KEY_COMPANY],
+    queryFn: () => Service.getCompaniesAll(),
+    queryKey: [QUERY_KEY_COMPANY+'all'],
     // cacheTime: CACHE_TIME,
     // staleTime: STALE_TIME,
     // refetchOnWindowFocus: false,
@@ -21,7 +21,7 @@ function BoxGeneral() {
       <div className="Boxgeneral_listCompany">
         <div className="grid grid-cols-6">
           {companies
-            .sort((com1, com2) => com1?.rating - com2.rating)
+            .sort((com1, com2) => com2?.rating - com1.rating)
             .map((item) => {
               return (
                 <div key={item?.id} className="col-span-1">

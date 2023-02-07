@@ -79,9 +79,6 @@ export class StudentApplyJobsController {
     file,
   ) {
     const data = await this.importResult.readFile(file);
-
-    
-
     const result = await Promise.all(
       data
         .filter((item) => item.value === STATUS.APPROPVED || item.value === STATUS.REJECTED)

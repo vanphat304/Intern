@@ -105,6 +105,7 @@ export const API = {
 
   // company
   company: 'company',
+  companyAll: 'company/all',
   company_count: 'company/count',
   company_id: 'company/{id}',
   company_update: 'company/update',
