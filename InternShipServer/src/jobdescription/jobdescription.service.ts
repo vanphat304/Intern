@@ -32,6 +32,13 @@ export class JobDescriptionService {
   async getListJobDecriptonCount() {
     return this.prisma.jobDecripton.count();
   }
+  async getListJobDecriptonCountNumberApply(jobId) {
+    return this.prisma.jobDecripton.count({
+      where: {
+        jobId,
+      },
+    });
+  }
 
   async getListJobDecripton(query): Promise<Array<JobDecripton>> {
     try {

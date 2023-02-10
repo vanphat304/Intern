@@ -118,6 +118,7 @@ export const API = {
 
   jobDescription: 'jobdescription',
   jobDescription_count: 'jobdescription/count',
+  jobDescription_count_id: 'jobdescription/count-number-apply/{id}',
   jobDescription_id: 'jobdescription/{id}',
   jobDescription_update: 'jobdescription/update',
   jobDescription_jobCompany: 'jobdescription/job-company',

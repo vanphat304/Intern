@@ -7,6 +7,7 @@ import {
   MoneyCollectOutlined,
   CalendarFilled,
   TrophyFilled,
+  UserAddOutlined
 } from '@ant-design/icons';
 import InternRow from '../../../../components/InternRow';
 import { toast } from 'react-toastify';
@@ -27,6 +28,7 @@ import {
 } from '../../../../enums';
 import { formatDateTime, getDayFromDateTime } from '../../../../helpers/datetime';
 import { useAuthStore } from '../../../../store';
+import InternButtonLike from '../../../../components/InternButtonLike';
 
 function JobDescription() {
   const [modalApply, setModalApply] = useState(null);
@@ -75,6 +77,13 @@ function JobDescription() {
     cacheTime: CACHE_TIME,
     staleTime: STALE_TIME,
   });
+  const { data: numberApply = false, refetch: refetchCountNumberApply } = useQuery({
+    queryFn: () => Service.getJobDescriptionsCount_id({ id }),
+    refetchOnWindowFocus: false,
+    queryKey: ['COUNT_NUMBER_APPLY', id],
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
+  });
 
   const { data: JobDescription = { company: {} } } = useQuery({
     queryFn: () => Service.getJobDescription({ id }),
@@ -97,7 +106,6 @@ function JobDescription() {
     addressToInterview,
     workingForm,
   } = JobDescription;
-
 
   return (
     <>
@@ -136,13 +144,12 @@ function JobDescription() {
                 ) : (
                   <span>ỨNG TUYỂN NGAY</span>
                 )}
-                {!!isProposal || !!isWorked  && (
-                  <p className="text-xs font-thin normal-case">không dành cho bạn =.=</p>
-                )}
+                {!!isProposal ||
+                  (!!isWorked && (
+                    <p className="text-xs font-thin normal-case">không dành cho bạn =.=</p>
+                  ))}
               </button>
-              <button className="p-2 text-blue-500 border-solid border border-blue-500 rounded-lg">
-                Lưu tin
-              </button>
+              {/* <InternButtonLike init={isLike} jobId={item?.jobId} studentId={userLogin?.id} /> */}
             </div>
           </div>
         </div>
@@ -169,6 +176,15 @@ function JobDescription() {
                       {workingForm}
                     </p>
                   </div>{' '}
+                  <div className="flex items-center mt-1">
+                    <UserAddOutlined  className="border text-blue-800 bg-blue-300 w-8 h-8 rounded-full flex items-center justify-center" />
+                    <p className=" text-sm pl-4 text-slate-500 flex flex-col">
+                      <span className="text-base font-semibold text-black">
+                        Sô lượng sinh viên đã ứng tuyển
+                      </span>
+                      {numberApply} sinh viên
+                    </p>
+                  </div>{' '}
                 </div>
                 <div className="w-2/4">
                   <div className="flex items-center">
@@ -185,12 +201,13 @@ function JobDescription() {
                       Thực tập
                     </p>
                   </div>{' '}
+                 
                 </div>
               </div>
             </div>
 
             <div className="mt-2 bg-white rounded-md p-6">
-              <div className="font-bold border-l-4 border-blue-500 pl-4">Địa điểm làm việc</div>
+              <div className="font-bold border-l-4 border-blue-500 pl-4">Địa điểm phỏng vấn</div>
               <span>{addressToInterview}</span>
             </div>
 

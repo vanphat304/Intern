@@ -171,6 +171,7 @@ export class StudentApplyJobsService {
         where: {
           id,
         },
+
         include: {
           student: {
             select: {

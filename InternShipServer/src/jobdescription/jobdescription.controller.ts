@@ -36,9 +36,12 @@ export class JobdescriptionController {
   getListJobDecriptonCount(): Promise<number> {
     return this.jobDescription.getListJobDecriptonCount();
   }
+  @Get('count-number-apply/:id')
+  getListJobDecriptonCountNumber(@Param('id') id: string): Promise<number> {
+    return this.jobDescription.getListJobDecriptonCountNumberApply(id);
+  }
   @Get('/job-company')
   getListJobCompany(@Query() query) {
-    
     return this.jobDescription.getListJobWithCompany(query);
   }
   @Get('filter')

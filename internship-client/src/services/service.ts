@@ -30,6 +30,7 @@ export const Service = {
   // job description
   getJobDescriptions: (params: {}) => API.GET(API.jobDescription, { params }),
   getJobDescriptionsCounts: (params: {}) => API.GET(API.jobDescription_count, { params }),
+  getJobDescriptionsCount_id: (vars: {}) => API.GET(API.jobDescription_count_id, { vars }),
   getJobDescription: (vars: {}) => API.GET(API.jobDescription_id, { vars }),
   getJobDescriptionCompany: (params: {}) => API.GET(API.jobDescription_jobCompany, { params }),
   getJobDescriptionByCompany: (params: {}) => API.GET(API.jobDescription_filter, { params }),
